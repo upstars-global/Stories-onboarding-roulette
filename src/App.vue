@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import Stories from '@components/Stories.vue'
+import Stories from '@components/stories/Stories.vue'
 </script>
 
 <style lang="scss"></style>

@@ -64,12 +64,12 @@
 import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { onLongPress } from '@vueuse/core'
 
-import StoriesTopBar from '@components/UI/storiesTopBar.vue'
-import mobileControlArea from '@components/UI/mobileControlArea.vue'
-import desktopControlButton from '@components/UI/desktopControlButton.vue'
-import desktopPausePlayButton from '@components/UI/desktopPausePlayButton.vue'
-import CloseButton from '@components/UI/closeButton.vue'
-import StorySlide from '@components/StorySlide.vue'
+import StoriesTopBar from '@components/stories/ui/storiesTopBar.vue'
+import mobileControlArea from '@components/stories/ui/mobileControlArea.vue'
+import desktopControlButton from '@components/stories/ui/desktopControlButton.vue'
+import desktopPausePlayButton from '@components/stories/ui/desktopPausePlayButton.vue'
+import CloseButton from '@components/stories/ui/closeButton.vue'
+import StorySlide from '@components/stories/StorySlide.vue'
 
 import gsap from 'gsap'
 import { TextPlugin } from 'gsap/TextPlugin'
@@ -275,5 +275,5 @@ watch(videoCurrentIndex, i => {
 </script>
 
 <style lang="scss" scoped>
-@import './Stories.scss';
+@import './stories.scss';
 </style>
