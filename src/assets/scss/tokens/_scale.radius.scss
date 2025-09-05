@@ -1,0 +1,31 @@
+// =============================================================================
+// RADIUS SCALE TOKENS
+// =============================================================================
+
+// Border radius scale (px)
+$radius-scale: (
+  xs: 4px,
+  sm: 8px,
+  md: 12px,
+  lg: 16px,
+  xl: 24px,
+  full: 9999px,
+);
+
+// Legacy variables for backward compatibility
+$border-radius-xs: 4px;
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 16px;
+$border-radius-xl: 24px;
+$border-radius-full: 9999px;
+
+// CSS Custom Properties
+:root {
+  --border-radius-xs: #{$border-radius-xs};
+  --border-radius-sm: #{$border-radius-sm};
+  --border-radius-md: #{$border-radius-md};
+  --border-radius-lg: #{$border-radius-lg};
+  --border-radius-xl: #{$border-radius-xl};
+  --border-radius-full: #{$border-radius-full};
+}

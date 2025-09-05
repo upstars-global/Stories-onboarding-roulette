@@ -1,0 +1,395 @@
+// =============================================================================
+// UTILITY FUNCTIONS AND HELPERS
+// =============================================================================
+
+// =============================================================================
+// LAYOUT UTILITIES
+// =============================================================================
+
+// Flexbox utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-center {
+  @include flex-column;
+  align-items: center;
+  justify-content: center;
+}
+
+// Grid utilities
+@mixin grid-center {
+  display: grid;
+  place-items: center;
+}
+
+@mixin grid-columns($columns: 1) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+}
+
+// Position utilities
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin fixed-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin sticky-top {
+  position: sticky;
+  top: 0;
+}
+
+// =============================================================================
+// COMPONENT UTILITIES
+// =============================================================================
+
+// Button utilities
+@mixin button-base {
+  @include button-spacing;
+  @include button-text;
+  border: none;
+  border-radius: $border-radius-lg;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $color-primary-1;
+  color: $color-button-text-primary;
+
+  &:hover {
+    background: $color-primary-2;
+    @include shadow-hover('md', 'lg');
+  }
+
+  &:active {
+    background: $color-primary-3;
+    transform: translateY(1px);
+  }
+
+  &:focus {
+    @include shadow-focus-ring('primary', 3px);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: $color-secondary-1;
+  color: $color-button-text-secondary;
+
+  &:hover {
+    background: $color-secondary-3;
+    @include shadow-hover('md', 'lg');
+  }
+
+  &:active {
+    background: $color-secondary-4;
+    transform: translateY(1px);
+  }
+
+  &:focus {
+    @include shadow-focus-ring('secondary', 3px);
+  }
+}
+
+@mixin button-outline {
+  @include button-base;
+  background: transparent;
+  color: $color-primary-1;
+  border: 2px solid $color-primary-1;
+
+  &:hover {
+    background: $color-primary-1;
+    color: $color-button-text-primary;
+    @include shadow-hover('sm', 'md');
+  }
+
+  &:active {
+    background: $color-primary-2;
+    border-color: $color-primary-2;
+    transform: translateY(1px);
+  }
+
+  &:focus {
+    @include shadow-focus-ring('primary', 3px);
+  }
+}
+
+// Card utilities
+@mixin card-base {
+  background: $color-layer-alt-1;
+  border-radius: $border-radius-md;
+  @include shadow-card;
+  overflow: hidden;
+}
+
+@mixin card-interactive {
+  @include card-base;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    @include shadow-hover-lift('md');
+  }
+}
+
+// Input utilities
+@mixin input-base {
+  background: $color-input-background;
+  border: 1px solid $color-input-border;
+  border-radius: $border-radius-sm;
+  padding: $spacing-sm $spacing-md;
+  color: $color-text-body;
+  @include text-style('base');
+  transition: all 0.2s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary-1;
+    @include shadow-focus-ring('primary', 2px);
+  }
+
+  &::placeholder {
+    color: $color-text-menu-default;
+  }
+}
+
+// =============================================================================
+// ANIMATION UTILITIES
+// =============================================================================
+
+// Transition utilities
+@mixin transition-base($properties: all) {
+  transition: $properties 0.2s ease-in-out;
+}
+
+@mixin transition-fast($properties: all) {
+  transition: $properties 0.1s ease-in-out;
+}
+
+@mixin transition-slow($properties: all) {
+  transition: $properties 0.3s ease-in-out;
+}
+
+// Hover animations
+@mixin hover-lift($distance: 2px) {
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-#{$distance});
+  }
+}
+
+@mixin hover-scale($scale: 1.05) {
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+@mixin hover-rotate($angle: 5deg) {
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: rotate($angle);
+  }
+}
+
+// Loading animations
+@mixin loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@mixin loading-spin {
+  animation: spin 1s linear infinite;
+}
+
+@mixin loading-bounce {
+  animation: bounce 1s infinite;
+}
+
+// Keyframe animations
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+// =============================================================================
+// RESPONSIVE UTILITIES
+// =============================================================================
+
+// Responsive visibility
+@mixin responsive-hidden($breakpoint) {
+  @include media($breakpoint) {
+    display: none;
+  }
+}
+
+@mixin responsive-visible($breakpoint) {
+  display: none;
+
+  @include media($breakpoint) {
+    display: block;
+  }
+}
+
+// Responsive text alignment
+@mixin responsive-text-align($mobile: left, $tablet: center, $desktop: left) {
+  text-align: $mobile;
+
+  @include tablet-up {
+    text-align: $tablet;
+  }
+
+  @include desktop-up {
+    text-align: $desktop;
+  }
+}
+
+// Responsive spacing
+@mixin responsive-padding($mobile: 'sm', $tablet: 'md', $desktop: 'lg') {
+  @include responsive-spacing('padding', $mobile, $tablet, $desktop);
+}
+
+@mixin responsive-margin($mobile: 'sm', $tablet: 'md', $desktop: 'lg') {
+  @include responsive-spacing('margin', $mobile, $tablet, $desktop);
+}
+
+// =============================================================================
+// ACCESSIBILITY UTILITIES
+// =============================================================================
+
+// Screen reader only
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Focus visible
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid $color-primary-1;
+    outline-offset: 2px;
+  }
+}
+
+// Reduced motion
+@mixin reduced-motion {
+  @include reduced-motion {
+    animation: none;
+    transition: none;
+  }
+}
+
+// =============================================================================
+// PRINT UTILITIES
+// =============================================================================
+
+@mixin print-hidden {
+  @include print {
+    display: none !important;
+  }
+}
+
+@mixin print-visible {
+  display: none;
+
+  @include print {
+    display: block !important;
+  }
+}
+
+// =============================================================================
+// DEBUG UTILITIES
+// =============================================================================
+
+// Debug outline
+@mixin debug-outline($color: red) {
+  outline: 1px solid $color;
+}
+
+// Debug grid
+@mixin debug-grid($color: rgba(255, 0, 0, 0.1)) {
+  background-image: linear-gradient($color 1px, transparent 1px),
+    linear-gradient(90deg, $color 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+// Debug spacing
+@mixin debug-spacing($color: rgba(0, 255, 0, 0.3)) {
+  background: $color;
+  min-height: 20px;
+}

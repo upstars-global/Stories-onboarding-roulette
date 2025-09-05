@@ -1,0 +1,63 @@
+// =============================================================================
+// VIEWPORT FUNCTIONS
+// =============================================================================
+// Functions for converting pixels to viewport units (vh, dvh, svh, vw, cqw)
+// These functions help create truly responsive layouts
+
+@use 'sass:math';
+
+// =========================
+// HELPERS
+// =========================
+
+/// Returns unitless number if SCSS numeric; passes var(...) through as-is.
+@function _num($value) {
+  @if type-of($value) == 'number' {
+    @return math.div($value, ($value * 0 + 1)); // strip-unit
+  }
+  @return $value; // e.g. var(--design-width)
+}
+
+// =========================
+// CORE VIEWPORT CONVERSIONS
+// =========================
+
+// Convert pixels to viewport height (vh)
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $design-h - Design height (default: design height from tokens)
+// @return {String} CSS calc() expression for vh
+@function to-vh($px, $design-h: $design-height) {
+  @return calc(#{_num($px)} / #{_num($design-h)} * 100vh);
+}
+
+// Convert pixels to dynamic viewport height (dvh)
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $ref - Reference height (default: design height from tokens)
+// @return {String} CSS calc() expression for dvh
+@function to-dvh($px, $ref: $design-height) {
+  @return calc(#{_num($px)} / #{_num($ref)} * 100dvh);
+}
+
+// Convert pixels to small viewport height (svh)
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $ref - Reference height (default: design height from tokens)
+// @return {String} CSS calc() expression for svh
+@function to-svh($px, $ref: $design-height) {
+  @return calc(#{_num($px)} / #{_num($ref)} * 100svh);
+}
+
+// Convert pixels to viewport width (vw)
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $design-w - Design width (default: design width from tokens)
+// @return {String} CSS calc() expression for vw
+@function to-vw($px, $design-w: $design-width) {
+  @return calc(#{_num($px)} / #{_num($design-w)} * 100vw);
+}
+
+// Convert pixels to container query width (cqw)
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $design-w - Design width (default: design width from tokens)
+// @return {String} CSS calc() expression for cqw
+@function to-cqw($px, $design-w: $design-width) {
+  @return calc(#{_num($px)} / #{_num($design-w)} * 100cqw);
+}

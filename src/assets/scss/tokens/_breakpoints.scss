@@ -1,0 +1,58 @@
+// =============================================================================
+// BREAKPOINT TOKENS
+// =============================================================================
+
+// Breakpoint map (from existing project)
+$breakpoints: (
+  xs: 320px,
+  s: 508px,
+  m: 754px,
+  xm: 980px,
+  l: 1200px,
+  xl: 1300px,
+  new-xl: 1420px,
+  xxl: 1792px,
+);
+
+// Legacy variables for backward compatibility
+$XS: 320px !default;
+$S: 508px !default;
+$M: 754px !default;
+$XM: 980px !default;
+$L: 1200px !default;
+$XL: 1300px !default;
+$NEW_XL: 1420px !default;
+$XXL: 1792px !default;
+
+// Device-specific breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-wide: 1440px;
+
+// Orientation breakpoints
+$breakpoint-portrait: 768px;
+$breakpoint-landscape: 1024px;
+
+// CSS Custom Properties for theming
+:root {
+  // Base breakpoints
+  --breakpoint-xs: #{$XS};
+  --breakpoint-s: #{$S};
+  --breakpoint-m: #{$M};
+  --breakpoint-xm: #{$XM};
+  --breakpoint-l: #{$L};
+  --breakpoint-xl: #{$XL};
+  --breakpoint-new-xl: #{$NEW_XL};
+  --breakpoint-xxl: #{$XXL};
+
+  // Device breakpoints
+  --breakpoint-mobile: #{$breakpoint-mobile};
+  --breakpoint-tablet: #{$breakpoint-tablet};
+  --breakpoint-desktop: #{$breakpoint-desktop};
+  --breakpoint-wide: #{$breakpoint-wide};
+
+  // Orientation breakpoints
+  --breakpoint-portrait: #{$breakpoint-portrait};
+  --breakpoint-landscape: #{$breakpoint-landscape};
+}

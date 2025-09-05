@@ -1,0 +1,243 @@
+// =============================================================================
+// MATH FUNCTIONS
+// =============================================================================
+// Mathematical utility functions for calculations and transformations
+// These functions help with complex calculations and scaling
+
+// Clamp a value between minimum and maximum
+// @param {Number} $value - Value to clamp
+// @param {Number} $min - Minimum value
+// @param {Number} $max - Maximum value
+// @return {Number} Clamped value
+@function clamp-value($value, $min, $max) {
+  @if $value < $min {
+    @return $min;
+  } @else if $value > $max {
+    @return $max;
+  } @else {
+    @return $value;
+  }
+}
+
+// Linear interpolation between two values
+// @param {Number} $a - Start value
+// @param {Number} $b - End value
+// @param {Number} $t - Interpolation factor (0-1)
+// @return {Number} Interpolated value
+@function lerp($a, $b, $t) {
+  @return $a + ($b - $a) * $t;
+}
+
+// Inverse linear interpolation
+// @param {Number} $a - Start value
+// @param {Number} $b - End value
+// @param {Number} $value - Value to find factor for
+// @return {Number} Interpolation factor (0-1)
+@function invlerp($a, $b, $value) {
+  @return ($value - $a) / ($b - $a);
+}
+
+// Map a value from one range to another
+// @param {Number} $value - Input value
+// @param {Number} $in-min - Input range minimum
+// @param {Number} $in-max - Input range maximum
+// @param {Number} $out-min - Output range minimum
+// @param {Number} $out-max - Output range maximum
+// @return {Number} Mapped value
+@function map($value, $in-min, $in-max, $out-min, $out-max) {
+  $factor: invlerp($in-min, $in-max, $value);
+  @return lerp($out-min, $out-max, $factor);
+}
+
+// Round to nearest multiple
+// @param {Number} $value - Value to round
+// @param {Number} $multiple - Multiple to round to
+// @return {Number} Rounded value
+@function round-to($value, $multiple) {
+  @return round($value / $multiple) * $multiple;
+}
+
+// Floor to nearest multiple
+// @param {Number} $value - Value to floor
+// @param {Number} $multiple - Multiple to floor to
+// @return {Number} Floored value
+@function floor-to($value, $multiple) {
+  @return floor($value / $multiple) * $multiple;
+}
+
+// Ceil to nearest multiple
+// @param {Number} $value - Value to ceil
+// @param {Number} $multiple - Multiple to ceil to
+// @return {Number} Ceiled value
+@function ceil-to($value, $multiple) {
+  @return ceil($value / $multiple) * $multiple;
+}
+
+// Calculate percentage
+// @param {Number} $part - Part value
+// @param {Number} $whole - Whole value
+// @return {Number} Percentage value
+@function percentage($part, $whole) {
+  @return ($part / $whole) * 100%;
+}
+
+// Calculate aspect ratio
+// @param {Number} $width - Width value
+// @param {Number} $height - Height value
+// @return {Number} Aspect ratio
+@function aspect-ratio($width, $height) {
+  @return ($width / $height) * 100%;
+}
+
+// Calculate golden ratio
+// @param {Number} $base - Base value
+// @return {Number} Golden ratio value
+@function golden-ratio($base) {
+  @return $base * 1.618;
+}
+
+// Calculate golden ratio inverse
+// @param {Number} $base - Base value
+// @return {Number} Golden ratio inverse value
+@function golden-ratio-inverse($base) {
+  @return $base * 0.618;
+}
+
+// Calculate modular scale
+// @param {Number} $base - Base value
+// @param {Number} $ratio - Scale ratio (default: 1.25)
+// @param {Number} $step - Scale step
+// @return {Number} Scaled value
+@function modular-scale($base, $ratio: 1.25, $step: 0) {
+  @if $step == 0 {
+    @return $base;
+  } @else if $step > 0 {
+    @return $base * math.pow($ratio, $step);
+  } @else {
+    @return $base / math.pow($ratio, abs($step));
+  }
+}
+
+// Calculate fluid scaling between breakpoints
+// @param {Number} $min-size - Minimum size
+// @param {Number} $max-size - Maximum size
+// @param {Number} $min-width - Minimum viewport width
+// @param {Number} $max-width - Maximum viewport width
+// @return {String} CSS calc() expression for fluid scaling
+@function fluid-scale(
+  $min-size,
+  $max-size,
+  $min-width: 320px,
+  $max-width: 1200px
+) {
+  $slope: ($max-size - $min-size) / ($max-width - $min-width);
+  $slope-vw: $slope * 100;
+  $intercept-rem: to-rem($min-size - $slope * $min-width);
+
+  @return clamp-value(
+    #{to-rem($min-size)},
+    #{$intercept-rem} + #{$slope-vw}vw,
+    #{to-rem($max-size)}
+  );
+}
+
+// Calculate grid column width
+// @param {Number} $columns - Number of columns
+// @param {Number} $total-columns - Total grid columns (default: 12)
+// @param {Number} $gutter - Gutter size (default: 16px)
+// @return {String} CSS calc() expression for column width
+@function grid-column($columns, $total-columns: 12, $gutter: 16px) {
+  $column-width: percentage($columns / $total-columns);
+  $gutter-compensation: to-rem($gutter * ($columns - 1) / $total-columns);
+
+  @return calc(#{$column-width} - #{$gutter-compensation});
+}
+
+// Calculate grid gap
+// @param {Number} $gutter - Gutter size
+// @param {Number} $columns - Number of columns
+// @return {String} CSS calc() expression for grid gap
+@function grid-gap($gutter, $columns: 1) {
+  @if $columns <= 1 {
+    @return 0;
+  } @else {
+    @return to-rem($gutter * ($columns - 1));
+  }
+}
+
+// Calculate container query size
+// @param {Number} $size - Size in pixels
+// @param {Number} $container-size - Container size
+// @return {String} CSS calc() expression for container query
+@function container-size($size, $container-size: 360px) {
+  @return calc(#{$size} / #{$container-size} * 100cqw);
+}
+
+// Calculate responsive spacing
+// @param {Number} $base-size - Base size
+// @param {Map} $scale - Scale factors for different breakpoints
+// @return {Map} Map with responsive spacing values
+@function responsive-spacing(
+  $base-size,
+  $scale: (mobile: 1, tablet: 1.25, desktop: 1.5)
+) {
+  $result: ();
+
+  @each $breakpoint, $factor in $scale {
+    $result: map-merge($result, (#{$breakpoint}: $base-size * $factor));
+  }
+
+  @return $result;
+}
+
+// Calculate color contrast ratio
+// @param {Color} $color1 - First color
+// @param {Color} $color2 - Second color
+// @return {Number} Contrast ratio
+@function contrast-ratio($color1, $color2) {
+  $luminance1: luminance($color1);
+  $luminance2: luminance($color2);
+
+  $lighter: if($luminance1 > $luminance2, $luminance1, $luminance2);
+  $darker: if($luminance1 > $luminance2, $luminance2, $luminance1);
+
+  @return ($lighter + 0.05) / ($darker + 0.05);
+}
+
+// Calculate color luminance
+// @param {Color} $color - Color to calculate luminance for
+// @return {Number} Luminance value
+@function luminance($color) {
+  $red: nth(linear-rgb($color), 1);
+  $green: nth(linear-rgb($color), 2);
+  $blue: nth(linear-rgb($color), 3);
+
+  @return 0.2126 * $red + 0.7152 * $green + 0.0722 * $blue;
+}
+
+// Convert color to linear RGB
+// @param {Color} $color - Color to convert
+// @return {List} List of linear RGB values
+@function linear-rgb($color) {
+  $red: red($color) / 255;
+  $green: green($color) / 255;
+  $blue: blue($color) / 255;
+
+  $red: if(
+    $red <= 0.03928,
+    $red / 12.92,
+    math.pow(($red + 0.055) / 1.055, 2.4)
+  );
+  $green: if(
+    $green <= 0.03928,
+    $green / 12.92,
+    math.pow(($green + 0.055) / 1.055, 2.4)
+  );
+  $blue: if(
+    $blue <= 0.03928,
+    $blue / 12.92,
+    math.pow(($blue + 0.055) / 1.055, 2.4)
+  );
+
+  @return ($red, $green, $blue);
+}

@@ -1,0 +1,162 @@
+// =============================================================================
+// BORDER TOKENS
+// =============================================================================
+// Border radius, border width, border styles
+// Based on spacing scale for consistency
+
+// Border radius scale
+$border-radius-xs: 4px; // 4px
+$border-radius-sm: 8px; // 8px
+$border-radius-md: 12px; // 12px
+$border-radius-lg: 16px; // 16px
+$border-radius-xl: 24px; // 24px
+$border-radius-2xl: 32px; // 32px
+$border-radius-full: 9999px; // Full radius for circles
+
+// Border width scale
+$border-width-xs: 1px;
+$border-width-sm: 2px;
+$border-width-md: 3px;
+$border-width-lg: 4px;
+$border-width-xl: 6px;
+
+// Border styles
+$border-style-solid: solid;
+$border-style-dashed: dashed;
+$border-style-dotted: dotted;
+$border-style-none: none;
+
+// CSS Custom Properties for theming
+:root {
+  // Border radius
+  --border-radius-xs: #{$border-radius-xs};
+  --border-radius-sm: #{$border-radius-sm};
+  --border-radius-md: #{$border-radius-md};
+  --border-radius-lg: #{$border-radius-lg};
+  --border-radius-xl: #{$border-radius-xl};
+  --border-radius-2xl: #{$border-radius-2xl};
+  --border-radius-full: #{$border-radius-full};
+
+  // Border width
+  --border-width-xs: #{$border-width-xs};
+  --border-width-sm: #{$border-width-sm};
+  --border-width-md: #{$border-width-md};
+  --border-width-lg: #{$border-width-lg};
+  --border-width-xl: #{$border-width-xl};
+
+  // Border styles
+  --border-style-solid: #{$border-style-solid};
+  --border-style-dashed: #{$border-style-dashed};
+  --border-style-dotted: #{$border-style-dotted};
+  --border-style-none: #{$border-style-none};
+}
+
+// Border radius utility functions
+@function border-radius($size) {
+  @if $size == 'xs' {
+    @return var(--border-radius-xs);
+  } @else if $size == 'sm' {
+    @return var(--border-radius-sm);
+  } @else if $size == 'md' {
+    @return var(--border-radius-md);
+  } @else if $size == 'lg' {
+    @return var(--border-radius-lg);
+  } @else if $size == 'xl' {
+    @return var(--border-radius-xl);
+  } @else if $size == '2xl' {
+    @return var(--border-radius-2xl);
+  } @else if $size == 'full' {
+    @return var(--border-radius-full);
+  } @else {
+    @warn "Unknown border-radius size: #{$size}";
+    @return var(--border-radius-md);
+  }
+}
+
+// Border width utility functions
+@function border-width($size) {
+  @if $size == 'xs' {
+    @return var(--border-width-xs);
+  } @else if $size == 'sm' {
+    @return var(--border-width-sm);
+  } @else if $size == 'md' {
+    @return var(--border-width-md);
+  } @else if $size == 'lg' {
+    @return var(--border-width-lg);
+  } @else if $size == 'xl' {
+    @return var(--border-width-xl);
+  } @else {
+    @warn "Unknown border-width size: #{$size}";
+    @return var(--border-width-xs);
+  }
+}
+
+// Border utility mixins
+@mixin border-radius($size: 'md') {
+  border-radius: border-radius($size);
+}
+
+@mixin border-width($size: 'xs') {
+  border-width: border-width($size);
+}
+
+@mixin border-style($style: 'solid') {
+  border-style: var(--border-style-#{$style});
+}
+
+@mixin border($width: 'xs', $style: 'solid', $color: currentColor) {
+  border: border-width($width) var(--border-style-#{$style}) $color;
+}
+
+// Responsive border radius
+@mixin responsive-border-radius($mobile: 'sm', $tablet: 'md', $desktop: 'lg') {
+  border-radius: border-radius($mobile);
+
+  @include tablet-up {
+    border-radius: border-radius($tablet);
+  }
+
+  @include desktop-up {
+    border-radius: border-radius($desktop);
+  }
+}
+
+// Border radius variants
+@mixin rounded-xs {
+  border-radius: $border-radius-xs;
+}
+@mixin rounded-sm {
+  border-radius: $border-radius-sm;
+}
+@mixin rounded-md {
+  border-radius: $border-radius-md;
+}
+@mixin rounded-lg {
+  border-radius: $border-radius-lg;
+}
+@mixin rounded-xl {
+  border-radius: $border-radius-xl;
+}
+@mixin rounded-2xl {
+  border-radius: $border-radius-2xl;
+}
+@mixin rounded-full {
+  border-radius: $border-radius-full;
+}
+
+// Border width variants
+@mixin border-xs {
+  border-width: $border-width-xs;
+}
+@mixin border-sm {
+  border-width: $border-width-sm;
+}
+@mixin border-md {
+  border-width: $border-width-md;
+}
+@mixin border-lg {
+  border-width: $border-width-lg;
+}
+@mixin border-xl {
+  border-width: $border-width-xl;
+}

@@ -1,0 +1,144 @@
+// =============================================================================
+// COLOR TOKENS
+// =============================================================================
+
+// Primary Colors (from Figma)
+$color-primary-1: #00eda6;
+$color-primary-2: #00d595;
+$color-primary-3: #00be85;
+$color-primary-4: #00a674;
+$color-primary-5: #4df2c1;
+$color-primary-gradient: linear-gradient(270deg, #00eda6, #00eda6 100%);
+
+// Secondary Colors (from Figma)
+$color-secondary-1: #cd3fe2;
+$color-secondary-2: #574c7b;
+$color-secondary-3: #a432b5;
+$color-secondary-4: #362f4c;
+$color-secondary-5: #dc79eb;
+$color-secondary-6: #4c426b;
+
+// Tertiary Colors (from Figma)
+$color-tertiary-1: #8b7cbb;
+$color-tertiary-2: rgba(88, 72, 139, 0.72);
+$color-tertiary-3: rgba(88, 72, 139, 0.4);
+$color-tertiary-4: rgba(0, 10, 18, 0.16);
+$color-tertiary-5: rgba(35, 28, 56, 0.72);
+$color-tertiary-6: rgba(88, 72, 139, 0.2);
+
+// Text Colors (from Figma)
+$color-text-body: #f7f7f7e0;
+$color-text-alt: #f7f7f7;
+$color-text-menu-default: #c1b3db;
+$color-text-menu-active: #f7f7f7;
+$color-text-link-default: #00eda6;
+$color-text-link-active: #66f4ca;
+
+// Background Colors (from Figma)
+$color-layer-body: #110e1b;
+$color-layer-alt-1: #221c36;
+$color-layer-alt-2: #30284c;
+$color-layer-alt-3: rgba(68, 56, 108, 0.6);
+$color-layer-alt-4: rgba(68, 56, 108, 0.8);
+
+// Button Colors (from Figma)
+$color-button-text-primary: #110e1b;
+$color-button-text-secondary: #f7f7f7;
+
+// Status Colors (from Figma)
+$color-success: #20d552;
+$color-warning: #ffba33;
+$color-error: #f75757;
+$color-info: #00eda6;
+
+// Additional Colors (from Figma)
+$color-additional-1: #ffe114;
+$color-black: #000;
+$color-white: #fff;
+
+// Input Colors (from Figma)
+$color-input-background: #443a70;
+$color-input-border: #443a70;
+
+// Progress Bar Colors (from Figma)
+$color-progress-filled: #c1b3db;
+$color-progress-empty: rgba(0, 10, 18, 0.16);
+
+// CSS Custom Properties for theming
+:root {
+  // Primary
+  --color-primary-1: #{$color-primary-1};
+  --color-primary-2: #{$color-primary-2};
+  --color-primary-3: #{$color-primary-3};
+  --color-primary-4: #{$color-primary-4};
+  --color-primary-5: #{$color-primary-5};
+  --color-primary-gradient: #{$color-primary-gradient};
+
+  // Secondary
+  --color-secondary-1: #{$color-secondary-1};
+  --color-secondary-2: #{$color-secondary-2};
+  --color-secondary-3: #{$color-secondary-3};
+  --color-secondary-4: #{$color-secondary-4};
+  --color-secondary-5: #{$color-secondary-5};
+  --color-secondary-6: #{$color-secondary-6};
+
+  // Tertiary
+  --color-tertiary-1: #{$color-tertiary-1};
+  --color-tertiary-2: #{$color-tertiary-2};
+  --color-tertiary-3: #{$color-tertiary-3};
+  --color-tertiary-4: #{$color-tertiary-4};
+  --color-tertiary-5: #{$color-tertiary-5};
+  --color-tertiary-6: #{$color-tertiary-6};
+
+  // Text
+  --color-text-body: #{$color-text-body};
+  --color-text-alt: #{$color-text-alt};
+  --color-text-menu-default: #{$color-text-menu-default};
+  --color-text-menu-active: #{$color-text-menu-active};
+  --color-text-link-default: #{$color-text-link-default};
+  --color-text-link-active: #{$color-text-link-active};
+
+  // Background
+  --color-layer-body: #{$color-layer-body};
+  --color-layer-alt-1: #{$color-layer-alt-1};
+  --color-layer-alt-2: #{$color-layer-alt-2};
+  --color-layer-alt-3: #{$color-layer-alt-3};
+  --color-layer-alt-4: #{$color-layer-alt-4};
+
+  // Button
+  --color-button-text-primary: #{$color-button-text-primary};
+  --color-button-text-secondary: #{$color-button-text-secondary};
+
+  // Status
+  --color-success: #{$color-success};
+  --color-warning: #{$color-warning};
+  --color-error: #{$color-error};
+  --color-info: #{$color-info};
+
+  // Additional
+  --color-additional-1: #{$color-additional-1};
+  --color-black: #{$color-black};
+  --color-white: #{$color-white};
+  --color-on-light-back: #{$color-black};
+
+  // Input
+  --color-input-background: #{$color-input-background};
+  --color-input-border: #{$color-input-border};
+
+  // Progress
+  --color-progress-filled: #{$color-progress-filled};
+  --color-progress-empty: #{$color-progress-empty};
+}
+
+// Color utility functions
+@function color($name, $variant: null) {
+  @if $variant {
+    @return var(--color-#{$name}-#{$variant});
+  }
+  @return var(--color-#{$name});
+}
+
+@function color-rgb($name, $variant: null) {
+  $color: color($name, $variant);
+  @return $color;
+}

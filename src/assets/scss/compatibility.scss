@@ -1,0 +1,71 @@
+/* =============================================================================
+   COMPATIBILITY LAYER
+   =============================================================================
+   Этот файл обеспечивает обратную совместимость со старым кодом
+   Импортируйте его в компонентах для доступа к старым переменным и миксинам
+*/
+
+/* =============================================================================
+   BREAKPOINTS (для обратной совместимости)
+   ============================================================================= */
+$XS: 320px;
+$S: 508px;
+$M: 754px;
+$XM: 980px;
+$L: 1200px;
+$XL: 1300px;
+$NEW_XL: 1420px;
+$XXL: 1792px;
+
+/* =============================================================================
+   FONT WEIGHTS (для обратной совместимости)
+   ============================================================================= */
+$font-weight--normal: 400;
+$font-weight--bold: 700;
+$font-weight--black: 900;
+
+$font-family--main: 'Rubik', system-ui, sans-serif;
+$font-family--secondary: 'Roboto Slab', 'Rubik', sans-serif;
+
+/* =============================================================================
+   SPACING MIXINS (для обратной совместимости)
+   ============================================================================= */
+@mixin padding($size) {
+  @if $size == 'xs' {
+    padding: var(--spacing-xs);
+  } @else if $size == 'sm' {
+    padding: var(--spacing-sm);
+  } @else if $size == 'md' {
+    padding: var(--spacing-md);
+  } @else if $size == 'lg' {
+    padding: var(--spacing-lg);
+  } @else if $size == 'xl' {
+    padding: var(--spacing-xl);
+  } @else if $size == '2xl' {
+    padding: var(--spacing-2xl);
+  } @else if $size == '3xl' {
+    padding: var(--spacing-3xl);
+  } @else {
+    padding: var(--spacing-md);
+  }
+}
+
+@mixin margin($size) {
+  @if $size == 'xs' {
+    margin: var(--spacing-xs);
+  } @else if $size == 'sm' {
+    margin: var(--spacing-sm);
+  } @else if $size == 'md' {
+    margin: var(--spacing-md);
+  } @else if $size == 'lg' {
+    margin: var(--spacing-lg);
+  } @else if $size == 'xl' {
+    margin: var(--spacing-xl);
+  } @else if $size == '2xl' {
+    margin: var(--spacing-2xl);
+  } @else if $size == '3xl' {
+    margin: var(--spacing-3xl);
+  } @else {
+    margin: var(--spacing-md);
+  }
+}

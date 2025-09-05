@@ -1,0 +1,241 @@
+// =============================================================================
+// SHADOW TOKENS
+// =============================================================================
+
+// Shadow values (from Figma analysis)
+$shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+// Custom shadows for specific components (from Figma)
+$shadow-button: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-dropdown: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-tooltip: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+// Inner shadows (inset)
+$shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+$shadow-inner-sm: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-inner-md: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+$shadow-inner-lg: inset 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+
+// Colored shadows (using theme colors)
+$shadow-primary: 0 4px 6px -1px rgba(0, 237, 166, 0.1),
+  0 2px 4px -1px rgba(0, 237, 166, 0.06);
+$shadow-secondary: 0 4px 6px -1px rgba(205, 63, 226, 0.1),
+  0 2px 4px -1px rgba(205, 63, 226, 0.06);
+$shadow-success: 0 4px 6px -1px rgba(32, 213, 82, 0.1),
+  0 2px 4px -1px rgba(32, 213, 82, 0.06);
+$shadow-warning: 0 4px 6px -1px rgba(255, 186, 51, 0.1),
+  0 2px 4px -1px rgba(255, 186, 51, 0.06);
+$shadow-error: 0 4px 6px -1px rgba(247, 87, 87, 0.1),
+  0 2px 4px -1px rgba(247, 87, 87, 0.06);
+
+// Shadow map for easy access
+$shadows: (
+  xs: $shadow-xs,
+  sm: $shadow-sm,
+  md: $shadow-md,
+  lg: $shadow-lg,
+  xl: $shadow-xl,
+  '2xl': $shadow-2xl,
+  button: $shadow-button,
+  card: $shadow-card,
+  modal: $shadow-modal,
+  dropdown: $shadow-dropdown,
+  tooltip: $shadow-tooltip,
+  inner: $shadow-inner,
+  'inner-sm': $shadow-inner-sm,
+  'inner-md': $shadow-inner-md,
+  'inner-lg': $shadow-inner-lg,
+  primary: $shadow-primary,
+  secondary: $shadow-secondary,
+  success: $shadow-success,
+  warning: $shadow-warning,
+  error: $shadow-error,
+);
+
+// CSS Custom Properties for theming
+:root {
+  // Base shadows
+  --shadow-xs: #{$shadow-xs};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+  --shadow-2xl: #{$shadow-2xl};
+
+  // Component shadows
+  --shadow-button: #{$shadow-button};
+  --shadow-card: #{$shadow-card};
+  --shadow-modal: #{$shadow-modal};
+  --shadow-dropdown: #{$shadow-dropdown};
+  --shadow-tooltip: #{$shadow-tooltip};
+
+  // Inner shadows
+  --shadow-inner: #{$shadow-inner};
+  --shadow-inner-sm: #{$shadow-inner-sm};
+  --shadow-inner-md: #{$shadow-inner-md};
+  --shadow-inner-lg: #{$shadow-inner-lg};
+
+  // Colored shadows
+  --shadow-primary: #{$shadow-primary};
+  --shadow-secondary: #{$shadow-secondary};
+  --shadow-success: #{$shadow-success};
+  --shadow-warning: #{$shadow-warning};
+  --shadow-error: #{$shadow-error};
+}
+
+// Shadow utility functions
+@function shadow($name) {
+  @if map-has-key($shadows, $name) {
+    @return map-get($shadows, $name);
+  }
+  @warn "Unknown shadow: #{$name}";
+  @return $shadow-xs;
+}
+
+@function shadow-var($name) {
+  @return var(--shadow-#{$name});
+}
+
+// Shadow utility mixins
+@mixin shadow($name) {
+  box-shadow: shadow($name);
+}
+
+@mixin shadow-var($name) {
+  box-shadow: shadow-var($name);
+}
+
+@mixin shadow-none {
+  box-shadow: none;
+}
+
+// Component-specific shadow mixins
+@mixin shadow-button {
+  box-shadow: $shadow-button;
+}
+
+@mixin shadow-card {
+  box-shadow: $shadow-card;
+}
+
+@mixin shadow-modal {
+  box-shadow: $shadow-modal;
+}
+
+@mixin shadow-dropdown {
+  box-shadow: $shadow-dropdown;
+}
+
+@mixin shadow-tooltip {
+  box-shadow: $shadow-tooltip;
+}
+
+// Inner shadow mixins
+@mixin shadow-inner($size: 'md') {
+  @if $size == 'sm' {
+    box-shadow: $shadow-inner-sm;
+  } @else if $size == 'md' {
+    box-shadow: $shadow-inner-md;
+  } @else if $size == 'lg' {
+    box-shadow: $shadow-inner-lg;
+  } @else {
+    box-shadow: $shadow-inner;
+  }
+}
+
+// Colored shadow mixins
+@mixin shadow-primary {
+  box-shadow: $shadow-primary;
+}
+
+@mixin shadow-secondary {
+  box-shadow: $shadow-secondary;
+}
+
+@mixin shadow-success {
+  box-shadow: $shadow-success;
+}
+
+@mixin shadow-warning {
+  box-shadow: $shadow-warning;
+}
+
+@mixin shadow-error {
+  box-shadow: $shadow-error;
+}
+
+// Hover shadow effects
+@mixin shadow-hover($base-shadow: 'md', $hover-shadow: 'lg') {
+  box-shadow: shadow($base-shadow);
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: shadow($hover-shadow);
+  }
+}
+
+@mixin shadow-hover-lift($base-shadow: 'md') {
+  box-shadow: shadow($base-shadow);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: shadow('xl');
+    transform: translateY(-2px);
+  }
+}
+
+// Focus shadow effects
+@mixin shadow-focus($color: 'primary') {
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 237, 166, 0.1), shadow('md');
+  }
+}
+
+@mixin shadow-focus-ring($color: 'primary', $size: 3px) {
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 #{$size} rgba(0, 237, 166, 0.3);
+  }
+}
+
+// Responsive shadows
+@mixin responsive-shadow($mobile: 'sm', $tablet: 'md', $desktop: 'lg') {
+  box-shadow: shadow($mobile);
+
+  @media (min-width: 768px) {
+    box-shadow: shadow($tablet);
+  }
+
+  @media (min-width: 1024px) {
+    box-shadow: shadow($desktop);
+  }
+}
+
+// Shadow with backdrop blur
+@mixin shadow-backdrop($shadow: 'lg', $backdrop-blur: 10px) {
+  box-shadow: shadow($shadow);
+  backdrop-filter: blur($backdrop-blur);
+  -webkit-backdrop-filter: blur($backdrop-blur);
+}
+
+// Multiple shadows
+@mixin shadow-multiple($shadows...) {
+  $shadow-list: ();
+  @each $shadow in $shadows {
+    $shadow-list: append($shadow-list, shadow($shadow), comma);
+  }
+  box-shadow: $shadow-list;
+}

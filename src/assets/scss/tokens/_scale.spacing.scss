@@ -1,0 +1,50 @@
+// =============================================================================
+// SPACING SCALE TOKENS
+// =============================================================================
+
+// Base spacing scale (px)
+$spacing-scale: (
+  xs: 4px,
+  sm: 8px,
+  md: 16px,
+  lg: 24px,
+  xl: 32px,
+  2xl: 48px,
+  3xl: 64px,
+  4xl: 96px,
+  5xl: 128px,
+);
+
+// Legacy variables for backward compatibility
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+$spacing-3xl: 64px;
+
+// Spacing unit (base for calculations)
+$spacing-unit: 4px;
+
+// Container max-widths
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px,
+);
+
+// CSS Custom Properties
+:root {
+  --spacing-xs: #{$spacing-xs};
+  --spacing-sm: #{$spacing-sm};
+  --spacing-md: #{$spacing-md};
+  --spacing-lg: #{$spacing-lg};
+  --spacing-xl: #{$spacing-xl};
+  --spacing-2xl: #{$spacing-2xl};
+  --spacing-3xl: #{$spacing-3xl};
+
+  --spacing-unit: #{$spacing-unit};
+}

@@ -1,0 +1,125 @@
+// =============================================================================
+// UNIT FUNCTIONS
+// =============================================================================
+// Functions for converting between different CSS units (px, rem, em, %, etc.)
+// These functions help maintain consistent sizing across the design system
+
+@use 'sass:math';
+@use 'sass:map';
+
+// =========================
+// HELPERS
+// =========================
+
+/// Returns unitless number if SCSS numeric; passes var(...) through as-is.
+@function _num($value) {
+  @if type-of($value) == 'number' {
+    @return math.div($value, ($value * 0 + 1)); // strip-unit
+  }
+  @return $value; // e.g. var(--design-width)
+}
+
+// =========================
+// CORE CONVERSIONS
+// =========================
+
+// Convert pixels to rem units
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $base - Base font size (default: base font from tokens)
+// @return {String} CSS calc() expression for rem
+@function to-rem($px, $base: $base-font) {
+  @return calc(#{_num($px)} / #{_num($base)} * 1rem);
+}
+
+// Convert pixels to em units
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $base - Base font size (default: base font from tokens)
+// @return {String} CSS calc() expression for em
+@function to-em($px, $base: $base-font) {
+  @return calc(#{_num($px)} / #{_num($base)} * 1em);
+}
+
+// Convert pixels to percentage
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $container - Container size (default: design width from tokens)
+// @return {String} CSS calc() expression for percentage
+@function to-percent-x($px, $design-width: $design-width) {
+  @return calc(#{_num($px)} / #{_num($design-width)} * 100%);
+}
+
+@function to-percent-y($px, $design-height: $design-height) {
+  @return calc(#{_num($px)} / #{_num($design-height)} * 100%);
+}
+
+// =========================
+// TYPOGRAPHY UNITS
+// =========================
+
+// Convert pixels to lh units (line height)
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $line-height - Line height (default: base line height from tokens)
+// @return {String} CSS calc() expression for lh
+@function to-lh($px, $line-height: $base-line-height) {
+  @return calc(#{_num($px)} / #{_num($line-height)} * 1lh);
+}
+
+// Convert pixels to rlh units (root line height)
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $root-line-height - Root line height (default: base line height from tokens)
+// @return {String} CSS calc() expression for rlh
+@function to-rlh($px, $root-line-height: $base-line-height) {
+  @return calc(#{_num($px)} / #{_num($root-line-height)} * 1rlh);
+}
+
+// =========================
+// OPTIONAL VIEWPORT UNITS
+// =========================
+
+// Convert pixels to vmin units
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $design-size - Design size (default: design width from tokens)
+// @return {String} CSS calc() expression for vmin
+@function to-vmin($px, $design-size: $design-width) {
+  @return calc(#{_num($px)} / #{_num($design-size)} * 100vmin);
+}
+
+// Convert pixels to vmax units
+// @param {Number} $px - Pixel value to convert
+// @param {Number} $design-size - Design size (default: design height from tokens)
+// @return {String} CSS calc() expression for vmax
+@function to-vmax($px, $design-size: $design-height) {
+  @return calc(#{_num($px)} / #{_num($design-size)} * 100vmax);
+}
+
+// =========================
+// RESPONSIVE UNIT SYSTEM
+// =========================
+
+// Responsive unit function that scales between breakpoints
+// @param {Number} $px - Pixel value to convert
+// @param {String} $unit - Target unit (rem, em, %, etc.)
+// @param {Map} $breakpoints - Breakpoint map with reference sizes
+// @return {Map} Map with responsive values
+@function responsive-unit(
+  $px,
+  $unit: 'rem',
+  $breakpoints: (
+    mobile: $base-font,
+    tablet: $base-font-tablet,
+    desktop: $base-font-desktop
+  )
+) {
+  $result: ();
+
+  @each $breakpoint, $base-size in $breakpoints {
+    @if $unit == 'rem' {
+      $result: map.merge($result, (#{$breakpoint}: to-rem($px, $base-size)));
+    } @else if $unit == 'em' {
+      $result: map.merge($result, (#{$breakpoint}: to-em($px, $base-size)));
+    } @else if $unit == 'percent' {
+      $result: map.merge($result, (#{$breakpoint}: to-percent-x($px)));
+    }
+  }
+
+  @return $result;
+}

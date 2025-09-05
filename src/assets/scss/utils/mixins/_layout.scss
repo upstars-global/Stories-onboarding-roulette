@@ -1,0 +1,437 @@
+// =============================================================================
+// LAYOUT MIXINS
+// =============================================================================
+// Mixins for layout, flexbox, grid, and positioning
+// These mixins provide common layout patterns
+
+// =============================================================================
+// FLEXBOX MIXINS
+// =============================================================================
+
+// Center content using flexbox
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Center content horizontally using flexbox
+@mixin flex-center-x {
+  display: flex;
+  justify-content: center;
+}
+
+// Center content vertically using flexbox
+@mixin flex-center-y {
+  display: flex;
+  align-items: center;
+}
+
+// Distribute content with space between
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Distribute content with space around
+@mixin flex-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+// Distribute content with space evenly
+@mixin flex-evenly {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+// Align content to start
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+// Align content to end
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// Flexbox column layout
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Flexbox column with center alignment
+@mixin flex-column-center {
+  @include flex-column;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flexbox column with start alignment
+@mixin flex-column-start {
+  @include flex-column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+// Flexbox column with end alignment
+@mixin flex-column-end {
+  @include flex-column;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+// Flexbox column with space between
+@mixin flex-column-between {
+  @include flex-column;
+  justify-content: space-between;
+}
+
+// Flexbox column with space around
+@mixin flex-column-around {
+  @include flex-column;
+  justify-content: space-around;
+}
+
+// Flexbox with gap
+@mixin flex-gap($gap: $spacing-md) {
+  gap: $gap;
+}
+
+// Flexbox with responsive gap
+@mixin flex-responsive-gap(
+  $mobile: $spacing-sm,
+  $tablet: $spacing-md,
+  $desktop: $spacing-lg
+) {
+  gap: $mobile;
+
+  @include tablet-up {
+    gap: $tablet;
+  }
+
+  @include desktop-up {
+    gap: $desktop;
+  }
+}
+
+// =============================================================================
+// GRID MIXINS
+// =============================================================================
+
+// Center content using grid
+@mixin grid-center {
+  display: grid;
+  place-items: center;
+}
+
+// Grid with specified columns
+@mixin grid-columns($columns: 1, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Grid with specified rows
+@mixin grid-rows($rows: 1, $gap: $spacing-md) {
+  display: grid;
+  grid-template-rows: repeat($rows, 1fr);
+  gap: $gap;
+}
+
+// Grid with specified columns and rows
+@mixin grid($columns: 1, $rows: 1, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-template-rows: repeat($rows, 1fr);
+  gap: $gap;
+}
+
+// Grid with auto-fit columns
+@mixin grid-auto-fit($min-width: 200px, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// Grid with auto-fill columns
+@mixin grid-auto-fill($min-width: 200px, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// Grid with masonry layout
+@mixin grid-masonry($columns: 3, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-auto-rows: 0;
+  grid-auto-flow: dense;
+  gap: $gap;
+}
+
+// =============================================================================
+// POSITIONING MIXINS
+// =============================================================================
+
+// Absolute positioning with center alignment
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Absolute positioning with center alignment (X only)
+@mixin absolute-center-x {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// Absolute positioning with center alignment (Y only)
+@mixin absolute-center-y {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// Fixed positioning with center alignment
+@mixin fixed-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Fixed positioning with center alignment (X only)
+@mixin fixed-center-x {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// Fixed positioning with center alignment (Y only)
+@mixin fixed-center-y {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// Sticky positioning at top
+@mixin sticky-top($top: 0) {
+  position: sticky;
+  top: $top;
+}
+
+// Sticky positioning at bottom
+@mixin sticky-bottom($bottom: 0) {
+  position: sticky;
+  bottom: $bottom;
+}
+
+// Relative positioning with stacking context
+@mixin relative-stack($z-index: 1) {
+  position: relative;
+  z-index: $z-index;
+}
+
+// =============================================================================
+// CONTAINER MIXINS
+// =============================================================================
+
+// Container with max width and center alignment
+@mixin container($max-width: $container-width, $padding: $container-padding) {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $padding;
+}
+
+// Container with responsive max width
+@mixin responsive-container($mobile: 100%, $tablet: 768px, $desktop: 1200px) {
+  width: $mobile;
+  margin: 0 auto;
+
+  @include tablet-up {
+    max-width: $tablet;
+  }
+
+  @include desktop-up {
+    max-width: $desktop;
+  }
+}
+
+// Container with fluid scaling
+@mixin fluid-container($min-width: 320px, $max-width: 1200px) {
+  width: clamp-value($min-width, 90vw, $max-width);
+  margin: 0 auto;
+}
+
+// =============================================================================
+// SPACING MIXINS
+// =============================================================================
+
+// Apply spacing to all sides
+@mixin spacing($size: $spacing-md) {
+  padding: $size;
+  margin: $size;
+}
+
+// Apply spacing to horizontal sides only
+@mixin spacing-x($size: $spacing-md) {
+  padding-left: $size;
+  padding-right: $size;
+  margin-left: $size;
+  margin-right: $size;
+}
+
+// Apply spacing to vertical sides only
+@mixin spacing-y($size: $spacing-md) {
+  padding-top: $size;
+  padding-bottom: $size;
+  margin-top: $size;
+  margin-bottom: $size;
+}
+
+// Apply spacing to top only
+@mixin spacing-top($size: $spacing-md) {
+  padding-top: $size;
+  margin-top: $size;
+}
+
+// Apply spacing to bottom only
+@mixin spacing-bottom($size: $spacing-md) {
+  padding-bottom: $size;
+  margin-bottom: $size;
+}
+
+// Apply spacing to left only
+@mixin spacing-left($size: $spacing-md) {
+  padding-left: $size;
+  margin-left: $size;
+}
+
+// Apply spacing to right only
+@mixin spacing-right($size: $spacing-md) {
+  padding-right: $size;
+  margin-right: $size;
+}
+
+// =============================================================================
+// RESPONSIVE LAYOUT MIXINS
+// =============================================================================
+
+// Responsive flexbox direction
+@mixin responsive-flex-direction($mobile: column, $tablet: row, $desktop: row) {
+  flex-direction: $mobile;
+
+  @include tablet-up {
+    flex-direction: $tablet;
+  }
+
+  @include desktop-up {
+    flex-direction: $desktop;
+  }
+}
+
+// Responsive grid columns
+@mixin responsive-grid-columns($mobile: 1, $tablet: 2, $desktop: 3) {
+  grid-template-columns: repeat($mobile, 1fr);
+
+  @include tablet-up {
+    grid-template-columns: repeat($tablet, 1fr);
+  }
+
+  @include desktop-up {
+    grid-template-columns: repeat($desktop, 1fr);
+  }
+}
+
+// Responsive container padding
+@mixin responsive-container-padding(
+  $mobile: $spacing-sm,
+  $tablet: $spacing-md,
+  $desktop: $spacing-lg
+) {
+  padding: $mobile;
+
+  @include tablet-up {
+    padding: $tablet;
+  }
+
+  @include desktop-up {
+    padding: $desktop;
+  }
+}
+
+// =============================================================================
+// UTILITY LAYOUT MIXINS
+// =============================================================================
+
+// Full viewport height
+@mixin full-height {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+// Full viewport width
+@mixin full-width {
+  width: 100vw;
+  width: 100dvw;
+}
+
+// Full container height
+@mixin full-container-height {
+  min-height: 100%;
+  min-height: 100cqh;
+}
+
+// Full container width
+@mixin full-container-width {
+  width: 100%;
+  width: 100cqw;
+}
+
+// Aspect ratio container
+@mixin aspect-ratio($width: 16, $height: 9) {
+  position: relative;
+  width: 100%;
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: percentage($height / $width);
+  }
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Overflow hidden with ellipsis
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Multi-line text ellipsis
+@mixin text-ellipsis-multi($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

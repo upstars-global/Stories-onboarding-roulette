@@ -1,0 +1,43 @@
+// =============================================================================
+// DESIGN TOKENS
+// =============================================================================
+// Design dimensions from Figma (without units)
+
+// Design canvas dimensions (unitless)
+$design-width: 360; // Figma design width
+$design-height: 640; // Figma design height
+
+// Alternative design sizes for different breakpoints
+$design-width-tablet: 768;
+$design-height-tablet: 1024;
+
+$design-width-desktop: 1024;
+$design-height-desktop: 768;
+
+// Typography tokens (unitless)
+$base-font: 14; // Base font size
+$base-font-tablet: 18; // Font size for tablets
+$base-font-desktop: 20; // Font size for desktop
+
+// Line height tokens (unitless)
+$base-line-height: 1.5; // Base line-height
+$base-line-height-tablet: 1.6; // Line-height for tablets
+$base-line-height-desktop: 1.7; // Line-height for desktop
+
+// CSS Custom Properties (unitless)
+:root {
+  --design-width: #{$design-width};
+  --design-height: #{$design-height};
+  --design-width-tablet: #{$design-width-tablet};
+  --design-height-tablet: #{$design-height-tablet};
+  --design-width-desktop: #{$design-width-desktop};
+  --design-height-desktop: #{$design-height-desktop};
+
+  --base-font: #{$base-font};
+  --base-font-tablet: #{$base-font-tablet};
+  --base-font-desktop: #{$base-font-desktop};
+
+  --base-line-height: #{$base-line-height};
+  --base-line-height-tablet: #{$base-line-height-tablet};
+  --base-line-height-desktop: #{$base-line-height-desktop};
+}

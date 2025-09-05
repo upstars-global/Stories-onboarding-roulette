@@ -1,0 +1,212 @@
+// =============================================================================
+// SPACING TOKENS
+// =============================================================================
+// Hybrid spacing system with numeric scale and semantic aliases
+// Based on 4px base unit for consistent scaling
+
+// Base spacing unit
+$spacing-unit: 4px;
+
+// Numeric scale (for calculations)
+$spacing-1: $spacing-unit * 1; // 4px
+$spacing-2: $spacing-unit * 2; // 8px
+$spacing-3: $spacing-unit * 3; // 12px
+$spacing-4: $spacing-unit * 4; // 16px
+$spacing-5: $spacing-unit * 5; // 20px
+$spacing-6: $spacing-unit * 6; // 24px
+$spacing-8: $spacing-unit * 8; // 32px
+$spacing-10: $spacing-unit * 10; // 40px
+$spacing-12: $spacing-unit * 12; // 48px
+$spacing-16: $spacing-unit * 16; // 64px
+$spacing-20: $spacing-unit * 20; // 80px
+$spacing-24: $spacing-unit * 24; // 96px
+
+// Semantic aliases (for readability)
+$spacing-xs: $spacing-1; // 4px - минимальные отступы
+$spacing-sm: $spacing-2; // 8px - маленькие отступы
+$spacing-md: $spacing-4; // 16px - основные отступы
+$spacing-lg: $spacing-6; // 24px - большие отступы
+$spacing-xl: $spacing-8; // 32px - очень большие отступы
+$spacing-2xl: $spacing-12; // 48px - огромные отступы
+$spacing-3xl: $spacing-16; // 64px - максимальные отступы
+
+// Special spacing values (from Figma analysis)
+$spacing-header-top: $spacing-4; // 16px - top-4 для header
+$spacing-title-top: 88px; // 88px - top-[88px] для заголовков
+$spacing-image-top: 204px; // 204px - top-[204px] для изображений
+$spacing-button-top: 530px; // 530px - top-[530px] для кнопок
+$spacing-link-top: 576px; // 576px - top-[576px] для ссылок
+
+// Section spacing
+$spacing-section-gap-small: 10px; // 10px - gap-2.5 для title секций
+$spacing-section-gap-medium: $spacing-4; // 16px - gap-4 для header секций
+
+// Container dimensions
+$container-width: 1200px;
+$container-padding: $spacing-4; // 16px
+
+// Screen dimensions (from Figma analysis)
+$screen-width: 360px; // Ширина мобильного экрана
+$screen-height: 640px; // Высота мобильного экрана
+$screen-padding: $spacing-4; // 16px - отступы экрана
+
+// CSS Custom Properties for theming
+:root {
+  // Base spacing
+  --spacing-unit: #{$spacing-unit};
+
+  // Numeric scale
+  --spacing-1: #{$spacing-1};
+  --spacing-2: #{$spacing-2};
+  --spacing-3: #{$spacing-3};
+  --spacing-4: #{$spacing-4};
+  --spacing-5: #{$spacing-5};
+  --spacing-6: #{$spacing-6};
+  --spacing-8: #{$spacing-8};
+  --spacing-10: #{$spacing-10};
+  --spacing-12: #{$spacing-12};
+  --spacing-16: #{$spacing-16};
+  --spacing-20: #{$spacing-20};
+  --spacing-24: #{$spacing-24};
+
+  // Semantic aliases
+  --spacing-xs: #{$spacing-xs};
+  --spacing-sm: #{$spacing-sm};
+  --spacing-md: #{$spacing-md};
+  --spacing-lg: #{$spacing-lg};
+  --spacing-xl: #{$spacing-xl};
+  --spacing-2xl: #{$spacing-2xl};
+  --spacing-3xl: #{$spacing-3xl};
+
+  // Special spacing
+  --spacing-header-top: #{$spacing-header-top};
+  --spacing-title-top: #{$spacing-title-top};
+  --spacing-image-top: #{$spacing-image-top};
+  --spacing-button-top: #{$spacing-button-top};
+  --spacing-link-top: #{$spacing-link-top};
+
+  // Section spacing
+  --spacing-section-gap-small: #{$spacing-section-gap-small};
+  --spacing-section-gap-medium: #{$spacing-section-gap-medium};
+
+  // Container
+  --container-width: #{$container-width};
+  --container-padding: #{$container-padding};
+
+  // Screen dimensions
+  --screen-width: #{$screen-width};
+  --screen-height: #{$screen-height};
+  --screen-padding: #{$screen-padding};
+}
+
+// Spacing utility functions
+@function spacing($size) {
+  @if $size == 'xs' {
+    @return var(--spacing-xs);
+  } @else if $size == 'sm' {
+    @return var(--spacing-sm);
+  } @else if $size == 'md' {
+    @return var(--spacing-md);
+  } @else if $size == 'lg' {
+    @return var(--spacing-lg);
+  } @else if $size == 'xl' {
+    @return var(--spacing-xl);
+  } @else if $size == '2xl' {
+    @return var(--spacing-2xl);
+  } @else if $size == '3xl' {
+    @return var(--spacing-3xl);
+  } @else {
+    @warn "Unknown spacing size: #{$size}";
+    @return var(--spacing-md);
+  }
+}
+
+// Numeric spacing function
+@function spacing-numeric($number) {
+  @if $number == 1 {
+    @return var(--spacing-1);
+  } @else if $number == 2 {
+    @return var(--spacing-2);
+  } @else if $number == 3 {
+    @return var(--spacing-3);
+  } @else if $number == 4 {
+    @return var(--spacing-4);
+  } @else if $number == 5 {
+    @return var(--spacing-5);
+  } @else if $number == 6 {
+    @return var(--spacing-6);
+  } @else if $number == 8 {
+    @return var(--spacing-8);
+  } @else if $number == 10 {
+    @return var(--spacing-10);
+  } @else if $number == 12 {
+    @return var(--spacing-12);
+  } @else if $number == 16 {
+    @return var(--spacing-16);
+  } @else if $number == 20 {
+    @return var(--spacing-20);
+  } @else if $number == 24 {
+    @return var(--spacing-24);
+  } @else {
+    @warn "Unknown spacing number: #{$number}";
+    @return var(--spacing-4);
+  }
+}
+
+// Spacing utility mixins
+@mixin padding($size) {
+  padding: spacing($size);
+}
+
+@mixin padding-x($size) {
+  padding-left: spacing($size);
+  padding-right: spacing($size);
+}
+
+@mixin padding-y($size) {
+  padding-top: spacing($size);
+  padding-bottom: spacing($size);
+}
+
+@mixin margin($size) {
+  margin: spacing($size);
+}
+
+@mixin margin-x($size) {
+  margin-left: spacing($size);
+  margin-right: spacing($size);
+}
+
+@mixin margin-y($size) {
+  margin-top: spacing($size);
+  margin-bottom: spacing($size);
+}
+
+@mixin gap($size) {
+  gap: spacing($size);
+}
+
+// Responsive spacing mixins
+@mixin responsive-spacing($property, $mobile, $tablet, $desktop) {
+  #{$property}: spacing($mobile);
+
+  @include tablet-up {
+    #{$property}: spacing($tablet);
+  }
+
+  @include desktop-up {
+    #{$property}: spacing($desktop);
+  }
+}
+
+@mixin responsive-padding($mobile, $tablet, $desktop) {
+  @include responsive-spacing('padding', $mobile, $tablet, $desktop);
+}
+
+@mixin responsive-margin($mobile, $tablet, $desktop) {
+  @include responsive-spacing('margin', $mobile, $tablet, $desktop);
+}
+
+@mixin responsive-gap($mobile, $tablet, $desktop) {
+  @include responsive-spacing('gap', $mobile, $tablet, $desktop);
+}
