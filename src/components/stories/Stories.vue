@@ -259,8 +259,8 @@ onMounted(async () => {
   onLongPress(playerRef, handleLongPress, {
     delay: 500,
     modifiers: { prevent: true },
-    onMouseUp: ev => {
-      if (videoPaused.value && ev?.target && !ev.target.closest('.pause_button')) onPlay()
+    onMouseUp: () => {
+      if (videoPaused.value) onPlay()
     },
   })
 })
