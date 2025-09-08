@@ -12,7 +12,12 @@
       @timeupdate="$emit('timeupdate', $event)"
       @loadedmetadata="$emit('loadedmetadata')"
     >
-      <source v-if="!isAndroid" :src="h265Source" type="video/mp4" codecs="h265" />
+      <source
+        v-if="!isAndroid"
+        :src="h265Source"
+        type="video/mp4"
+        codecs="h265"
+      />
       <source :src="webmSource" type="video/webm" />
     </video>
     <div :id="`header${slideNumber}`" class="h1">{{ headerText }}</div>
@@ -20,32 +25,41 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from 'vue'
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import type { LocaleTexts } from '@/types';
 
-const props = defineProps({
-  slideNumber: { type: Number, required: true },
-  texts: { type: Object, required: true },
-  isAndroid: { type: Boolean, required: true },
-  h265Source: { type: String, required: true },
-  webmSource: { type: String, required: true },
-  autoplay: { type: Boolean, default: true },
-  muted: { type: Boolean, default: true },
-  setVideoRef: { type: Function, default: null },
-})
+interface Props {
+  slideNumber: number;
+  texts: LocaleTexts;
+  isAndroid: boolean;
+  h265Source: string;
+  webmSource: string;
+  autoplay?: boolean;
+  muted?: boolean;
+}
 
-defineEmits(['ended', 'timeupdate', 'loadedmetadata'])
+const props = defineProps<Props>();
 
-const videoRef = ref(null)
+interface Emits {
+  ended: [];
+  timeupdate: [event: Event];
+  loadedmetadata: [];
+}
 
-const videoId = computed(() => `story_1${props.slideNumber}`)
-const headerText = computed(() => props.texts[`header${props.slideNumber}`])
+defineEmits<Emits>();
 
-onMounted(() => {
-  if (props.setVideoRef && videoRef.value) {
-    props.setVideoRef(videoRef.value)
-  }
-})
+const videoRef = ref<HTMLVideoElement | null>(null);
+
+const videoId = computed(() => `story_1${props.slideNumber}`);
+const headerText = computed((): string => {
+  const key = `header${props.slideNumber}` as keyof LocaleTexts;
+  return props.texts[key] || '';
+});
+
+defineExpose({
+  videoRef,
+});
 </script>
 
 <style lang="scss">

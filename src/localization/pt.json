@@ -1,9 +1,9 @@
 {
   "top_text": "Como jogar: Roleta",
-  "top_text11": "<span>Passo 1.</span>Conheça a Roleta",
-  "top_text12": "<span>Passo 2.</span>Faça sua aposta",
-  "top_text13": "<span>Passo 3.</span>Espere a bola parar",
-  "top_text14": "<span>Passo 4.</span>Descubra o resultado",
+  "top_text1": "<span>Passo 1.</span>Conheça a Roleta",
+  "top_text2": "<span>Passo 2.</span>Faça sua aposta",
+  "top_text3": "<span>Passo 3.</span>Espere a bola parar",
+  "top_text4": "<span>Passo 4.</span>Descubra o resultado",
 
   "header1": "🎉 Bem-vindo à Roleta Live! 🚀",
   "header2": "💡 Como apostar",
@@ -15,21 +15,5 @@
   "desk3": "Depois que todas as apostas forem feitas, o crupiê gira a roleta. Basta relaxar e assistir a bola cair em um número",
   "desk4": "Se a bola cair no seu número, cor ou seção, você ganha! Parabéns! 🎉",
 
-  "start_game": "Start game",
-  "identity": "Identity",
-  "identity_verified": "Identity verified",
-  "deposit_amount": "Deposit amount",
-  "select_amount": "Select the deposit amount",
-  "profile": "My profile",
-  "personal_info": "Personal info",
-  "phone_number": "Phone number",
-  "email": "Email",
-  "nickname": "Nickname",
-  "id": "ID",
-  "payment": "Payment",
-  "all_payment_methods": "All payment methods",
-  "verified": "verified",
-  "withdraw_details": "Withdraw details",
-  "balance": "Balance",
-  "amount": "Amount"
+  "start_game": "Start game"
 }

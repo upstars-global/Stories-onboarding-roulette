@@ -4,21 +4,30 @@
 
 // Shadow values (from Figma analysis)
 $shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+$shadow-sm:
+  0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
   0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+$shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
   0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+$shadow-xl:
+  0 20px 25px -5px rgba(0, 0, 0, 0.1),
   0 10px 10px -5px rgba(0, 0, 0, 0.04);
 $shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
 // Custom shadows for specific components (from Figma)
 $shadow-button: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-$shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-$shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+$shadow-card:
+  0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-modal:
+  0 20px 25px -5px rgba(0, 0, 0, 0.1),
   0 10px 10px -5px rgba(0, 0, 0, 0.04);
-$shadow-dropdown: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+$shadow-dropdown:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
   0 4px 6px -2px rgba(0, 0, 0, 0.05);
 $shadow-tooltip: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
@@ -29,15 +38,20 @@ $shadow-inner-md: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 $shadow-inner-lg: inset 0 4px 6px 0 rgba(0, 0, 0, 0.1);
 
 // Colored shadows (using theme colors)
-$shadow-primary: 0 4px 6px -1px rgba(0, 237, 166, 0.1),
+$shadow-primary:
+  0 4px 6px -1px rgba(0, 237, 166, 0.1),
   0 2px 4px -1px rgba(0, 237, 166, 0.06);
-$shadow-secondary: 0 4px 6px -1px rgba(205, 63, 226, 0.1),
+$shadow-secondary:
+  0 4px 6px -1px rgba(205, 63, 226, 0.1),
   0 2px 4px -1px rgba(205, 63, 226, 0.06);
-$shadow-success: 0 4px 6px -1px rgba(32, 213, 82, 0.1),
+$shadow-success:
+  0 4px 6px -1px rgba(32, 213, 82, 0.1),
   0 2px 4px -1px rgba(32, 213, 82, 0.06);
-$shadow-warning: 0 4px 6px -1px rgba(255, 186, 51, 0.1),
+$shadow-warning:
+  0 4px 6px -1px rgba(255, 186, 51, 0.1),
   0 2px 4px -1px rgba(255, 186, 51, 0.06);
-$shadow-error: 0 4px 6px -1px rgba(247, 87, 87, 0.1),
+$shadow-error:
+  0 4px 6px -1px rgba(247, 87, 87, 0.1),
   0 2px 4px -1px rgba(247, 87, 87, 0.06);
 
 // Shadow map for easy access
@@ -200,7 +214,9 @@ $shadows: (
 @mixin shadow-focus($color: 'primary') {
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 237, 166, 0.1), shadow('md');
+    box-shadow:
+      0 0 0 3px rgba(0, 237, 166, 0.1),
+      shadow('md');
   }
 }
 

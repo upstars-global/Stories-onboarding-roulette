@@ -12,6 +12,17 @@
       "@src/*": ["./src/*"],
       "@scss/*": ["./src/assets/scss/*"]
     },
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "strict": true,
+    "noImplicitAny": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "useUnknownInCatchVariables": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "target": "ES2022",
+    "skipLibCheck": true
   }
 }

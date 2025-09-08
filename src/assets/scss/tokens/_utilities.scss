@@ -383,7 +383,8 @@
 
 // Debug grid
 @mixin debug-grid($color: rgba(255, 0, 0, 0.1)) {
-  background-image: linear-gradient($color 1px, transparent 1px),
+  background-image:
+    linear-gradient($color 1px, transparent 1px),
     linear-gradient(90deg, $color 1px, transparent 1px);
   background-size: 20px 20px;
 }

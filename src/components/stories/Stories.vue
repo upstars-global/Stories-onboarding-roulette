@@ -2,7 +2,7 @@
   <div ref="playerRef" class="story-container">
     <StoriesTopBar
       :progress="videoProgress"
-      :number-of-segments="4"
+      :number-of-segments="numberOfSegments"
       :current-index="videoCurrentIndex"
     />
     <div class="info_row">
@@ -17,17 +17,17 @@
     </div>
 
     <div id="text_container_stories" class="text_container">
-      <template v-for="(slide, index) in slides" :key="`slide-${index}`">
+      <template v-for="(story, index) in stories" :key="`story-${index}`">
         <StorySlide
           v-if="videoCurrentIndex === index"
+          :ref="(el: unknown) => setVideoRef(el as StorySlideRef | null, index)"
           :slide-number="index + 1"
           :texts="texts"
           :is-android="isAndroid"
-          :h265-source="slide.h265"
-          :webm-source="slide.webm"
-          :autoplay="!videoPaused.value"
+          :h265-source="story.h265"
+          :webm-source="story.webm"
+          :autoplay="!videoPaused"
           :muted="videoIsMuted"
-          :set-video-ref="el => setVideoRef(el, index)"
           @ended="onNext"
           @timeupdate="onTimeUpdate"
           @loadedmetadata="onLoadedMetadata"
@@ -39,239 +39,265 @@
       </div>
     </div>
 
-    <a @click="closeStory"
-      ><div class="close_button"><CloseButton /></div
-    ></a>
+    <a @click="closeStory">
+      <div class="close_button"><CloseButton /></div>
+    </a>
 
     <div class="pause_button">
-      <desktopPausePlayButton :playState="videoPaused" @play="onPlay" @pause="onPause" />
+      <DesktopPausePlayButton
+        :paused="videoPaused"
+        @toggle="(val) => (val ? onPause() : onPlay())"
+      />
     </div>
 
     <div id="story_controls" class="story_controls">
-      <div @click="handlePrev">
-        <mobileControlArea position="left" />
-      </div>
-      <div @click="handleNext">
-        <mobileControlArea position="right" />
-      </div>
-      <div @click="onPrev"><desktopControlButton position="left" /></div>
-      <div @click="onNext"><desktopControlButton position="right" /></div>
+      <MobileControlArea position="left" @click="handlePrev" />
+      <MobileControlArea position="right" @click="handleNext" />
+      <DesktopControlButton position="left" @click="onPrev" />
+      <DesktopControlButton position="right" @click="onNext" />
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { onLongPress } from '@vueuse/core'
+<script setup lang="ts">
+import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue';
+import { onLongPress } from '@vueuse/core';
+import type { Story, LocaleTexts, VideoElement, StorySlideRef } from '@/types';
 
-import StoriesTopBar from '@components/stories/ui/storiesTopBar.vue'
-import mobileControlArea from '@components/stories/ui/mobileControlArea.vue'
-import desktopControlButton from '@components/stories/ui/desktopControlButton.vue'
-import desktopPausePlayButton from '@components/stories/ui/desktopPausePlayButton.vue'
-import CloseButton from '@components/stories/ui/closeButton.vue'
-import StorySlide from '@components/stories/StorySlide.vue'
+import {
+  StoriesTopBar,
+  MobileControlArea,
+  DesktopControlButton,
+  DesktopPausePlayButton,
+  CloseButton,
+} from '@components/stories/ui';
+import StorySlide from '@components/stories/StorySlide.vue';
 
-import gsap from 'gsap'
-import { TextPlugin } from 'gsap/TextPlugin'
+import gsap from 'gsap';
+import { TextPlugin } from 'gsap/TextPlugin';
 
-import { useQueryParams } from '@/composables/useQueryParams'
-import { useLocale } from '@/composables/useLocale'
+import { useQueryParams } from '@/composables/useQueryParams';
+import { useLocale } from '@/composables/useLocale';
 
-import story_icon from '@/assets/images/icons/story_icon.webp'
-import story_11_webm from '@/assets/videos/stories/en/story_11.webm'
-import story_11_h265 from '@/assets/videos/stories/en/story_11-h265.mp4'
-import story_12_webm from '@/assets/videos/stories/en/story_12.webm'
-import story_12_h265 from '@/assets/videos/stories/en/story_12-h265.mp4'
-import story_13_webm from '@/assets/videos/stories/en/story_13.webm'
-import story_13_h265 from '@/assets/videos/stories/en/story_13-h265.mp4'
+import story_icon from '@/assets/images/icons/story_icon.webp';
+import story_1_webm from '@/assets/videos/stories/en/story_1.webm';
+import story_1_h265 from '@/assets/videos/stories/en/story_1-h265.mp4';
+import story_2_webm from '@/assets/videos/stories/en/story_2.webm';
+import story_2_h265 from '@/assets/videos/stories/en/story_2-h265.mp4';
+import story_3_webm from '@/assets/videos/stories/en/story_3.webm';
+import story_3_h265 from '@/assets/videos/stories/en/story_3-h265.mp4';
 
-gsap.registerPlugin(TextPlugin)
+gsap.registerPlugin(TextPlugin);
 
 let tl = gsap.timeline({
   defaults: { duration: 0.7, ease: 'power1.inOut' },
   paused: true,
-})
+});
 
-const isAndroid = computed(() => /android/i.test(navigator.userAgent))
+const isAndroid = computed(() => /android/i.test(navigator.userAgent));
 
 const currentSlideText = computed(() => {
-  const keys = ['top_text11', 'top_text12', 'top_text13', 'top_text14']
-  return texts.value[keys[videoCurrentIndex.value]] ?? texts.value.top_text11
-})
+  const keys: (keyof LocaleTexts)[] = [
+    'top_text1',
+    'top_text2',
+    'top_text3',
+    'top_text4',
+  ];
+  const key = keys[videoCurrentIndex.value];
+  return key ? texts.value[key] : texts.value.top_text1;
+});
 
-const videoCurrentIndex = ref(0)
-const videoProgress = ref(0)
-const videoPaused = ref(false)
-const videoIsMuted = ref(true)
-const videoWasLongPress = ref(false)
-const videoRefs = ref([])
-const playerRef = ref(null)
+const videoCurrentIndex = ref<number>(0);
+const videoProgress = ref<number>(0);
+const videoPaused = ref<boolean>(false);
+const videoIsMuted = ref<boolean>(true);
+const videoWasLongPress = ref<boolean>(false);
+const videoRefs = ref<VideoElement[]>([]);
+const playerRef = ref<HTMLElement | null>(null);
 
 const {
   userLanguage: qpLang,
-  currency: qpCurrency,
   endLink: qpEnd,
   gameLink: qpGame,
-} = useQueryParams()
-const { texts: textsRef } = useLocale(ref(qpLang))
-const texts = textsRef
-const currency = ref(qpCurrency)
-const end_link = ref(qpEnd)
-const game_link = ref(qpGame)
+} = useQueryParams();
+const { texts } = useLocale(ref(qpLang));
+const end_link = ref(qpEnd);
+const game_link = ref(qpGame);
 
-const slides = [
-  { h265: story_11_h265, webm: story_11_webm },
-  { h265: story_12_h265, webm: story_12_webm },
-  { h265: story_13_h265, webm: story_13_webm },
-  { h265: story_13_h265, webm: story_13_webm },
-]
+const stories: Story[] = [
+  { h265: story_1_h265, webm: story_1_webm },
+  { h265: story_2_h265, webm: story_2_webm },
+  { h265: story_3_h265, webm: story_3_webm },
+  { h265: story_3_h265, webm: story_3_webm },
+];
 
-const deskKeys = ['desk1', 'desk2', 'desk3', 'desk4']
+const numberOfSegments = computed<number>(() => stories.length);
 
-const buildSlideTimeline = index => {
-  const n = index + 1
-  const headerSel = `#header${n}`
-  const deskSel = `#desk${n}`
-  const deskText = texts.value[deskKeys[index]]
+const deskKeys: (keyof LocaleTexts)[] = ['desk1', 'desk2', 'desk3', 'desk4'];
 
-  const seg = gsap.timeline()
-  gsap.set([headerSel, deskSel], { opacity: 0, marginTop: '7dvh' })
-  seg.to(headerSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 })
-  seg.to(deskSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 }, '<0.1')
+const buildSlideTimeline = (index: number) => {
+  const slideNum = index + 1;
+  const headerSel = `#header${slideNum}`;
+  const deskSel = `#desk${slideNum}`;
+  const deskKey = deskKeys[index];
+  const deskText = deskKey ? texts.value[deskKey] : '';
+
+  const seg = gsap.timeline();
+  gsap.set([headerSel, deskSel], { opacity: 0, marginTop: '7dvh' });
+  seg.to(headerSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 });
+  seg.to(deskSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 }, '<0.1');
   seg.add(() => {
-    const el = document.querySelector(deskSel)
-    if (el) el.textContent = ''
-  })
+    const el = document.querySelector(deskSel);
+    if (el) el.textContent = '';
+  });
   seg.to(deskSel, {
     duration: 1,
     text: { value: deskText, padSpace: false, delimiter: '' },
     ease: 'none',
-  })
-  return seg
-}
+  });
+  return seg;
+};
 
-const rebuildTimelineFor = async index => {
-  await nextTick()
-  tl.kill()
+const rebuildTimelineFor = async (index: number) => {
+  await nextTick();
+  tl.kill();
   tl = gsap.timeline({
     defaults: { duration: 0.7, ease: 'power1.inOut' },
     paused: true,
-  })
-  tl.add(buildSlideTimeline(index), 0)
-  if (!videoPaused.value) tl.restart(true, false)
-}
+  });
+  tl.add(buildSlideTimeline(index), 0);
+  if (!videoPaused.value) tl.restart(true, false);
+};
 
 const closeStory = () => {
-  window.parent.postMessage('close', '*')
+  window.parent.postMessage('close', '*');
   if (end_link.value)
-    setTimeout(() => window.parent.postMessage('go_to_link:' + end_link.value, '*'), 300)
-}
+    setTimeout(
+      () => window.parent.postMessage('go_to_link:' + end_link.value, '*'),
+      300
+    );
+};
 
 const goToGame = () => {
-  window.parent.postMessage('start_game_btn', '*')
+  window.parent.postMessage('start_game_btn', '*');
   if (game_link.value)
-    setTimeout(() => window.parent.postMessage('go_to_link:' + game_link.value, '*'), 300)
-}
+    setTimeout(
+      () => window.parent.postMessage('go_to_link:' + game_link.value, '*'),
+      300
+    );
+};
 
 // Event handler for gift button - sends 'get_gift' message to parent window
 // This function should be called when user clicks on gift/prize related buttons
 const getGift = () => {
-  window.parent.postMessage('get_gift', '*')
-}
+  window.parent.postMessage('get_gift', '*');
+  if (end_link.value)
+    setTimeout(
+      () => window.parent.postMessage('go_to_link:' + end_link.value, '*'),
+      300
+    );
+};
 
 // Event handler for watch again button - sends 'watch_again' message to parent window
 // This function should be called when user wants to replay the stories
-const watchAgain = () => {
-  window.parent.postMessage('watch_again', '*')
-}
+// const watchAgain = () => {
+//   window.parent.postMessage('watch_again', '*');
+// };
 
-const setVideoRef = (el, index) => {
-  if (el instanceof HTMLVideoElement) {
-    videoRefs.value[index] = el
+const setVideoRef = (el: StorySlideRef | null, index: number) => {
+  if (el && el.videoRef) {
+    videoRefs.value[index] = el.videoRef as VideoElement;
   }
-}
+};
 
 const onPlay = () => {
-  videoPaused.value = false
-  const currentVideo = videoRefs.value[videoCurrentIndex.value]
-  if (currentVideo) {
-    currentVideo.muted = videoIsMuted.value
-    currentVideo.play()
+  if (!videoPaused.value) return;
+  videoPaused.value = false;
+  const video = videoRefs.value[videoCurrentIndex.value];
+  if (video) {
+    video.muted = videoIsMuted.value;
+    video.play().catch(() => {}); // to prevent the play() promise from breaking the state
   }
-  tl.play()
-}
+  tl.play();
+};
 
 const onPause = () => {
-  videoPaused.value = true
-  const currentVideo = videoRefs.value[videoCurrentIndex.value]
-  if (currentVideo) currentVideo.pause()
-  tl.pause()
-  window.parent.postMessage('click_pause', '*')
-}
+  if (videoPaused.value) return;
+  videoPaused.value = true;
+  const video = videoRefs.value[videoCurrentIndex.value];
+  if (video) video.pause();
+  tl.pause();
+  window.parent.postMessage('click_pause', '*');
+};
 
 const onNext = () => {
-  if (videoCurrentIndex.value < slides.length - 1) {
-    videoCurrentIndex.value++
-    videoProgress.value = 0
-    window.parent.postMessage('click_forward', '*')
+  if (videoCurrentIndex.value < stories.length - 1) {
+    videoCurrentIndex.value++;
+    videoProgress.value = 0;
+    window.parent.postMessage('click_forward', '*');
   }
-}
+};
 
 const onPrev = () => {
   if (videoCurrentIndex.value > 0) {
-    videoCurrentIndex.value--
-    videoProgress.value = 0
-    window.parent.postMessage('click_backward', '*')
+    videoCurrentIndex.value--;
+    videoProgress.value = 0;
+    window.parent.postMessage('click_backward', '*');
   }
-}
+};
 
 const onLoadedMetadata = () => {
-  videoProgress.value = 0
-}
+  videoProgress.value = 0;
+};
 
-const onTimeUpdate = e => {
+const onTimeUpdate = (e: Event) => {
   if (!videoPaused.value) {
-    const video = e.target
-    videoProgress.value = (video.currentTime / video.duration) * 100
+    const video = e.target as HTMLVideoElement;
+    if (video && video.duration) {
+      videoProgress.value = (video.currentTime / video.duration) * 100;
+    }
   }
-}
+};
 
 const handleLongPress = () => {
-  onPause()
-  videoWasLongPress.value = true
-}
+  onPause();
+  videoWasLongPress.value = true;
+};
 
 const handlePrev = () => {
-  if (videoWasLongPress.value) return (videoWasLongPress.value = false)
-  onPrev()
-}
+  if (videoWasLongPress.value) return (videoWasLongPress.value = false);
+  onPrev();
+};
 
 const handleNext = () => {
-  if (videoWasLongPress.value) return (videoWasLongPress.value = false)
-  onNext()
-}
+  if (videoWasLongPress.value) return (videoWasLongPress.value = false);
+  onNext();
+};
 
 onMounted(async () => {
-  await rebuildTimelineFor(0)
-  videoPaused.value = false
-  tl.play()
+  await rebuildTimelineFor(0);
+  videoPaused.value = false;
+  tl.play();
 
   onLongPress(playerRef, handleLongPress, {
     delay: 500,
     modifiers: { prevent: true },
     onMouseUp: () => {
-      if (videoPaused.value) onPlay()
+      if (videoWasLongPress.value && videoPaused.value) {
+        videoWasLongPress.value = false;
+        onPlay();
+      }
     },
-  })
-})
+  });
+});
 
 onUnmounted(() => {
-  tl.kill()
-})
+  tl.kill();
+});
 
-watch(videoCurrentIndex, i => {
-  rebuildTimelineFor(i)
-})
+watch(videoCurrentIndex, (i: number) => {
+  rebuildTimelineFor(i);
+});
 </script>
 
 <style lang="scss" scoped>

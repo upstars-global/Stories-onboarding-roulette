@@ -4,8 +4,8 @@
   </div>
 </template>
 
-<script setup>
-import Stories from '@components/stories/Stories.vue'
+<script setup lang="ts">
+import Stories from '@components/stories/Stories.vue';
 </script>
 
 <style lang="scss"></style>
