@@ -15,5 +15,8 @@
   "desk3": "Once all bets are placed, the dealer spins the wheel. Just relax and watch the ball land on a number",
   "desk4": "If the ball lands on your number, colour, or section, you win! Congratulations! 🎉",
 
-  "start_game": "Start game"
+  "start_game": "Start game",
+  "cta_button_text": "Try your luck",
+  "help_text": "Need more info? Check out the",
+  "help_link": "Detailed Roulette Instructions"
 }

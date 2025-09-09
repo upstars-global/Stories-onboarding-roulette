@@ -67,7 +67,7 @@
     </style>
   </head>
   <body class="body">
-    <div id="app" class="container theme-dark"></div>
+    <div id="app" class="container"></div>
     <div class="fe-preloader">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -195,11 +195,11 @@
     <script type="module" src="/src/main.ts"></script>
     <script>
       window.onload = function () {
-        const preloader = document.querySelector('.fe-preloader')
+        const preloader = document.querySelector('.fe-preloader');
         if (preloader) {
-          preloader.style.display = 'none'
+          preloader.style.display = 'none';
         }
-      }
+      };
     </script>
   </body>
 </html>

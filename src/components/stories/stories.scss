@@ -23,6 +23,12 @@
   height: 100%;
   overflow: hidden;
   transform-origin: center center;
+
+  @include media(M) {
+    transform-origin: 50% 50% -512px;
+    transform: translate3d(0px, 0px, -512px) rotateX(0deg) rotateY(0deg);
+    transform-style: preserve-3d;
+  }
 }
 
 .story_controls {
@@ -318,6 +324,10 @@
   @include media(M) {
     top: -16dvh;
     height: 117%;
+  }
+
+  .custom-layout & {
+    top: to-dvh(-140px);
   }
 }
 

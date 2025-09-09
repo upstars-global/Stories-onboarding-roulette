@@ -8,4 +8,13 @@
 import Stories from '@components/stories/Stories.vue';
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '@scss';
+
+.app-container {
+  @include media(M) {
+    perspective: 1200px;
+    height: 100vh;
+  }
+}
+</style>

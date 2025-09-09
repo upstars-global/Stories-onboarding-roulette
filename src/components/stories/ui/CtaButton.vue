@@ -9,6 +9,10 @@ defineProps({
   buttonText: {
     type: String,
   },
+  customPosition: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 
@@ -54,5 +58,15 @@ defineProps({
     var(--color-primary-3),
     var(--color-primary-3) 100%
   );
+}
+
+.custom-layout .call-to-action-button {
+  bottom: to-percent-y(70px);
+}
+
+@supports (height: 100dvh) {
+  .custom-layout .call-to-action-button {
+    bottom: to-dvh(70px);
+  }
 }
 </style>

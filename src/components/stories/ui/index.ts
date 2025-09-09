@@ -6,3 +6,4 @@ export { default as DesktopPausePlayButton } from './DesktopPausePlayButton.vue'
 export { default as MuteButton } from './MuteButton.vue';
 export { default as MobileControlArea } from './MobileControlArea.vue';
 export { default as StoriesTopBar } from './StoriesTopBar.vue';
+export { default as HelpText } from './HelpText.vue';

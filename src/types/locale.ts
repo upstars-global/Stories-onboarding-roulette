@@ -15,6 +15,9 @@ export interface LocaleTexts {
   desk3: string;
   desk4: string;
   start_game: string;
+  cta_button_text: string;
+  help_text: string;
+  help_link: string;
 }
 
 export type SupportedLanguage = 'en' | 'fr' | 'de' | 'it' | 'es' | 'pt';

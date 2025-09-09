@@ -16,7 +16,11 @@
       </div>
     </div>
 
-    <div id="text_container_stories" class="text_container">
+    <div
+      id="text_container_stories"
+      class="text_container"
+      :class="{ 'custom-layout': videoCurrentIndex === 3 }"
+    >
       <template v-for="(story, index) in stories" :key="`story-${index}`">
         <StorySlide
           v-if="videoCurrentIndex === index"
@@ -34,7 +38,18 @@
         />
       </template>
 
-      <CtaButton :button-text="texts.start_game" @click="goToGame" />
+      <CtaButton
+        :button-text="
+          videoCurrentIndex === 3 ? texts.cta_button_text : texts.start_game
+        "
+        @click="goToGame"
+      />
+
+      <HelpText
+        v-if="videoCurrentIndex === 3"
+        :help-text="texts.help_text"
+        :help-link="texts.help_link"
+      />
     </div>
 
     <a @click="closeStory">
@@ -90,6 +105,7 @@ import {
   MuteButton,
   CtaButton,
   CloseButton,
+  HelpText,
 } from '@components/stories/ui';
 import StorySlide from '@components/stories/StorySlide.vue';
 
@@ -213,14 +229,14 @@ const goToGame = () => {
 
 // Event handler for gift button - sends 'get_gift' message to parent window
 // This function should be called when user clicks on gift/prize related buttons
-const getGift = () => {
-  window.parent.postMessage('get_gift', '*');
-  if (end_link.value)
-    setTimeout(
-      () => window.parent.postMessage('go_to_link:' + end_link.value, '*'),
-      300
-    );
-};
+// const getGift = () => {
+//   window.parent.postMessage('get_gift', '*');
+//   if (end_link.value)
+//     setTimeout(
+//       () => window.parent.postMessage('go_to_link:' + end_link.value, '*'),
+//       300
+//     );
+// };
 
 // Event handler for watch again button - sends 'watch_again' message to parent window
 // This function should be called when user wants to replay the stories

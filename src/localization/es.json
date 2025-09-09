@@ -15,5 +15,8 @@
   "desk3": "Cuando todas las apuestas están hechas, el crupier hace girar la rueda. Solo relájate y mira dónde cae la bola",
   "desk4": "Si la bola cae en tu número, color o sección, ¡ganas! ¡Felicidades! 🎉",
 
-  "start_game": "Start game"
+  "start_game": "Start game",
+  "cta_button_text": "Prueba tu suerte",
+  "help_text": "¿Necesitas más información? Consulta las",
+  "help_link": "Instrucciones Detalladas de Ruleta"
 }
