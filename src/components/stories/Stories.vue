@@ -34,14 +34,16 @@
         />
       </template>
 
-      <div id="start_game_btn" class="bottom_btn" @click="goToGame">
-        {{ texts.start_game }}
-      </div>
+      <CtaButton :button-text="texts.start_game" @click="goToGame" />
     </div>
 
     <a @click="closeStory">
       <div class="close_button"><CloseButton /></div>
     </a>
+
+    <div class="mute_button">
+      <MuteButton :muted="videoIsMuted" @toggle="onToggleMute" />
+    </div>
 
     <div class="pause_button">
       <DesktopPausePlayButton
@@ -51,8 +53,16 @@
     </div>
 
     <div id="story_controls" class="story_controls">
-      <MobileControlArea position="left" @click="handlePrev" />
-      <MobileControlArea position="right" @click="handleNext" />
+      <MobileControlArea
+        ref="leftControlRef"
+        position="left"
+        @click="handlePrev"
+      />
+      <MobileControlArea
+        ref="rightControlRef"
+        position="right"
+        @click="handleNext"
+      />
       <DesktopControlButton position="left" @click="onPrev" />
       <DesktopControlButton position="right" @click="onNext" />
     </div>
@@ -60,7 +70,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue';
+import {
+  ref,
+  watch,
+  computed,
+  onMounted,
+  onUnmounted,
+  nextTick,
+  type Ref,
+} from 'vue';
 import { onLongPress } from '@vueuse/core';
 import type { Story, LocaleTexts, VideoElement, StorySlideRef } from '@/types';
 
@@ -69,6 +87,8 @@ import {
   MobileControlArea,
   DesktopControlButton,
   DesktopPausePlayButton,
+  MuteButton,
+  CtaButton,
   CloseButton,
 } from '@components/stories/ui';
 import StorySlide from '@components/stories/StorySlide.vue';
@@ -114,6 +134,10 @@ const videoIsMuted = ref<boolean>(true);
 const videoWasLongPress = ref<boolean>(false);
 const videoRefs = ref<VideoElement[]>([]);
 const playerRef = ref<HTMLElement | null>(null);
+
+// Control refs
+const leftControlRef = ref<HTMLElement | null>(null);
+const rightControlRef = ref<HTMLElement | null>(null);
 
 const {
   userLanguage: qpLang,
@@ -230,6 +254,15 @@ const onPause = () => {
   window.parent.postMessage('click_pause', '*');
 };
 
+const onToggleMute = (muted: boolean) => {
+  videoIsMuted.value = muted;
+  const video = videoRefs.value[videoCurrentIndex.value];
+  if (video) {
+    video.muted = muted;
+  }
+  window.parent.postMessage(muted ? 'mute_video' : 'unmute_video', '*');
+};
+
 const onNext = () => {
   if (videoCurrentIndex.value < stories.length - 1) {
     videoCurrentIndex.value++;
@@ -279,16 +312,20 @@ onMounted(async () => {
   videoPaused.value = false;
   tl.play();
 
-  onLongPress(playerRef, handleLongPress, {
-    delay: 500,
-    modifiers: { prevent: true },
-    onMouseUp: () => {
-      if (videoWasLongPress.value && videoPaused.value) {
-        videoWasLongPress.value = false;
-        onPlay();
-      }
-    },
-  });
+  const setupLongPress = (ref: Ref<HTMLElement | null>) => {
+    onLongPress(ref, handleLongPress, {
+      delay: 500,
+      modifiers: { prevent: true },
+      onMouseUp: () => {
+        if (videoWasLongPress.value && videoPaused.value) {
+          videoWasLongPress.value = false;
+          onPlay();
+        }
+      },
+    });
+  };
+
+  [leftControlRef, rightControlRef].forEach(setupLongPress);
 });
 
 onUnmounted(() => {

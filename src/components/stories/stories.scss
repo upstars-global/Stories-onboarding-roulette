@@ -90,7 +90,7 @@
   left: to-percent-x(16px);
   width: to-percent-x(328px);
   height: 87%;
-  height: to-percent-y(564px);
+  // height: to-percent-y(564px);
   position: absolute;
   @include media(M) {
     top: 16%;
@@ -98,8 +98,8 @@
 }
 
 .h1 {
-  margin-bottom: to-vh(10px);
-  font-size: to-vh(28px);
+  margin-bottom: to-dvh(10px);
+  font-size: to-dvh(28px);
   color: var(--color-text-alt);
   text-align: left;
   font-family: $font-family-primary;
@@ -113,7 +113,7 @@
 }
 
 .h2 {
-  font-size: to-vh(14px);
+  font-size: to-dvh(14px);
   color: var(--color-text-body);
   text-align: left;
   font-family: $font-family-primary;
@@ -122,7 +122,7 @@
   position: relative;
   line-height: $line-height-relaxed;
   max-width: 100%;
-  margin-top: to-vh(10px);
+  margin-top: to-dvh(10px);
   word-break: break-word;
   @media (max-aspect-ratio: 1/2) {
     font-size: 1.8dvh;
@@ -159,14 +159,31 @@
 .close_button {
   position: fixed;
   left: 0;
-  margin-left: 87%;
+  margin-left: to-percent-x(320px);
   transform: unset;
-  top: 5dvh;
+  top: to-dvh(38px);
   z-index: 9999;
   cursor: pointer;
   @include media(M) {
     left: 50%;
     transform: translate(23dvh);
+    margin-left: 0;
+    top: 11dvh;
+  }
+}
+
+.mute_button {
+  position: fixed;
+  left: 0;
+  margin-left: to-percent-x(312px);
+  transform: unset;
+  top: to-dvh(38px);
+  z-index: 9999;
+  cursor: pointer;
+  @include media(M) {
+    left: 50%;
+    transform: translate(23dvh);
+    transform: translate(21.3dvh);
     margin-left: 0;
     top: 11dvh;
   }
@@ -180,7 +197,9 @@
   @include media(M) {
     left: 50%;
     transform: translate(18.5dvh);
+    transform: translate(13.5dvh);
     top: 11.1dvh;
+    top: 11dvh;
   }
 }
 
@@ -189,7 +208,7 @@
   max-width: 83%;
   display: flex;
   justify-content: left;
-  margin-top: to-vh(8px);
+  margin-top: to-dvh(8px);
   margin-left: to-percent-x(16px);
   z-index: 10;
   align-items: center;
@@ -207,8 +226,8 @@
   top: 0;
   left: 0;
   margin-left: 0;
-  width: to-vh(44px);
-  height: to-vh(44px);
+  width: to-dvh(44px);
+  height: to-dvh(44px);
   aspect-ratio: 1/1;
   z-index: 5;
 }
@@ -216,12 +235,12 @@
 .story_icon_top_text {
   position: relative;
   color: var(--color-text-alt);
-  font-size: to-vh(14px);
+  font-size: to-dvh(14px);
   font-family: $font-family-primary, sans-serif;
   font-style: normal;
   font-weight: $font-weight-bold;
   top: 0;
-  margin-left: to-vh(16px);
+  margin-left: to-dvh(16px);
   line-height: $line-height-loose;
 
   @include media(M) {
@@ -238,7 +257,7 @@
 }
 
 .icon_bottom_text {
-  font-size: to-vh(12px);
+  font-size: to-dvh(12px);
   font-family: $font-family-primary, sans-serif;
   font-style: normal;
   font-weight: $font-weight-normal;
@@ -247,13 +266,13 @@
   div {
     display: flex;
     align-items: center;
-    gap: to-vh(4px);
+    gap: to-dvh(4px);
   }
 
   ::v-deep(span) {
     display: inline-block;
     font-weight: $font-weight-normal;
-    font-size: to-vh(9px);
+    font-size: to-dvh(9px);
     line-height: $line-height-extra-loose;
     letter-spacing: $letter-spacing-wider;
   }
@@ -265,14 +284,14 @@
   left: 50%;
   transform: translate(-50%);
   width: to-percent-x(328px);
-  height: to-vh(40px);
+  height: to-dvh(40px);
   z-index: 9999;
   justify-content: center;
   align-items: center;
-  border-radius: to-vh(19px);
+  border-radius: to-dvh(19px);
   background-color: var(--color-primary-1);
   color: var(--color-on-light-back);
-  font-size: to-vh(14px);
+  font-size: to-dvh(14px);
   font-family: $font-family-primary;
   font-style: normal;
   font-weight: $font-weight-bold;
@@ -283,17 +302,18 @@
 
 @supports (height: 100dvh) {
   .bottom_btn {
-    bottom: to-vh(16px);
+    bottom: to-dvh(16px);
   }
 }
 
 .bg_video {
   position: absolute;
-  top: -13dvh;
+  top: to-dvh(-88px);
   left: 50%;
   transform: translate(-50%);
   width: auto;
   height: 116%;
+  height: 100dvh;
   z-index: 0;
   @include media(M) {
     top: -16dvh;

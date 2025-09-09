@@ -14,10 +14,10 @@ const close_btn: string = '/src/assets/images/icons/close.svg';
 .close-button {
   position: absolute;
   display: flex;
-  top: to-vh(3px);
+  // top: to-vh(3px);
   left: 0;
-  width: to-vh(24px);
-  height: to-vh(24px);
+  width: to-dvh(24px);
+  height: to-dvh(24px);
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -25,8 +25,8 @@ const close_btn: string = '/src/assets/images/icons/close.svg';
   @include media(M) {
     top: 0;
     left: 0;
-    height: 3vh;
-    width: 3vh;
+    height: 3dvh;
+    width: 3dvh;
   }
 }
 

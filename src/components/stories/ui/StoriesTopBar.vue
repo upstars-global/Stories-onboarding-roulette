@@ -44,7 +44,7 @@ const segmentProgress = (index: number): string => {
   top: 0;
   left: 0;
   width: 100%;
-  height: 3vh;
+  height: 3dvh;
   position: relative;
   display: flex;
   justify-content: center;
@@ -62,26 +62,26 @@ const segmentProgress = (index: number): string => {
   position: relative;
   width: to-percent-x(328px);
   @include media(M) {
-    width: 52vh;
+    width: 52dvh;
   }
 }
 
 .stories-progress-bar {
-  margin-top: to-vh(16px);
+  margin-top: to-dvh(16px);
   position: relative;
   top: 0;
   width: 100%;
   display: flex;
   z-index: 10;
   @include media(M) {
-    width: 52vh;
+    width: 52dvh;
   }
 }
 
 .progress-segment {
   position: relative;
   flex: 1;
-  margin-right: to-vh(4px);
+  margin-right: to-dvh(4px);
 }
 
 .progress-line-bg {
@@ -89,18 +89,18 @@ const segmentProgress = (index: number): string => {
   top: 0;
   left: 0;
   width: 100%;
-  height: to-vh(4px);
+  height: to-dvh(4px);
   background-color: var(--color-progress-empty);
-  border-radius: to-vh(4px);
+  border-radius: to-dvh(4px);
 }
 
 .progress-line {
   position: absolute;
   top: 0;
   left: 0;
-  height: to-vh(4px);
+  height: to-dvh(4px);
   background-color: var(--color-progress-filled);
-  border-radius: to-vh(4px);
+  border-radius: to-dvh(4px);
   transition: width 0.05s linear;
 }
 
@@ -109,7 +109,7 @@ const segmentProgress = (index: number): string => {
   width: 100%;
   margin-top: 0.75rem;
   @include media(M) {
-    width: 52vh;
+    width: 52dvh;
   }
 }
 
