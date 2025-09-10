@@ -10,11 +10,4 @@ import Stories from '@components/stories/Stories.vue';
 
 <style lang="scss">
 @import '@scss';
-
-.app-container {
-  @include media(M) {
-    perspective: 1200px;
-    height: 100vh;
-  }
-}
 </style>
