@@ -122,6 +122,8 @@ import story_2_webm from '@/assets/videos/stories/en/story_2.webm';
 import story_2_h265 from '@/assets/videos/stories/en/story_2-h265.mp4';
 import story_3_webm from '@/assets/videos/stories/en/story_3.webm';
 import story_3_h265 from '@/assets/videos/stories/en/story_3-h265.mp4';
+import story_4_webm from '@/assets/videos/stories/en/story_4.webm';
+import story_4_h265 from '@/assets/videos/stories/en/story_4-h265.mp4';
 
 gsap.registerPlugin(TextPlugin);
 
@@ -168,7 +170,7 @@ const stories: Story[] = [
   { h265: story_1_h265, webm: story_1_webm },
   { h265: story_2_h265, webm: story_2_webm },
   { h265: story_3_h265, webm: story_3_webm },
-  { h265: story_3_h265, webm: story_3_webm },
+  { h265: story_4_h265, webm: story_4_webm },
 ];
 
 const numberOfSegments = computed<number>(() => stories.length);

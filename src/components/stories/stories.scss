@@ -326,10 +326,10 @@
   }
 
   .custom-layout & {
-    top: -22.5dvh;
+    top: -13.5dvh;
 
     @include media(M) {
-      top: -17.5dvh;
+      top: -11.5dvh;
     }
   }
 }
