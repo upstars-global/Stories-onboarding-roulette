@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-const close_btn: string = '/src/assets/images/icons/close.svg';
+import close_btn from '@/assets/images/icons/close.svg';
 </script>
 
 <style lang="scss" scoped>
