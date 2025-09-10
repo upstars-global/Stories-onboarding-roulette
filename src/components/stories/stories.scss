@@ -314,20 +314,23 @@
 
 .bg_video {
   position: absolute;
-  top: to-dvh(-88px);
+  top: to-dvh(-74px);
   left: 50%;
   transform: translate(-50%);
-  width: auto;
-  height: 116%;
+  width: 100dvw;
   height: 100dvh;
   z-index: 0;
   @include media(M) {
-    top: -16dvh;
-    height: 117%;
+    top: -9dvh;
+    height: 105%;
   }
 
   .custom-layout & {
-    top: to-dvh(-140px);
+    top: -20.5dvh;
+
+    @include media(M) {
+      top: -17.5dvh;
+    }
   }
 }
 
