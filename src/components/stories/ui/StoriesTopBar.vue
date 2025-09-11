@@ -101,7 +101,8 @@ const segmentProgress = (index: number): string => {
   height: to-dvh(4px);
   background-color: var(--color-progress-filled);
   border-radius: to-dvh(4px);
-  transition: width 0.05s linear;
+  transition: none;
+  will-change: width;
 }
 
 .profile-row {

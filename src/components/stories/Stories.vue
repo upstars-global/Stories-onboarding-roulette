@@ -1,9 +1,9 @@
 <template>
-  <div ref="playerRef" class="story-container">
+  <div class="story-container">
     <StoriesTopBar
-      :progress="videoProgress"
+      :progress="progress"
       :number-of-segments="numberOfSegments"
-      :current-index="videoCurrentIndex"
+      :current-index="currentIndex"
     />
     <div class="info_row">
       <img :src="story_icon" class="story_icon" alt="" />
@@ -19,19 +19,19 @@
     <div
       id="text_container_stories"
       class="text_container"
-      :class="{ 'custom-layout': videoCurrentIndex === 3 }"
+      :class="{ 'custom-layout': currentIndex === 3 }"
     >
       <template v-for="(story, index) in stories" :key="`story-${index}`">
         <StorySlide
-          v-if="videoCurrentIndex === index"
+          v-if="currentIndex === index"
           :ref="(el: unknown) => setVideoRef(el as StorySlideRef | null, index)"
           :slide-number="index + 1"
           :texts="texts"
           :is-android="isAndroid"
           :h265-source="story.h265"
           :webm-source="story.webm"
-          :autoplay="!videoPaused"
-          :muted="videoIsMuted"
+          :autoplay="!isPaused"
+          :muted="isMuted"
           @ended="onNext"
           @timeupdate="onTimeUpdate"
           @loadedmetadata="onLoadedMetadata"
@@ -40,13 +40,13 @@
 
       <CtaButton
         :button-text="
-          videoCurrentIndex === 3 ? texts.cta_button_text : texts.start_game
+          currentIndex === 3 ? texts.cta_button_text : texts.start_game
         "
         @click="goToGame"
       />
 
       <HelpText
-        v-if="videoCurrentIndex === 3"
+        v-if="currentIndex === 3"
         :help-text="texts.help_text"
         :help-link="texts.help_link"
       />
@@ -57,12 +57,12 @@
     </a>
 
     <div class="mute_button">
-      <MuteButton :muted="videoIsMuted" @toggle="onToggleMute" />
+      <MuteButton :muted="isMuted" @toggle="onToggleMute" />
     </div>
 
     <div class="pause_button">
       <DesktopPausePlayButton
-        :paused="videoPaused"
+        :paused="isPaused"
         @toggle="(val) => (val ? onPause() : onPlay())"
       />
     </div>
@@ -141,17 +141,89 @@ const currentSlideText = computed(() => {
     'top_text3',
     'top_text4',
   ];
-  const key = keys[videoCurrentIndex.value];
+  const key = keys[currentIndex.value];
   return key ? texts.value[key] : texts.value.top_text1;
 });
 
-const videoCurrentIndex = ref<number>(0);
-const videoProgress = ref<number>(0);
-const videoPaused = ref<boolean>(false);
-const videoIsMuted = ref<boolean>(true);
-const videoWasLongPress = ref<boolean>(false);
+const currentIndex = ref<number>(0);
+const progress = ref<number>(0);
+
+// === SMOOTH PROGRESS BAR IMPLEMENTATION ===
+// Instead of using rare 'timeupdate' events (4-5 times per second),
+// we use requestVideoFrameCallback to sync progress with actual video frames.
+// This provides smooth 24-60fps progress updates like in Instagram/TikTok.
+
+type RVFC = () => number;
+let rvfcCancel: (() => void) | null = null;
+let rafId: number | null = null;
+
+/**
+ * Stops all progress tracking loops (both rVFC and rAF)
+ * Called when pausing video or switching slides
+ */
+function stopProgressLoop() {
+  if (rvfcCancel) {
+    rvfcCancel();
+    rvfcCancel = null;
+  }
+  if (rafId != null) {
+    window.cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+}
+
+/**
+ * Starts smooth progress tracking for a specific video element
+ * Uses requestVideoFrameCallback for frame-perfect sync, falls back to rAF
+ * @param video - The video element to track progress for
+ */
+function startProgressLoopFor(video: HTMLVideoElement) {
+  stopProgressLoop();
+
+  // Check if browser supports requestVideoFrameCallback (Chrome 83+, Safari 15.4+)
+  const hasRVFC =
+    typeof (
+      video as HTMLVideoElement & {
+        requestVideoFrameCallback?: RVFC;
+      }
+    ).requestVideoFrameCallback === 'function';
+
+  if (hasRVFC) {
+    // Use requestVideoFrameCallback for perfect frame sync
+    const v = video as HTMLVideoElement & {
+      requestVideoFrameCallback: RVFC;
+      // eslint-disable-next-line no-unused-vars
+      cancelVideoFrameCallback?: (_: number) => void;
+    };
+    let handle = 0;
+    const tick = () => {
+      if (isPaused.value) return;
+      const d = video.duration || 0;
+      if (d > 0) progress.value = (video.currentTime / d) * 100;
+      handle = v.requestVideoFrameCallback(tick);
+    };
+    handle = v.requestVideoFrameCallback(tick);
+    rvfcCancel = () => {
+      v.cancelVideoFrameCallback?.(handle);
+    };
+  } else {
+    // Fallback: use requestAnimationFrame for 60fps updates
+    const tick = () => {
+      if (isPaused.value) {
+        rafId = null;
+        return;
+      }
+      const d = video.duration || 0;
+      if (d > 0) progress.value = (video.currentTime / d) * 100;
+      rafId = window.requestAnimationFrame(tick);
+    };
+    rafId = window.requestAnimationFrame(tick);
+  }
+}
+const isPaused = ref<boolean>(false);
+const isMuted = ref<boolean>(true);
+const wasLongPress = ref<boolean>(false);
 const videoRefs = ref<VideoElement[]>([]);
-const playerRef = ref<HTMLElement | null>(null);
 
 // Control refs
 const leftControlRef = ref<HTMLElement | null>(null);
@@ -208,7 +280,7 @@ const rebuildTimelineFor = async (index: number) => {
     paused: true,
   });
   tl.add(buildSlideTimeline(index), 0);
-  if (!videoPaused.value) tl.restart(true, false);
+  if (!isPaused.value) tl.restart(true, false);
 };
 
 const closeStory = () => {
@@ -253,28 +325,36 @@ const setVideoRef = (el: StorySlideRef | null, index: number) => {
 };
 
 const onPlay = () => {
-  if (!videoPaused.value) return;
-  videoPaused.value = false;
-  const video = videoRefs.value[videoCurrentIndex.value];
+  if (!isPaused.value) return;
+  isPaused.value = false;
+  const video = videoRefs.value[currentIndex.value];
   if (video) {
-    video.muted = videoIsMuted.value;
-    video.play().catch(() => {}); // to prevent the play() promise from breaking the state
+    video.muted = isMuted.value;
+    video
+      .play()
+      .then(() => {
+        // Start smooth progress tracking once video actually starts playing
+        startProgressLoopFor(video);
+      })
+      .catch(() => {});
   }
   tl.play();
 };
 
 const onPause = () => {
-  if (videoPaused.value) return;
-  videoPaused.value = true;
-  const video = videoRefs.value[videoCurrentIndex.value];
+  if (isPaused.value) return;
+  isPaused.value = true;
+  const video = videoRefs.value[currentIndex.value];
   if (video) video.pause();
+  // Stop progress tracking when pausing
+  stopProgressLoop();
   tl.pause();
   window.parent.postMessage('click_pause', '*');
 };
 
 const onToggleMute = (muted: boolean) => {
-  videoIsMuted.value = muted;
-  const video = videoRefs.value[videoCurrentIndex.value];
+  isMuted.value = muted;
+  const video = videoRefs.value[currentIndex.value];
   if (video) {
     video.muted = muted;
   }
@@ -282,61 +362,67 @@ const onToggleMute = (muted: boolean) => {
 };
 
 const onNext = () => {
-  if (videoCurrentIndex.value < stories.length - 1) {
-    videoCurrentIndex.value++;
-    videoProgress.value = 0;
+  if (currentIndex.value < stories.length - 1) {
+    currentIndex.value++;
+    progress.value = 0;
     window.parent.postMessage('click_forward', '*');
   }
 };
 
 const onPrev = () => {
-  if (videoCurrentIndex.value > 0) {
-    videoCurrentIndex.value--;
-    videoProgress.value = 0;
+  if (currentIndex.value > 0) {
+    currentIndex.value--;
+    progress.value = 0;
     window.parent.postMessage('click_backward', '*');
   }
 };
 
 const onLoadedMetadata = () => {
-  videoProgress.value = 0;
+  progress.value = 0;
+  const video = videoRefs.value[currentIndex.value];
+  // Start smooth progress tracking for newly loaded video
+  if (video && !isPaused.value) startProgressLoopFor(video);
 };
 
 const onTimeUpdate = (e: Event) => {
-  if (!videoPaused.value) {
+  if (!isPaused.value) {
     const video = e.target as HTMLVideoElement;
     if (video && video.duration) {
-      videoProgress.value = (video.currentTime / video.duration) * 100;
+      progress.value = (video.currentTime / video.duration) * 100;
     }
   }
 };
 
 const handleLongPress = () => {
   onPause();
-  videoWasLongPress.value = true;
+  wasLongPress.value = true;
 };
 
 const handlePrev = () => {
-  if (videoWasLongPress.value) return (videoWasLongPress.value = false);
+  if (wasLongPress.value) return (wasLongPress.value = false);
   onPrev();
 };
 
 const handleNext = () => {
-  if (videoWasLongPress.value) return (videoWasLongPress.value = false);
+  if (wasLongPress.value) return (wasLongPress.value = false);
   onNext();
 };
 
 onMounted(async () => {
   await rebuildTimelineFor(0);
-  videoPaused.value = false;
+  isPaused.value = false;
   tl.play();
+  // Start progress tracking for the first video if it's already loaded
+  const video = videoRefs.value[currentIndex.value];
+  if (video) startProgressLoopFor(video);
 
   const setupLongPress = (ref: Ref<HTMLElement | null>) => {
     onLongPress(ref, handleLongPress, {
       delay: 500,
       modifiers: { prevent: true },
       onMouseUp: () => {
-        if (videoWasLongPress.value && videoPaused.value) {
-          videoWasLongPress.value = false;
+        if (wasLongPress.value && isPaused.value) {
+          wasLongPress.value = false;
           onPlay();
         }
       },
@@ -348,10 +434,14 @@ onMounted(async () => {
 
 onUnmounted(() => {
   tl.kill();
+  // Clean up progress tracking loops
+  stopProgressLoop();
 });
 
-watch(videoCurrentIndex, (i: number) => {
+watch(currentIndex, (i: number) => {
   rebuildTimelineFor(i);
+  // Stop progress loop for previous slide when switching to new slide
+  stopProgressLoop();
 });
 </script>
 
