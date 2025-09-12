@@ -45,11 +45,10 @@
         @click="goToGame"
       />
 
-      <HelpText
-        v-if="currentIndex === 3"
-        :help-text="texts.help_text"
-        :help-link="texts.help_link"
-      />
+      <div v-if="currentIndex === 3" class="help-text">
+        {{ texts.help_text }}
+        <a href="#" class="help-text-link">{{ texts.help_link }}</a>
+      </div>
     </div>
 
     <a @click="closeStory">
@@ -105,7 +104,6 @@ import {
   MuteButton,
   CtaButton,
   CloseButton,
-  HelpText,
 } from '@components/stories/ui';
 import StorySlide from '@components/stories/StorySlide.vue';
 
