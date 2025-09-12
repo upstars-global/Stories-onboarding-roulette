@@ -90,10 +90,12 @@
   left: to-percent-x(16px);
   width: to-percent-x(328px);
   height: 87%;
-  // height: to-percent-y(564px);
   position: absolute;
   @include media(M) {
     top: 16%;
+    left: calc(30 / 360 * 100%);
+    width: calc(300 / 360 * 100%);
+    height: to-percent-y(538px);
   }
 }
 
@@ -109,6 +111,10 @@
   line-height: $line-height-snug;
   @media (max-aspect-ratio: 1/2) {
     font-size: 3.5dvh;
+  }
+
+  @include media(M) {
+    font-size: to-dvh(24px);
   }
 }
 
@@ -126,6 +132,9 @@
   word-break: break-word;
   @media (max-aspect-ratio: 1/2) {
     font-size: 1.8dvh;
+  }
+  @include media(M) {
+    font-size: to-dvh(12px);
   }
 }
 
@@ -166,7 +175,7 @@
   cursor: pointer;
   @include media(M) {
     left: 50%;
-    transform: translate(23dvh);
+    transform: translate(to-dvh(139.3px));
     margin-left: 0;
     top: 11dvh;
   }
@@ -182,8 +191,7 @@
   cursor: pointer;
   @include media(M) {
     left: 50%;
-    transform: translate(23dvh);
-    transform: translate(21.3dvh);
+    transform: translate(to-dvh(132.3px));
     margin-left: 0;
     top: 11dvh;
   }
@@ -216,7 +224,8 @@
     margin-top: 6dvh;
     margin-left: 0;
     left: 50%;
-    width: 50dvh;
+    // width: 50dvh;
+    width: to-dvh(310px);
     transform: translate(-50%);
   }
 }
@@ -315,15 +324,16 @@
   height: 100dvh;
   z-index: 0;
   @include media(M) {
-    top: -9dvh;
-    height: 105%;
+    top: -17dvh;
+    height: 121%;
   }
 
   .custom-layout & {
     top: -14.5dvh;
 
     @include media(M) {
-      top: -11.5dvh;
+      top: -12.5dvh;
+      height: 119%;
     }
   }
 }
@@ -334,7 +344,7 @@
 #header3,
 #header4,
 #desk1,
-#desk2,
+П #desk2,
 #desk3,
 #desk4 {
   opacity: 0;
@@ -354,6 +364,10 @@
   line-height: $line-height-loose;
   text-align: center;
   color: var(--color-text-alt, #f7f7f7);
+
+  @include media(M) {
+    bottom: to-dvh(10px);
+  }
 }
 
 .help-text-link {

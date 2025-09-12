@@ -62,7 +62,7 @@ const segmentProgress = (index: number): string => {
   position: relative;
   width: to-percent-x(328px);
   @include media(M) {
-    width: 52dvh;
+    width: to-dvh(310px);
   }
 }
 
@@ -75,13 +75,18 @@ const segmentProgress = (index: number): string => {
   z-index: 10;
   @include media(M) {
     width: 52dvh;
+
+    width: to-dvh(310px);
   }
 }
 
 .progress-segment {
   position: relative;
   flex: 1;
-  margin-right: to-dvh(4px);
+
+  &:not(:last-child) {
+    margin-right: to-dvh(4px);
+  }
 }
 
 .progress-line-bg {

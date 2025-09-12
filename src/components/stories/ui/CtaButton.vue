@@ -45,6 +45,10 @@ defineProps({
   box-sizing: border-box;
   white-space: nowrap;
   text-align: center;
+  @include media(M) {
+    bottom: to-dvh(48px);
+    width: to-dvh(310px);
+  }
 }
 @supports (height: 100dvh) {
   .call-to-action-button {
@@ -62,11 +66,9 @@ defineProps({
 
 .custom-layout .call-to-action-button {
   bottom: to-percent-y(70px);
-}
 
-@supports (height: 100dvh) {
-  .custom-layout .call-to-action-button {
-    bottom: to-dvh(70px);
+  @include media(M) {
+    bottom: to-dvh(44px);
   }
 }
 </style>
