@@ -346,12 +346,12 @@
   bottom: to-dvh(28px);
   left: 50%;
   transform: translate(-50%);
-  z-index: 9999;
+  z-index: $z-max;
   width: 100%;
   font-family: $font-family-primary;
   font-size: to-dvh(14px);
   font-weight: $font-weight-normal;
-  line-height: 170%;
+  line-height: $line-height-loose;
   text-align: center;
   color: var(--color-text-alt, #f7f7f7);
 }
