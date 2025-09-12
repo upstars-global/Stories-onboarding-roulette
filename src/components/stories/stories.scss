@@ -177,7 +177,7 @@
     left: 50%;
     transform: translate(to-dvh(139.3px));
     margin-left: 0;
-    top: 11dvh;
+    top: 10dvh;
   }
 }
 
@@ -193,7 +193,7 @@
     left: 50%;
     transform: translate(to-dvh(132.3px));
     margin-left: 0;
-    top: 11dvh;
+    top: 10dvh;
   }
 }
 
@@ -204,10 +204,8 @@
   left: 45dvh;
   @include media(M) {
     left: 50%;
-    transform: translate(18.5dvh);
     transform: translate(13.5dvh);
-    top: 11.1dvh;
-    top: 11dvh;
+    top: 10dvh;
   }
 }
 
