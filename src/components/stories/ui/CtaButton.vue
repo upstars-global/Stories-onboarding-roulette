@@ -46,13 +46,15 @@ defineProps({
   white-space: nowrap;
   text-align: center;
   @include media(M) {
-    bottom: to-dvh(48px);
-    width: to-dvh(310px);
+    bottom: to-dvh(17px, 900px);
+    width: to-dvh(394px, 900px);
+    height: to-dvh(48.24px, 900px);
+    font-size: to-dvh(17px, 900px);
   }
 }
 @supports (height: 100dvh) {
   .call-to-action-button {
-    bottom: to-dvh(16px);
+    bottom: to-dvh(16px, 900px);
   }
 }
 
@@ -68,7 +70,7 @@ defineProps({
   bottom: to-percent-y(70px);
 
   @include media(M) {
-    bottom: to-dvh(44px);
+    bottom: to-dvh(62px, 900px);
   }
 }
 </style>

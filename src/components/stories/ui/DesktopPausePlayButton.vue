@@ -75,10 +75,8 @@ const handleClick = (): void => {
     position: absolute;
     top: 0;
     left: 0;
-    height: 2.8vh;
-    width: 2.8vh;
-    height: 3vh;
-    width: 3vh;
+    height: to-dvh(24px, 900px);
+    width: to-dvh(24px, 900px);
     justify-content: center;
     align-items: center;
     cursor: pointer;

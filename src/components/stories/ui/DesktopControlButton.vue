@@ -46,8 +46,8 @@ const positionClass = computed((): string => {
     display: flex;
     background: var(--color-tertiary-6);
     border-radius: 5vh;
-    width: 5vh;
-    height: 5vh;
+    width: to-dvh(40px, 900px);
+    height: to-dvh(40px, 900px);
     position: absolute;
     z-index: 100;
     justify-content: center;
@@ -58,20 +58,21 @@ const positionClass = computed((): string => {
 
 .left {
   left: -37vh;
+  left: to-dvh(-280px, 900px);
   z-index: 999;
   transform-origin: center;
   transform: translateY(-50%);
 }
 
 .right {
-  left: 32vh;
+  left: to-dvh(240px, 900px);
   z-index: 999;
   transform-origin: center;
   transform: scaleX(-1) translateY(-50%);
 }
 
 .stories-arrow {
-  height: 3vh;
+  height: to-dvh(24px, 900px);
   width: auto;
 }
 

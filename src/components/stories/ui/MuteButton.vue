@@ -73,8 +73,8 @@ const handleClick = (): void => {
   cursor: pointer;
 
   @include media(M) {
-    height: 3vh;
-    width: 3vh;
+    height: to-dvh(24px, 900px);
+    width: to-dvh(24px, 900px);
   }
 }
 
@@ -99,6 +99,9 @@ const handleClick = (): void => {
 .sound-icons {
   fill: var(--color-text-alt);
   transition: fill 0.3s linear;
+  @include media(M) {
+    fill: var(--color-text-body);
+  }
 }
 
 .mute-button:hover .sound-icons {

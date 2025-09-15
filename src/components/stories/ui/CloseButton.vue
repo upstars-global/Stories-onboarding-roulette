@@ -25,8 +25,8 @@ import close_btn from '@/assets/images/icons/close.svg?url';
   @include media(M) {
     top: 0;
     left: 0;
-    height: 3dvh;
-    width: 3dvh;
+    width: to-dvh(24px, 900px);
+    height: to-dvh(24px, 900px);
   }
 }
 
