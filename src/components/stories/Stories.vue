@@ -45,7 +45,7 @@
         @click="goToGame"
       />
 
-      <div v-if="currentIndex === 3" class="help-text">
+      <div v-if="currentIndex === 3" class="help-text" style="display: none">
         {{ texts.help_text }}
         <a href="#" class="help-text-link">{{ texts.help_link }}</a>
       </div>
