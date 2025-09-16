@@ -328,7 +328,7 @@
   z-index: 0;
   @include media(M) {
     top: -12dvh;
-    height: 117%;
+    height: 116%;
   }
 
   .custom-layout & {
@@ -347,7 +347,7 @@
 #header3,
 #header4,
 #desk1,
-П #desk2,
+#desk2,
 #desk3,
 #desk4 {
   opacity: 0;
