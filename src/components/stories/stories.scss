@@ -339,6 +339,14 @@
       height: 115%;
     }
   }
+
+  .slide-4-layout & {
+    top: to-dvh(-39px);
+
+    @include media(M) {
+      top: -5.5dvh;
+    }
+  }
 }
 
 /* Initial hidden state for story headers and text */

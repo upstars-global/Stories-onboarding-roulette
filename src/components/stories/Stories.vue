@@ -16,7 +16,11 @@
       </div>
     </div>
     <!-- :class="{ 'custom-layout': currentIndex === 3 }" -->
-    <div id="text_container_stories" class="text_container">
+    <div
+      id="text_container_stories"
+      class="text_container"
+      :class="{ 'slide-4-layout': currentIndex === 3 }"
+    >
       <template v-for="(story, index) in stories" :key="`story-${index}`">
         <StorySlide
           v-if="currentIndex === index"
