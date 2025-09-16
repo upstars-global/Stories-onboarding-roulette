@@ -138,6 +138,17 @@
   @include media(M) {
     font-size: to-dvh(17px, 900px);
   }
+  ul {
+    list-style-type: square;
+    margin: 0;
+    margin-top: to-dvh(10px);
+    padding: 0;
+    padding-left: to-dvh(24px);
+    @include media(M) {
+      margin-top: to-dvh(10px, 900px);
+      padding-left: to-dvh(24px, 900px);
+    }
+  }
 }
 
 .video-player {
@@ -234,10 +245,14 @@
   top: 0;
   left: 0;
   margin-left: 0;
-  width: to-dvh(44px, 900px);
-  height: to-dvh(44px, 900px);
+  width: to-dvh(44px, 640px);
+  height: to-dvh(44px, 640px);
   aspect-ratio: 1/1;
   z-index: 5;
+  @include media(M) {
+    width: to-dvh(44px, 900px);
+    height: to-dvh(44px, 900px);
+  }
 }
 
 .story_icon_top_text {

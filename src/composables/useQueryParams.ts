@@ -23,7 +23,7 @@ const DEFAULTS: QueryParams = {
   userLanguage: 'en',
   currency: '',
   endLink: '',
-  gameLink: 'play/bet_live_roulette',
+  gameLink: 'categories/blackjack',
   storiesTotal: 4,
 };
 

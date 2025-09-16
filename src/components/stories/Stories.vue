@@ -19,7 +19,7 @@
     <div
       id="text_container_stories"
       class="text_container"
-      :class="{ 'custom-layout': currentIndex === 3 }"
+      :class="{ 'custom-layout': currentIndex === stories.length - 1 }"
     >
       <template v-for="(story, index) in stories" :key="`story-${index}`">
         <StorySlide
@@ -38,14 +38,9 @@
         />
       </template>
 
-      <CtaButton
-        :button-text="
-          currentIndex === 3 ? texts.cta_button_text : texts.start_game
-        "
-        @click="goToGame"
-      />
+      <CtaButton :button-text="texts.start_game" @click="goToGame" />
 
-      <div v-if="currentIndex === 3" class="help-text">
+      <div v-if="currentIndex === stories.length - 1" class="help-text">
         {{ texts.help_text }}
         <a href="#" class="help-text-link">{{ texts.help_link }}</a>
       </div>
@@ -133,14 +128,8 @@ let tl = gsap.timeline({
 const isAndroid = computed(() => /android/i.test(navigator.userAgent));
 
 const currentSlideText = computed(() => {
-  const keys: (keyof LocaleTexts)[] = [
-    'top_text1',
-    'top_text2',
-    'top_text3',
-    'top_text4',
-  ];
-  const key = keys[currentIndex.value];
-  return key ? texts.value[key] : texts.value.top_text1;
+  const key = `top_text${currentIndex.value + 1}` as keyof LocaleTexts;
+  return texts.value[key];
 });
 
 const currentIndex = ref<number>(0);
@@ -241,11 +230,24 @@ const stories: Story[] = [
   { h265: story_2_h265, webm: story_2_webm },
   { h265: story_3_h265, webm: story_3_webm },
   { h265: story_4_h265, webm: story_4_webm },
+  { h265: story_1_h265, webm: story_1_webm },
+  { h265: story_2_h265, webm: story_2_webm },
+  { h265: story_3_h265, webm: story_3_webm },
+  { h265: story_4_h265, webm: story_4_webm },
 ];
 
 const numberOfSegments = computed<number>(() => stories.length);
 
-const deskKeys: (keyof LocaleTexts)[] = ['desk1', 'desk2', 'desk3', 'desk4'];
+const deskKeys: (keyof LocaleTexts)[] = [
+  'desk1',
+  'desk2',
+  'desk3',
+  'desk4',
+  'desk5',
+  'desk6',
+  'desk7',
+  'desk8',
+];
 
 const buildSlideTimeline = (index: number) => {
   const slideNum = index + 1;
