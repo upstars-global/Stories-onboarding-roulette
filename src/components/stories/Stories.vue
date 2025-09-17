@@ -1,35 +1,35 @@
 <template>
   <div class="story-container">
     <StoriesTopBar
-      :progress="progress"
+      :progress
       :number-of-segments="numberOfSegments"
-      :current-index="currentIndex"
+      :current-index="currentStoryIndex"
     />
     <div class="info_row">
-      <img :src="story_icon" class="story_icon" alt="" />
+      <img :src="assets.storyIcon" class="story_icon" alt="" />
       <div class="story_icon_top_text">
-        <b>{{ texts.top_text }} </b>
+        <b>{{ texts[title as keyof LocaleTexts] }} </b>
         <br />
         <div class="icon_bottom_text" id="icon_bottom_text">
-          <div id="top_text_1" v-html="currentSlideText" />
+          <div id="top_text_1" v-html="currentStoryText" />
         </div>
       </div>
     </div>
-    <!-- :class="{ 'custom-layout': currentIndex === 3 }" -->
     <div
       id="text_container_stories"
       class="text_container"
-      :class="{ 'slide-4-layout': currentIndex === 3 }"
+      :class="{
+        'has-help-text': currentStory?.helpText?.enabled,
+      }"
     >
-      <template v-for="(story, index) in stories" :key="`story-${index}`">
+      <template v-for="(story, index) in stories" :key="`story-${story.id}`">
         <StorySlide
-          v-if="currentIndex === index"
+          v-if="currentStoryIndex === index"
           :ref="(el: unknown) => setVideoRef(el as StorySlideRef | null, index)"
-          :slide-number="index + 1"
-          :texts="texts"
+          :story
+          :texts
           :is-android="isAndroid"
-          :h265-source="story.h265"
-          :webm-source="story.webm"
+          :current-index="currentStoryIndex"
           :autoplay="!isPaused"
           :muted="isMuted"
           @ended="onNext"
@@ -39,15 +39,34 @@
       </template>
 
       <CtaButton
+        v-if="currentStory?.ctaButton?.enabled"
         :button-text="
-          currentIndex === 3 ? texts.cta_button_text : texts.start_game
+          currentStory?.ctaButton?.text
+            ? texts.buttons[
+                currentStory.ctaButton.text as keyof LocaleTexts['buttons']
+              ]
+            : texts.buttons.start_game
         "
         @click="goToGame"
       />
 
-      <div v-if="currentIndex === 3" class="help-text" style="display: none">
-        {{ texts.help_text }}
-        <a href="#" class="help-text-link">{{ texts.help_link }}</a>
+      <div
+        v-if="currentStory?.helpText?.enabled"
+        class="help-text"
+        style="display: none"
+      >
+        {{
+          currentStory.helpText.text
+            ? texts[currentStory.helpText.text as keyof LocaleTexts]
+            : texts.help_text
+        }}
+        <a href="#" class="help-text-link">
+          {{
+            currentStory.helpText.link
+              ? texts[currentStory.helpText.link as keyof LocaleTexts]
+              : texts.help_link
+          }}
+        </a>
       </div>
     </div>
 
@@ -70,12 +89,12 @@
       <MobileControlArea
         ref="leftControlRef"
         position="left"
-        @click="handlePrev"
+        @click.stop.prevent="handlePrev"
       />
       <MobileControlArea
         ref="rightControlRef"
         position="right"
-        @click="handleNext"
+        @click.stop.prevent="handleNext"
       />
       <DesktopControlButton position="left" @click="onPrev" />
       <DesktopControlButton position="right" @click="onNext" />
@@ -93,8 +112,8 @@ import {
   nextTick,
   type Ref,
 } from 'vue';
-import { onLongPress } from '@vueuse/core';
-import type { Story, LocaleTexts, VideoElement, StorySlideRef } from '@/types';
+import { onLongPress, useEventListener } from '@vueuse/core';
+import type { LocaleTexts, VideoElement, StorySlideRef } from '@/types';
 
 import {
   StoriesTopBar,
@@ -112,52 +131,61 @@ import { TextPlugin } from 'gsap/TextPlugin';
 
 import { useQueryParams } from '@/composables/useQueryParams';
 import { useLocale } from '@/composables/useLocale';
-
-import story_icon from '@/assets/images/icons/story_icon.webp';
-import story_1_webm from '@/assets/videos/stories/en/story_1.webm';
-import story_1_h265 from '@/assets/videos/stories/en/story_1-h265.mp4';
-import story_2_webm from '@/assets/videos/stories/en/story_2.webm';
-import story_2_h265 from '@/assets/videos/stories/en/story_2-h265.mp4';
-import story_3_webm from '@/assets/videos/stories/en/story_3.webm';
-import story_3_h265 from '@/assets/videos/stories/en/story_3-h265.mp4';
-import story_4_webm from '@/assets/videos/stories/en/story_4.webm';
-import story_4_h265 from '@/assets/videos/stories/en/story_4-h265.mp4';
+import { useStoriesData } from '@/composables/useStoriesData';
 
 gsap.registerPlugin(TextPlugin);
+
+// === CONSTANTS ===
+const LONG_PRESS_DELAY = 350;
 
 let tl = gsap.timeline({
   defaults: { duration: 0.7, ease: 'power1.inOut' },
   paused: true,
 });
 
-const isAndroid = computed(() => /android/i.test(navigator.userAgent));
-
-const currentSlideText = computed(() => {
-  const keys: (keyof LocaleTexts)[] = [
-    'top_text1',
-    'top_text2',
-    'top_text3',
-    'top_text4',
-  ];
-  const key = keys[currentIndex.value];
-  return key ? texts.value[key] : texts.value.top_text1;
-});
-
-const currentIndex = ref<number>(0);
+// === REFS ===
 const progress = ref<number>(0);
+const isPaused = ref<boolean>(false);
+const isMuted = ref<boolean>(true);
+const wasLongPress = ref<boolean>(false);
+const suppressNextClickUntil = ref<number>(0);
+const isLongPressing = ref<boolean>(false);
+const videoRefs = ref<VideoElement[]>([]);
+const currentStoryIndex = ref(0);
 
-// === SMOOTH PROGRESS BAR IMPLEMENTATION ===
-// Instead of using rare 'timeupdate' events (4-5 times per second),
-// we use requestVideoFrameCallback to sync progress with actual video frames.
-// This provides smooth 24-60fps progress updates like in Instagram/TikTok.
+const leftControlRef = ref<HTMLElement | null>(null);
+const rightControlRef = ref<HTMLElement | null>(null);
 
-type RVFC = () => number;
 let rvfcCancel: (() => void) | null = null;
 let rafId: number | null = null;
 
+// === COMPOSABLES ===
+const {
+  userLanguage: qpLang,
+  endLink: qpEnd,
+  gameLink: qpGame,
+} = useQueryParams();
+const { texts } = useLocale(ref(qpLang));
+const { assets, title, stories } = useStoriesData();
+
+const end_link = ref(qpEnd);
+const game_link = ref(qpGame);
+
+// === COMPUTED ===
+const isAndroid = computed(() => /android/i.test(navigator.userAgent));
+const currentStory = computed(() => stories.value[currentStoryIndex.value]);
+const numberOfSegments = computed<number>(() => stories.value.length);
+
+const currentStoryText = computed(() => {
+  if (!currentStory.value) return '';
+  const key = currentStory.value.topText as keyof LocaleTexts;
+  return texts.value[key];
+});
+
+// === METHODS ===
 /**
  * Stops all progress tracking loops (both rVFC and rAF)
- * Called when pausing video or switching slides
+ * Called when pausing video or switching stories
  */
 function stopProgressLoop() {
   if (rvfcCancel) {
@@ -180,19 +208,12 @@ function startProgressLoopFor(video: HTMLVideoElement) {
 
   // Check if browser supports requestVideoFrameCallback (Chrome 83+, Safari 15.4+)
   const hasRVFC =
-    typeof (
-      video as HTMLVideoElement & {
-        requestVideoFrameCallback?: RVFC;
-      }
-    ).requestVideoFrameCallback === 'function';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    typeof (video as any).requestVideoFrameCallback === 'function';
 
   if (hasRVFC) {
-    // Use requestVideoFrameCallback for perfect frame sync
-    const v = video as HTMLVideoElement & {
-      requestVideoFrameCallback: RVFC;
-      // eslint-disable-next-line no-unused-vars
-      cancelVideoFrameCallback?: (_: number) => void;
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const v = video as any;
     let handle = 0;
     const tick = () => {
       if (isPaused.value) return;
@@ -205,7 +226,6 @@ function startProgressLoopFor(video: HTMLVideoElement) {
       v.cancelVideoFrameCallback?.(handle);
     };
   } else {
-    // Fallback: use requestAnimationFrame for 60fps updates
     const tick = () => {
       if (isPaused.value) {
         rafId = null;
@@ -218,49 +238,25 @@ function startProgressLoopFor(video: HTMLVideoElement) {
     rafId = window.requestAnimationFrame(tick);
   }
 }
-const isPaused = ref<boolean>(false);
-const isMuted = ref<boolean>(true);
-const wasLongPress = ref<boolean>(false);
-const videoRefs = ref<VideoElement[]>([]);
 
-// Control refs
-const leftControlRef = ref<HTMLElement | null>(null);
-const rightControlRef = ref<HTMLElement | null>(null);
-
-const {
-  userLanguage: qpLang,
-  endLink: qpEnd,
-  gameLink: qpGame,
-} = useQueryParams();
-const { texts } = useLocale(ref(qpLang));
-const end_link = ref(qpEnd);
-const game_link = ref(qpGame);
-
-const stories: Story[] = [
-  { h265: story_1_h265, webm: story_1_webm },
-  { h265: story_2_h265, webm: story_2_webm },
-  { h265: story_3_h265, webm: story_3_webm },
-  { h265: story_4_h265, webm: story_4_webm },
-];
-
-const numberOfSegments = computed<number>(() => stories.length);
-
-const deskKeys: (keyof LocaleTexts)[] = ['desk1', 'desk2', 'desk3', 'desk4'];
-
-const buildSlideTimeline = (index: number) => {
-  const slideNum = index + 1;
-  const headerSel = `#header${slideNum}`;
-  const deskSel = `#desk${slideNum}`;
-  const deskKey = deskKeys[index];
-  const deskText = deskKey ? texts.value[deskKey] : '';
+const buildStoryTimeline = (index: number) => {
+  const storyNum = index + 1;
+  const headerSel = `#header${storyNum}`;
+  const deskSel = `#desk${storyNum}`;
+  const deskKey = currentStory.value?.description as keyof LocaleTexts;
+  const deskTextRaw = deskKey ? texts.value[deskKey] || '' : '';
+  const deskText = typeof deskTextRaw === 'string' ? deskTextRaw : '';
 
   const seg = gsap.timeline();
   gsap.set([headerSel, deskSel], { opacity: 0, marginTop: '7dvh' });
   seg.to(headerSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 });
-  seg.to(deskSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 }, '<0.1');
+  seg.to(deskSel, { marginTop: '0dvh', duration: 0.4 }, '<0.1');
   seg.add(() => {
     const el = document.querySelector(deskSel);
     if (el) el.textContent = '';
+  });
+  seg.to(deskSel, {
+    opacity: 1,
   });
   seg.to(deskSel, {
     duration: 1,
@@ -277,8 +273,14 @@ const rebuildTimelineFor = async (index: number) => {
     defaults: { duration: 0.7, ease: 'power1.inOut' },
     paused: true,
   });
-  tl.add(buildSlideTimeline(index), 0);
+  tl.add(buildStoryTimeline(index), 0);
   if (!isPaused.value) tl.restart(true, false);
+};
+
+const setVideoRef = (el: StorySlideRef | null, index: number) => {
+  if (el && el.videoRef) {
+    videoRefs.value[index] = el.videoRef as VideoElement;
+  }
 };
 
 const closeStory = () => {
@@ -299,33 +301,10 @@ const goToGame = () => {
     );
 };
 
-// Event handler for gift button - sends 'get_gift' message to parent window
-// This function should be called when user clicks on gift/prize related buttons
-// const getGift = () => {
-//   window.parent.postMessage('get_gift', '*');
-//   if (end_link.value)
-//     setTimeout(
-//       () => window.parent.postMessage('go_to_link:' + end_link.value, '*'),
-//       300
-//     );
-// };
-
-// Event handler for watch again button - sends 'watch_again' message to parent window
-// This function should be called when user wants to replay the stories
-// const watchAgain = () => {
-//   window.parent.postMessage('watch_again', '*');
-// };
-
-const setVideoRef = (el: StorySlideRef | null, index: number) => {
-  if (el && el.videoRef) {
-    videoRefs.value[index] = el.videoRef as VideoElement;
-  }
-};
-
 const onPlay = () => {
   if (!isPaused.value) return;
   isPaused.value = false;
-  const video = videoRefs.value[currentIndex.value];
+  const video = videoRefs.value[currentStoryIndex.value];
   if (video) {
     video.muted = isMuted.value;
     video
@@ -342,7 +321,7 @@ const onPlay = () => {
 const onPause = () => {
   if (isPaused.value) return;
   isPaused.value = true;
-  const video = videoRefs.value[currentIndex.value];
+  const video = videoRefs.value[currentStoryIndex.value];
   if (video) video.pause();
   // Stop progress tracking when pausing
   stopProgressLoop();
@@ -352,7 +331,7 @@ const onPause = () => {
 
 const onToggleMute = (muted: boolean) => {
   isMuted.value = muted;
-  const video = videoRefs.value[currentIndex.value];
+  const video = videoRefs.value[currentStoryIndex.value];
   if (video) {
     video.muted = muted;
   }
@@ -360,16 +339,16 @@ const onToggleMute = (muted: boolean) => {
 };
 
 const onNext = () => {
-  if (currentIndex.value < stories.length - 1) {
-    currentIndex.value++;
+  if (currentStoryIndex.value < stories.value.length - 1) {
+    currentStoryIndex.value++;
     progress.value = 0;
     window.parent.postMessage('click_forward', '*');
   }
 };
 
 const onPrev = () => {
-  if (currentIndex.value > 0) {
-    currentIndex.value--;
+  if (currentStoryIndex.value > 0) {
+    currentStoryIndex.value--;
     progress.value = 0;
     window.parent.postMessage('click_backward', '*');
   }
@@ -377,9 +356,13 @@ const onPrev = () => {
 
 const onLoadedMetadata = () => {
   progress.value = 0;
-  const video = videoRefs.value[currentIndex.value];
-  // Start smooth progress tracking for newly loaded video
-  if (video && !isPaused.value) startProgressLoopFor(video);
+  const video = videoRefs.value[currentStoryIndex.value];
+  if (!video) return;
+  video.muted = isMuted.value;
+  if (!isPaused.value) {
+    video.play().catch(() => {});
+    startProgressLoopFor(video);
+  }
 };
 
 const onTimeUpdate = (e: Event) => {
@@ -391,55 +374,110 @@ const onTimeUpdate = (e: Event) => {
   }
 };
 
+/**
+ * Checks if the next click should be suppressed to prevent "ghost clicks"
+ * that browsers generate after touchend events on mobile devices
+ */
+const shouldSuppressClick = () =>
+  window.performance.now() < suppressNextClickUntil.value;
+
 const handleLongPress = () => {
-  onPause();
+  isLongPressing.value = true;
   wasLongPress.value = true;
+  onPause();
 };
 
 const handlePrev = () => {
-  if (wasLongPress.value) return (wasLongPress.value = false);
+  if (isLongPressing.value || shouldSuppressClick()) {
+    isLongPressing.value = false;
+    return;
+  }
   onPrev();
 };
 
 const handleNext = () => {
-  if (wasLongPress.value) return (wasLongPress.value = false);
+  if (isLongPressing.value || shouldSuppressClick()) {
+    isLongPressing.value = false;
+    return;
+  }
   onNext();
 };
 
+/**
+ * Global pointerup event listener to handle finger release anywhere on screen
+ * Resumes playback when long press is released and blocks ghost clicks
+ */
+const offUp = useEventListener(
+  window,
+  'pointerup',
+  () => {
+    if (isLongPressing.value) {
+      suppressNextClickUntil.value =
+        window.performance.now() + Math.max(250, LONG_PRESS_DELAY - 50);
+      isLongPressing.value = false;
+      wasLongPress.value = false;
+      if (isPaused.value) onPlay();
+    }
+  },
+  { capture: true }
+);
+
+/**
+ * Global pointercancel event listener to handle interrupted gestures
+ * Resumes playback when gesture is cancelled (finger moved outside bounds, system interruption)
+ */
+const offCancel = useEventListener(window, 'pointercancel', () => {
+  if (isLongPressing.value && isPaused.value) onPlay();
+  isLongPressing.value = false;
+});
+
+/**
+ * Sets up long press detection for a specific element
+ * @param refEl - Reference to the DOM element to monitor for long press
+ */
+const setupLongPress = (refEl: Ref<HTMLElement | null>) => {
+  onLongPress(refEl, handleLongPress, {
+    delay: LONG_PRESS_DELAY,
+    modifiers: { prevent: true, stop: true },
+  });
+};
+
+// === LIFECYCLE HOOKS ===
 onMounted(async () => {
   await rebuildTimelineFor(0);
   isPaused.value = false;
   tl.play();
   // Start progress tracking for the first video if it's already loaded
-  const video = videoRefs.value[currentIndex.value];
+  const video = videoRefs.value[currentStoryIndex.value];
   if (video) startProgressLoopFor(video);
 
-  const setupLongPress = (ref: Ref<HTMLElement | null>) => {
-    onLongPress(ref, handleLongPress, {
-      delay: 500,
-      modifiers: { prevent: true },
-      onMouseUp: () => {
-        if (wasLongPress.value && isPaused.value) {
-          wasLongPress.value = false;
-          onPlay();
-        }
-      },
-    });
-  };
-
   [leftControlRef, rightControlRef].forEach(setupLongPress);
+
+  // Disable context menu during long press
+  useEventListener(
+    window,
+    'contextmenu',
+    (e) => {
+      if (isLongPressing.value) e.preventDefault();
+    },
+    { capture: true }
+  );
 });
 
 onUnmounted(() => {
   tl.kill();
   // Clean up progress tracking loops
   stopProgressLoop();
+  // Clean up event listeners
+  offUp();
+  offCancel();
 });
 
-watch(currentIndex, (i: number) => {
-  rebuildTimelineFor(i);
-  // Stop progress loop for previous slide when switching to new slide
+// === WATCHERS ===
+watch(currentStoryIndex, (i: number) => {
+  // Stop progress loop for previous story when switching to new story
   stopProgressLoop();
+  rebuildTimelineFor(i);
 });
 </script>
 

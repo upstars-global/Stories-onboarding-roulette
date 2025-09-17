@@ -14,27 +14,26 @@
     >
       <source
         v-if="!isAndroid"
-        :src="h265Source"
+        :src="story.video.h265"
         type="video/mp4"
         codecs="h265"
       />
-      <source :src="webmSource" type="video/webm" />
+      <source :src="story.video.webm" type="video/webm" />
     </video>
-    <div :id="`header${slideNumber}`" class="h1">{{ headerText }}</div>
-    <div :id="`desk${slideNumber}`" class="h2"></div>
+    <div :id="`header${currentIndex + 1}`" class="h1">{{ headerText }}</div>
+    <div :id="`desk${currentIndex + 1}`" class="h2">{{ descriptionText }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { LocaleTexts } from '@/types';
+import type { LocaleTexts, StoryData } from '@/types';
 
 interface Props {
-  slideNumber: number;
+  story: StoryData;
   texts: LocaleTexts;
   isAndroid: boolean;
-  h265Source: string;
-  webmSource: string;
+  currentIndex: number;
   autoplay?: boolean;
   muted?: boolean;
 }
@@ -51,10 +50,17 @@ defineEmits<Emits>();
 
 const videoRef = ref<HTMLVideoElement | null>(null);
 
-const videoId = computed(() => `story_1${props.slideNumber}`);
+const videoId = computed(() => `story_${props.currentIndex + 1}`);
 const headerText = computed((): string => {
-  const key = `header${props.slideNumber}` as keyof LocaleTexts;
-  return props.texts[key] || '';
+  const key = props.story.header as keyof LocaleTexts;
+  const value = props.texts[key];
+  return typeof value === 'string' ? value : '';
+});
+
+const descriptionText = computed((): string => {
+  const key = props.story.description as keyof LocaleTexts;
+  const value = props.texts[key];
+  return typeof value === 'string' ? value : '';
 });
 
 defineExpose({

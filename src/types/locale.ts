@@ -14,8 +14,10 @@ export interface LocaleTexts {
   desk2: string;
   desk3: string;
   desk4: string;
-  start_game: string;
-  cta_button_text: string;
+  buttons: {
+    start_game: string;
+    try_luck: string;
+  };
   help_text: string;
   help_link: string;
 }

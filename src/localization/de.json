@@ -15,8 +15,10 @@
   "desk3": "Sobald alle Einsätze platziert sind, dreht der Dealer das Rad. Lehne dich zurück und beobachte, wie die Kugel auf einer Zahl landet",
   "desk4": "Wenn die Kugel auf deiner Zahl, Farbe oder deinem Bereich landet, hast du gewonnen! Herzlichen Glückwunsch! 🎉",
 
-  "start_game": "Start game",
-  "cta_button_text": "Versuch dein Glück",
+  "buttons": {
+    "start_game": "Spiel starten",
+    "try_luck": "Versuch dein Glück"
+  },
   "help_text": "Brauchst du mehr Infos? ",
   "help_link": "Lies unseren Guide"
 }

@@ -15,8 +15,10 @@
   "desk3": "Una volta piazzate tutte le puntate, il croupier fa girare la ruota. Rilassati e guarda la pallina fermarsi su un numero",
   "desk4": "Se la pallina si ferma sul tuo numero, colore o sezione, vinci! Congratulazioni! 🎉",
 
-  "start_game": "Start game",
-  "cta_button_text": "Prova la fortuna",
+  "buttons": {
+    "start_game": "Inizia il gioco",
+    "try_luck": "Prova la fortuna"
+  },
   "help_text": "Hai bisogno di più informazioni? ",
   "help_link": "Leggi la nostra guida"
 }

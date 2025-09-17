@@ -1,0 +1,69 @@
+{
+  "assets": {
+    "storyIcon": "/src/assets/images/icons/story_icon.webp"
+  },
+  "title": "top_text",
+  "stories": [
+    {
+      "id": "story1",
+      "topText": "top_text1",
+      "header": "header1",
+      "description": "desk1",
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_1.webm"
+      },
+      "ctaButton": {
+        "enabled": true,
+        "text": "start_game"
+      }
+    },
+    {
+      "id": "story2",
+      "topText": "top_text2",
+      "header": "header2",
+      "description": "desk2",
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_2.webm"
+      },
+      "ctaButton": {
+        "enabled": true,
+        "text": "start_game"
+      }
+    },
+    {
+      "id": "story3",
+      "topText": "top_text3",
+      "header": "header3",
+      "description": "desk3",
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_3.webm"
+      },
+      "ctaButton": {
+        "enabled": true,
+        "text": "start_game"
+      }
+    },
+    {
+      "id": "story4",
+      "topText": "top_text4",
+      "header": "header4",
+      "description": "desk4",
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_4.webm"
+      },
+      "ctaButton": {
+        "enabled": true,
+        "text": "try_luck"
+      },
+      "helpText": {
+        "enabled": true,
+        "text": "help_text",
+        "link": "help_link"
+      }
+    }
+  ]
+}

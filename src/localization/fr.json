@@ -15,8 +15,10 @@
   "desk3": "Une fois toutes les mises placées, le croupier fait tourner la roue. Détends-toi et regarde la bille s'arrêter sur un numéro",
   "desk4": "Si la bille s'arrête sur ton numéro, ta couleur ou ta section, tu gagnes ! Félicitations ! 🎉",
 
-  "start_game": "Start game",
-  "cta_button_text": "Tente ta chance",
+  "buttons": {
+    "start_game": "Commencer le jeu",
+    "try_luck": "Tente ta chance"
+  },
   "help_text": "Besoin de plus d'infos? ",
   "help_link": "Lis notre guide"
 }
