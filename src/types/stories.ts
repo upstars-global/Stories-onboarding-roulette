@@ -7,20 +7,30 @@ export interface StoryVideo {
 
 export interface StoryCtaButton {
   enabled: boolean;
-  text: string;
+  text: LocalizedText;
 }
 
 export interface StoryHelpText {
   enabled: boolean;
-  text: string;
-  link: string;
+  text: LocalizedText;
+  link: LocalizedText;
+}
+
+export interface LocalizedText {
+  en: string;
+  de: string;
+  fr: string;
+  it: string;
+  es: string;
+  pt: string;
+  [key: string]: string;
 }
 
 export interface StoryData {
   id: string;
-  topText: string;
-  header: string;
-  description: string;
+  topText: LocalizedText;
+  header: LocalizedText;
+  description: LocalizedText;
   video: StoryVideo;
   ctaButton: StoryCtaButton;
   helpText?: StoryHelpText;
@@ -32,6 +42,6 @@ export interface StoriesAssets {
 
 export interface StoriesData {
   assets: StoriesAssets;
-  title: string;
+  title: LocalizedText;
   stories: StoryData[];
 }

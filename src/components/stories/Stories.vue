@@ -8,10 +8,13 @@
     <div class="info_row">
       <img :src="assets.storyIcon" class="story_icon" alt="" />
       <div class="story_icon_top_text">
-        <b>{{ texts[title as keyof LocaleTexts] }} </b>
+        <b>{{ getLocalizedText(title, userLanguage) }} </b>
         <br />
         <div class="icon_bottom_text" id="icon_bottom_text">
-          <div id="top_text_1" v-html="currentStoryText" />
+          <div
+            id="top_text_1"
+            v-html="getLocalizedText(currentStory?.topText, userLanguage)"
+          />
         </div>
       </div>
     </div>
@@ -27,7 +30,7 @@
           v-if="currentStoryIndex === index"
           :ref="(el: unknown) => setVideoRef(el as StorySlideRef | null, index)"
           :story
-          :texts
+          :texts="{ userLanguage }"
           :is-android="isAndroid"
           :current-index="currentStoryIndex"
           :autoplay="!isPaused"
@@ -42,10 +45,8 @@
         v-if="currentStory?.ctaButton?.enabled"
         :button-text="
           currentStory?.ctaButton?.text
-            ? texts.buttons[
-                currentStory.ctaButton.text as keyof LocaleTexts['buttons']
-              ]
-            : texts.buttons.start_game
+            ? getLocalizedText(currentStory.ctaButton.text, userLanguage)
+            : 'Start game'
         "
         @click="goToGame"
       />
@@ -57,14 +58,14 @@
       >
         {{
           currentStory.helpText.text
-            ? texts[currentStory.helpText.text as keyof LocaleTexts]
-            : texts.help_text
+            ? getLocalizedText(currentStory.helpText.text, userLanguage)
+            : 'Need more info? '
         }}
         <a href="#" class="help-text-link">
           {{
             currentStory.helpText.link
-              ? texts[currentStory.helpText.link as keyof LocaleTexts]
-              : texts.help_link
+              ? getLocalizedText(currentStory.helpText.link, userLanguage)
+              : 'Read our guide'
           }}
         </a>
       </div>
@@ -113,7 +114,7 @@ import {
   type Ref,
 } from 'vue';
 import { onLongPress, useEventListener } from '@vueuse/core';
-import type { LocaleTexts, VideoElement, StorySlideRef } from '@/types';
+import type { VideoElement, StorySlideRef } from '@/types';
 
 import {
   StoriesTopBar,
@@ -165,8 +166,9 @@ const {
   endLink: qpEnd,
   gameLink: qpGame,
 } = useQueryParams();
-const { texts } = useLocale(ref(qpLang));
+useLocale(ref(qpLang));
 const { assets, title, stories } = useStoriesData();
+const userLanguage = qpLang;
 
 const end_link = ref(qpEnd);
 const game_link = ref(qpGame);
@@ -176,13 +178,14 @@ const isAndroid = computed(() => /android/i.test(navigator.userAgent));
 const currentStory = computed(() => stories.value[currentStoryIndex.value]);
 const numberOfSegments = computed<number>(() => stories.value.length);
 
-const currentStoryText = computed(() => {
-  if (!currentStory.value) return '';
-  const key = currentStory.value.topText as keyof LocaleTexts;
-  return texts.value[key];
-});
-
 // === METHODS ===
+const getLocalizedText = (
+  text: Record<string, string> | undefined,
+  lang: string
+): string => {
+  return text?.[lang] || '';
+};
+
 /**
  * Stops all progress tracking loops (both rVFC and rAF)
  * Called when pausing video or switching stories
@@ -243,9 +246,9 @@ const buildStoryTimeline = (index: number) => {
   const storyNum = index + 1;
   const headerSel = `#header${storyNum}`;
   const deskSel = `#desk${storyNum}`;
-  const deskKey = currentStory.value?.description as keyof LocaleTexts;
-  const deskTextRaw = deskKey ? texts.value[deskKey] || '' : '';
-  const deskText = typeof deskTextRaw === 'string' ? deskTextRaw : '';
+  const deskText = currentStory.value?.description
+    ? getLocalizedText(currentStory.value.description, userLanguage)
+    : '';
 
   const seg = gsap.timeline();
   gsap.set([headerSel, deskSel], { opacity: 0, marginTop: '7dvh' });
@@ -260,7 +263,7 @@ const buildStoryTimeline = (index: number) => {
   });
   seg.to(deskSel, {
     duration: 1,
-    text: { value: deskText, padSpace: false, delimiter: '' },
+    text: { value: deskText || '', padSpace: false, delimiter: '' },
     ease: 'none',
   });
   return seg;

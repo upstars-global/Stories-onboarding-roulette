@@ -2,8 +2,8 @@
   <div class="stories-segment">
     <video
       ref="videoRef"
-      :id="videoId"
       class="bg_video"
+      :id="videoId"
       :muted="muted"
       :autoplay="autoplay"
       playsinline
@@ -27,11 +27,11 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { LocaleTexts, StoryData } from '@/types';
+import type { StoryData } from '@/types';
 
 interface Props {
   story: StoryData;
-  texts: LocaleTexts;
+  texts: { userLanguage: string };
   isAndroid: boolean;
   currentIndex: number;
   autoplay?: boolean;
@@ -52,15 +52,14 @@ const videoRef = ref<HTMLVideoElement | null>(null);
 
 const videoId = computed(() => `story_${props.currentIndex + 1}`);
 const headerText = computed((): string => {
-  const key = props.story.header as keyof LocaleTexts;
-  const value = props.texts[key];
-  return typeof value === 'string' ? value : '';
+  return props.story.header[props.texts.userLanguage] || props.story.header.en;
 });
 
 const descriptionText = computed((): string => {
-  const key = props.story.description as keyof LocaleTexts;
-  const value = props.texts[key];
-  return typeof value === 'string' ? value : '';
+  return (
+    props.story.description[props.texts.userLanguage] ||
+    props.story.description.en
+  );
 });
 
 defineExpose({

@@ -1,23 +1,9 @@
-import { ref, watchEffect, type Ref } from 'vue';
-import type { LocaleTexts, SupportedLanguage } from '@/types';
-import availableLanguages from '@/localization/available-languages.json';
-import en from '@/localization/en.json';
-import fr from '@/localization/fr.json';
-import de from '@/localization/de.json';
-import it from '@/localization/it.json';
-import es from '@/localization/es.json';
-import pt from '@/localization/pt.json';
+import { ref, type Ref } from 'vue';
+import type { SupportedLanguage } from '@/composables/useQueryParams';
+import type { LanguageCode } from '@/types/langs.generated';
 
-const languageMap: Record<SupportedLanguage, LocaleTexts> = {
-  en,
-  fr,
-  de,
-  it,
-  es,
-  pt,
-};
 export interface UseLocaleReturn {
-  texts: Ref<LocaleTexts>;
+  texts: Ref<{ userLanguage: LanguageCode }>;
   locale: Ref<SupportedLanguage>;
 }
 
@@ -25,24 +11,22 @@ export function useLocale(
   userLanguageRef: Ref<string | undefined>
 ): UseLocaleReturn {
   const locale = ref<SupportedLanguage>('en');
-  const texts = ref<LocaleTexts>(en);
+  const texts = ref<{ userLanguage: LanguageCode }>({ userLanguage: 'en' });
 
   function resolveLocale(): SupportedLanguage {
     const candidate = (userLanguageRef?.value || '').split(
       '-'
     )[0] as SupportedLanguage;
-    if (candidate && availableLanguages.languages.includes(candidate))
+    if (candidate && ['en', 'fr', 'de', 'it', 'es', 'pt'].includes(candidate))
       return candidate;
     const nav = (navigator.language || 'en').split('-')[0] as SupportedLanguage;
-    if (availableLanguages.languages.includes(nav)) return nav;
+    if (['en', 'fr', 'de', 'it', 'es', 'pt'].includes(nav)) return nav;
     return 'en';
   }
 
-  watchEffect(() => {
-    const l = resolveLocale();
-    locale.value = l;
-    texts.value = languageMap[l] || en;
-  });
+  const resolvedLocale = resolveLocale();
+  locale.value = resolvedLocale;
+  texts.value = { userLanguage: resolvedLocale };
 
   return { texts, locale };
 }
