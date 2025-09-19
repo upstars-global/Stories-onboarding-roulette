@@ -104,7 +104,7 @@
 
     <!-- Custom video play button for autoplay fallback -->
     <Transition name="fade-scale" mode="out-in">
-      <CustomVideoPlayButton v-if="showVideoPlayButton" @play="onPlay" />
+      <CustomVideoPlayButton v-if="isUserPlayRequired" @play="onPlay" />
     </Transition>
   </div>
 </template>
@@ -185,6 +185,8 @@ const game_link = ref(qpGame);
 const isAndroid = computed(() => /android/i.test(navigator.userAgent));
 const currentStory = computed(() => stories.value[currentStoryIndex.value]);
 const numberOfSegments = computed<number>(() => stories.value.length);
+// true, if explicit user action (Play) is required to start video
+const isUserPlayRequired = computed(() => showVideoPlayButton.value);
 
 // === METHODS ===
 const getLocalizedText = (
@@ -284,8 +286,8 @@ const rebuildTimelineFor = async (index: number) => {
     defaults: { duration: 0.7, ease: 'power1.inOut' },
     paused: true,
   });
+  // Add story timeline to main timeline (paused by default)
   tl.add(buildStoryTimeline(index), 0);
-  if (!isPaused.value) tl.restart(true, false);
 };
 
 const setVideoRef = (el: StorySlideRef | null, index: number) => {
@@ -324,6 +326,7 @@ const onPlay = () => {
       .then(() => {
         // Start smooth progress tracking once video actually starts playing
         startProgressLoopFor(video);
+        tl.play(); // start text animation only after video starts
       })
       .catch(() => {
         // Still blocked (e.g., not a "real" user gesture) → keep button visible
@@ -331,7 +334,6 @@ const onPlay = () => {
         isPaused.value = true;
       });
   }
-  tl.play();
 };
 
 const onPause = () => {
@@ -346,6 +348,13 @@ const onPause = () => {
 };
 
 const onToggleMute = (muted: boolean) => {
+  // When custom play button is visible (user play required),
+  // block mute/unmute action to prevent desync:
+  // don't change volume, don't start animations, don't move progress.
+  if (isUserPlayRequired.value) {
+    return;
+  }
+
   isMuted.value = muted;
   const video = videoRefs.value[currentStoryIndex.value];
   if (video) {
@@ -355,6 +364,7 @@ const onToggleMute = (muted: boolean) => {
 };
 
 const onNext = () => {
+  if (isUserPlayRequired.value) return; // block forward navigation until user starts video
   if (currentStoryIndex.value < stories.value.length - 1) {
     currentStoryIndex.value++;
     progress.value = 0;
@@ -363,6 +373,7 @@ const onNext = () => {
 };
 
 const onPrev = () => {
+  if (isUserPlayRequired.value) return; // block backward navigation until user starts video
   if (currentStoryIndex.value > 0) {
     currentStoryIndex.value--;
     progress.value = 0;
@@ -384,6 +395,7 @@ const onLoadedMetadata = () => {
         // Only now start the progress loop
         startProgressLoopFor(video);
         showVideoPlayButton.value = false;
+        tl.play(); // synchronous start text animation on autoplay
       })
       .catch(() => {
         // Autoplay blocked → show custom button
@@ -409,12 +421,20 @@ const shouldSuppressClick = () =>
   window.performance.now() < suppressNextClickUntil.value;
 
 const handleLongPress = () => {
+  // Ignore long-press until user starts playback (to avoid "fake pause")
+  if (isUserPlayRequired.value) return;
+
   isLongPressing.value = true;
   wasLongPress.value = true;
   onPause();
 };
 
 const handlePrev = () => {
+  if (isUserPlayRequired.value) {
+    // block navigation until user starts video
+    isLongPressing.value = false;
+    return;
+  }
   if (isLongPressing.value || shouldSuppressClick()) {
     isLongPressing.value = false;
     return;
@@ -423,6 +443,11 @@ const handlePrev = () => {
 };
 
 const handleNext = () => {
+  if (isUserPlayRequired.value) {
+    // block navigation until user starts video
+    isLongPressing.value = false;
+    return;
+  }
   if (isLongPressing.value || shouldSuppressClick()) {
     isLongPressing.value = false;
     return;
@@ -473,7 +498,6 @@ const setupLongPress = (refEl: Ref<HTMLElement | null>) => {
 onMounted(async () => {
   await rebuildTimelineFor(0);
   isPaused.value = false;
-  tl.play();
 
   const video = videoRefs.value[currentStoryIndex.value];
   if (video) {
@@ -483,6 +507,7 @@ onMounted(async () => {
       // Start progress tracking for the first video if it's already loaded
       startProgressLoopFor(video);
       showVideoPlayButton.value = false;
+      tl.play(); // start text animation only after video starts
     } catch {
       showVideoPlayButton.value = true; // Autoplay blocked → show custom button
     }
