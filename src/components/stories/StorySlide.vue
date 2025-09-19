@@ -3,9 +3,10 @@
     <video
       ref="videoRef"
       class="bg_video"
+      :class="{ locked: videoLocked }"
       :id="videoId"
-      :muted="muted"
-      :autoplay="autoplay"
+      :muted
+      :autoplay
       playsinline
       preload="metadata"
       @ended="$emit('ended')"
@@ -36,6 +37,7 @@ interface Props {
   currentIndex: number;
   autoplay?: boolean;
   muted?: boolean;
+  videoLocked?: boolean;
 }
 
 const props = defineProps<Props>();

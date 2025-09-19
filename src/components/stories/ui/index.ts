@@ -1,6 +1,7 @@
 // UI Components exports for stories module
 export { default as CloseButton } from './CloseButton.vue';
 export { default as CtaButton } from './CtaButton.vue';
+export { default as CustomVideoPlayButton } from './CustomVideoPlayButton.vue';
 export { default as DesktopControlButton } from './DesktopControlButton.vue';
 export { default as DesktopPausePlayButton } from './DesktopPausePlayButton.vue';
 export { default as MuteButton } from './MuteButton.vue';

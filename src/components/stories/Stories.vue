@@ -35,6 +35,7 @@
           :current-index="currentStoryIndex"
           :autoplay="!isPaused"
           :muted="isMuted"
+          :video-locked="showVideoPlayButton"
           @ended="onNext"
           @timeupdate="onTimeUpdate"
           @loadedmetadata="onLoadedMetadata"
@@ -100,6 +101,11 @@
       <DesktopControlButton position="left" @click="onPrev" />
       <DesktopControlButton position="right" @click="onNext" />
     </div>
+
+    <!-- Custom video play button for autoplay fallback -->
+    <Transition name="fade-scale" mode="out-in">
+      <CustomVideoPlayButton v-if="showVideoPlayButton" @play="onPlay" />
+    </Transition>
   </div>
 </template>
 
@@ -124,6 +130,7 @@ import {
   MuteButton,
   CtaButton,
   CloseButton,
+  CustomVideoPlayButton,
 } from '@components/stories/ui';
 import StorySlide from '@components/stories/StorySlide.vue';
 
@@ -153,6 +160,7 @@ const suppressNextClickUntil = ref<number>(0);
 const isLongPressing = ref<boolean>(false);
 const videoRefs = ref<VideoElement[]>([]);
 const currentStoryIndex = ref(0);
+const showVideoPlayButton = ref<boolean>(false);
 
 const leftControlRef = ref<HTMLElement | null>(null);
 const rightControlRef = ref<HTMLElement | null>(null);
@@ -305,8 +313,9 @@ const goToGame = () => {
 };
 
 const onPlay = () => {
-  if (!isPaused.value) return;
   isPaused.value = false;
+  showVideoPlayButton.value = false;
+
   const video = videoRefs.value[currentStoryIndex.value];
   if (video) {
     video.muted = isMuted.value;
@@ -316,7 +325,11 @@ const onPlay = () => {
         // Start smooth progress tracking once video actually starts playing
         startProgressLoopFor(video);
       })
-      .catch(() => {});
+      .catch(() => {
+        // Still blocked (e.g., not a "real" user gesture) → keep button visible
+        showVideoPlayButton.value = true;
+        isPaused.value = true;
+      });
   }
   tl.play();
 };
@@ -361,10 +374,21 @@ const onLoadedMetadata = () => {
   progress.value = 0;
   const video = videoRefs.value[currentStoryIndex.value];
   if (!video) return;
+
   video.muted = isMuted.value;
+
   if (!isPaused.value) {
-    video.play().catch(() => {});
-    startProgressLoopFor(video);
+    video
+      .play()
+      .then(() => {
+        // Only now start the progress loop
+        startProgressLoopFor(video);
+        showVideoPlayButton.value = false;
+      })
+      .catch(() => {
+        // Autoplay blocked → show custom button
+        showVideoPlayButton.value = true;
+      });
   }
 };
 
@@ -450,9 +474,19 @@ onMounted(async () => {
   await rebuildTimelineFor(0);
   isPaused.value = false;
   tl.play();
-  // Start progress tracking for the first video if it's already loaded
+
   const video = videoRefs.value[currentStoryIndex.value];
-  if (video) startProgressLoopFor(video);
+  if (video) {
+    // If metadata is already loaded, try to start immediately
+    try {
+      await video.play();
+      // Start progress tracking for the first video if it's already loaded
+      startProgressLoopFor(video);
+      showVideoPlayButton.value = false;
+    } catch {
+      showVideoPlayButton.value = true; // Autoplay blocked → show custom button
+    }
+  }
 
   [leftControlRef, rightControlRef].forEach(setupLongPress);
 

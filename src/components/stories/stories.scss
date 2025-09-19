@@ -118,6 +118,13 @@
   }
 }
 
+/* Hide video when autoplay is blocked */
+.bg_video.locked {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
 .h1 {
   margin-bottom: to-dvh(10px);
   font-size: to-dvh(28px);
