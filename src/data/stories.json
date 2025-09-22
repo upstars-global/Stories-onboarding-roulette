@@ -17,9 +17,9 @@
         "en": "About game",
         "de": "Über das Spiel",
         "fr": "À propos du jeu",
-        "it": "Informazioni sul gioco",
-        "es": "Acerca del juego",
-        "pt": "Sobre o jogo"
+        "it": "Informazioni sul Gioco",
+        "es": "Acerca del Juego",
+        "pt": "Sobre o Jogo"
       },
       "header": {
         "en": "What is Blackjack",
@@ -42,7 +42,7 @@
         "webm": "/src/assets/videos/stories/en/story_1.webm"
       },
       "ctaButton": {
-        "enabled": false,
+        "enabled": true,
         "text": {
           "en": "Play Blackjack",
           "de": "Blackjack spielen",
@@ -78,9 +78,9 @@
         "en": "Card values",
         "de": "Kartenwerte",
         "fr": "Valeurs des cartes",
-        "it": "Valori delle carte",
-        "es": "Valores de las cartas",
-        "pt": "Valores das cartas"
+        "it": "Valori delle Carte",
+        "es": "Valores de las Cartas",
+        "pt": "Valores das Cartas"
       },
       "header": {
         "en": "Value of each card",
@@ -103,7 +103,7 @@
         "webm": "/src/assets/videos/stories/en/story_2.webm"
       },
       "ctaButton": {
-        "enabled": false,
+        "enabled": true,
         "text": {
           "en": "Play Blackjack",
           "de": "Blackjack spielen",
@@ -139,9 +139,9 @@
         "en": "Game start",
         "de": "Spielstart",
         "fr": "Début du jeu",
-        "it": "Inizio del gioco",
-        "es": "Inicio del juego",
-        "pt": "Início do jogo"
+        "it": "Inizio del Gioco",
+        "es": "Inicio del Juego",
+        "pt": "Início do Jogo"
       },
       "header": {
         "en": "How the game starts",
@@ -164,7 +164,7 @@
         "webm": "/src/assets/videos/stories/en/story_3.webm"
       },
       "ctaButton": {
-        "enabled": false,
+        "enabled": true,
         "text": {
           "en": "Play Blackjack",
           "de": "Blackjack spielen",
@@ -200,8 +200,8 @@
         "en": "Key strategies",
         "de": "Wichtige Strategien",
         "fr": "Stratégies clés",
-        "it": "Strategie chiave",
-        "es": "Estrategias clave",
+        "it": "Strategie Chiave",
+        "es": "Estrategias Clave",
         "pt": "Estratégias-chave"
       },
       "header": {
@@ -225,7 +225,7 @@
         "webm": "/src/assets/videos/stories/en/story_4.webm"
       },
       "ctaButton": {
-        "enabled": false,
+        "enabled": true,
         "text": {
           "en": "Play Blackjack",
           "de": "Blackjack spielen",
@@ -261,8 +261,8 @@
         "en": "Key strategies",
         "de": "Wichtige Strategien",
         "fr": "Stratégies clés",
-        "it": "Strategie chiave",
-        "es": "Estrategias clave",
+        "it": "Strategie Chiave",
+        "es": "Estrategias Clave",
         "pt": "Estratégias-chave"
       },
       "header": {
@@ -286,7 +286,7 @@
         "webm": "/src/assets/videos/stories/en/story_1.webm"
       },
       "ctaButton": {
-        "enabled": false,
+        "enabled": true,
         "text": {
           "en": "Play Blackjack",
           "de": "Blackjack spielen",
@@ -322,8 +322,8 @@
         "en": "Other strategies",
         "de": "Andere Strategien",
         "fr": "Autres stratégies",
-        "it": "Altre strategie",
-        "es": "Otras estrategias",
+        "it": "Altre Strategie",
+        "es": "Otras Estrategias",
         "pt": "Outras estratégias"
       },
       "header": {
@@ -347,7 +347,7 @@
         "webm": "/src/assets/videos/stories/en/story_2.webm"
       },
       "ctaButton": {
-        "enabled": false,
+        "enabled": true,
         "text": {
           "en": "Play Blackjack",
           "de": "Blackjack spielen",
@@ -383,8 +383,8 @@
         "en": "Other strategies",
         "de": "Andere Strategien",
         "fr": "Autres stratégies",
-        "it": "Altre strategie",
-        "es": "Otras estrategias",
+        "it": "Altre Strategie",
+        "es": "Otras Estrategias",
         "pt": "Outras estratégias"
       },
       "header": {
@@ -408,7 +408,7 @@
         "webm": "/src/assets/videos/stories/en/story_3.webm"
       },
       "ctaButton": {
-        "enabled": false,
+        "enabled": true,
         "text": {
           "en": "Play Blackjack",
           "de": "Blackjack spielen",
@@ -444,8 +444,8 @@
         "en": "Winning combination",
         "de": "Gewinnkombination",
         "fr": "Combinaison gagnante",
-        "it": "Combinazione vincente",
-        "es": "Combinación ganadora",
+        "it": "Combinazione Vincente",
+        "es": "Combinación Ganadora",
         "pt": "Combinação vencedora"
       },
       "header": {
