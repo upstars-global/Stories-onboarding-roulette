@@ -2,10 +2,11 @@
   <div class="stories-segment">
     <video
       ref="videoRef"
-      :id="videoId"
       class="bg_video"
-      :muted="muted"
-      :autoplay="autoplay"
+      :class="{ locked: videoLocked }"
+      :id="videoId"
+      :muted
+      :autoplay
       playsinline
       preload="metadata"
       @ended="$emit('ended')"
@@ -14,29 +15,29 @@
     >
       <source
         v-if="!isAndroid"
-        :src="h265Source"
+        :src="story.video.h265"
         type="video/mp4"
         codecs="h265"
       />
-      <source :src="webmSource" type="video/webm" />
+      <source :src="story.video.webm" type="video/webm" />
     </video>
-    <div :id="`header${slideNumber}`" class="h1">{{ headerText }}</div>
-    <div :id="`desk${slideNumber}`" class="h2"></div>
+    <div :id="`header${currentIndex + 1}`" class="h1">{{ headerText }}</div>
+    <div :id="`desk${currentIndex + 1}`" class="h2">{{ descriptionText }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { LocaleTexts } from '@/types';
+import type { StoryData } from '@/types';
 
 interface Props {
-  slideNumber: number;
-  texts: LocaleTexts;
+  story: StoryData;
+  texts: { userLanguage: string };
   isAndroid: boolean;
-  h265Source: string;
-  webmSource: string;
+  currentIndex: number;
   autoplay?: boolean;
   muted?: boolean;
+  videoLocked?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -51,10 +52,16 @@ defineEmits<Emits>();
 
 const videoRef = ref<HTMLVideoElement | null>(null);
 
-const videoId = computed(() => `story_1${props.slideNumber}`);
+const videoId = computed(() => `story_${props.currentIndex + 1}`);
 const headerText = computed((): string => {
-  const key = `header${props.slideNumber}` as keyof LocaleTexts;
-  return props.texts[key] || '';
+  return props.story.header[props.texts.userLanguage] || props.story.header.en;
+});
+
+const descriptionText = computed((): string => {
+  return (
+    props.story.description[props.texts.userLanguage] ||
+    props.story.description.en
+  );
 });
 
 defineExpose({

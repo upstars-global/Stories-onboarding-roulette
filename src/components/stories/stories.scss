@@ -15,6 +15,24 @@
   outline: none;
 }
 
+/* Disable context menu for testing */
+.story-container {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* iOS/Android UX improvements */
+.story_controls,
+.story_controls * {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
 .story-container {
   position: absolute;
   top: 0;
@@ -98,6 +116,13 @@
     width: to-percent-x(394px, 432px);
     height: to-percent-y(664px, 768px);
   }
+}
+
+/* Hide video when autoplay is blocked */
+.bg_video.locked {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
 .h1 {
@@ -343,15 +368,21 @@
   z-index: 0;
   @include media(M) {
     top: -12dvh;
-    height: 117%;
+    height: 116%;
   }
 
-  .custom-layout & {
-    top: -14.5dvh;
+  .has-help-text & {
+    // top: -14.5dvh;
+
+    // @include media(M) {
+    //   top: -9.5dvh;
+    //   height: 115%;
+    // }
+
+    top: to-dvh(-39px);
 
     @include media(M) {
-      top: -9.5dvh;
-      height: 115%;
+      top: -5.5dvh;
     }
   }
 }
@@ -362,7 +393,7 @@
 #header3,
 #header4,
 #desk1,
-П #desk2,
+#desk2,
 #desk3,
 #desk4 {
   opacity: 0;

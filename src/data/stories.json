@@ -1,0 +1,503 @@
+{
+  "assets": {
+    "storyIcon": "/src/assets/images/icons/story_icon.webp"
+  },
+  "title": {
+    "en": "Blackjack",
+    "de": "Blackjack",
+    "fr": "Blackjack",
+    "it": "Blackjack",
+    "es": "Blackjack",
+    "pt": "Blackjack"
+  },
+  "stories": [
+    {
+      "id": "story1",
+      "topText": {
+        "en": "About game",
+        "de": "Über das Spiel",
+        "fr": "À propos du jeu",
+        "it": "Informazioni sul gioco",
+        "es": "Acerca del juego",
+        "pt": "Sobre o jogo"
+      },
+      "header": {
+        "en": "What is Blackjack",
+        "de": "Was ist Blackjack",
+        "fr": "Qu'est-ce que le Blackjack",
+        "it": "Cos'è il Blackjack",
+        "es": "Qué es el Blackjack",
+        "pt": "O que é Blackjack"
+      },
+      "description": {
+        "en": "In this game, you play against the dealer. To win, your hand must be close to 21",
+        "de": "In diesem Spiel spielst du gegen den Dealer. Um zu gewinnen, muss deine Hand nahe an 21 sein",
+        "fr": "Dans ce jeu, tu joues contre le croupier. Pour gagner, ta main doit être proche de 21",
+        "it": "In questo gioco, giochi contro il dealer. Per vincere, la tua mano deve essere vicina a 21",
+        "es": "En este juego, juegas contra el crupier. Para ganar, tu mano debe estar cerca de 21",
+        "pt": "Neste jogo, você joga contra o dealer. Para ganar, sua mão deve estar próxima de 21"
+      },
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_1.webm"
+      },
+      "ctaButton": {
+        "enabled": false,
+        "text": {
+          "en": "Play Blackjack",
+          "de": "Blackjack spielen",
+          "fr": "Jouer au Blackjack",
+          "it": "Gioca a Blackjack",
+          "es": "Jugar Blackjack",
+          "pt": "Jogar Blackjack"
+        }
+      },
+      "helpText": {
+        "enabled": false,
+        "text": {
+          "en": "Need more info?",
+          "de": "Brauchen Sie mehr Infos?",
+          "fr": "Besoin de plus d'infos?",
+          "it": "Hai bisogno di più informazioni?",
+          "es": "Necesitas más información?",
+          "pt": "Precisa de mais informações?"
+        },
+        "link": {
+          "en": "Discover Blackjack",
+          "de": "Blackjack entdecken",
+          "fr": "Découvrir le Blackjack",
+          "it": "Scopri il Blackjack",
+          "es": "Descubre Blackjack",
+          "pt": "Descubra Blackjack"
+        }
+      }
+    },
+    {
+      "id": "story2",
+      "topText": {
+        "en": "Card values",
+        "de": "Kartenwerte",
+        "fr": "Valeurs des cartes",
+        "it": "Valori delle carte",
+        "es": "Valores de las cartas",
+        "pt": "Valores das cartas"
+      },
+      "header": {
+        "en": "Value of each card",
+        "de": "Wert jeder Karte",
+        "fr": "Valeur de chaque carte",
+        "it": "Valore di ogni carta",
+        "es": "Valor de cada carta",
+        "pt": "Valor de cada carta"
+      },
+      "description": {
+        "en": "<ul><li><strong>Face card (J, Q, K)</strong> = 10 points</li><li><strong>Ace (A)</strong> = 1 or 11, whichever is better for your hand</li><li><strong>Number cards (2–10)</strong> = face value. Example: 2 Spades = 2 points</li></ul>",
+        "de": "<ul><li><strong>Bildkarte (J, Q, K)</strong> = 10 Punkte</li><li><strong>Ass (A)</strong> = 1 oder 11, je nachdem was besser für deine Hand ist</li><li><strong>Zahlenkarten (2–10)</strong> = Nennwert. Beispiel: 2 Pik = 2 Punkte</li></ul>",
+        "fr": "<ul><li><strong>Carte figure (J, Q, K)</strong> = 10 points</li><li><strong>As (A)</strong> = 1 ou 11, selon ce qui est mieux pour ta main</li><li><strong>Cartes numérotées (2–10)</strong> = valeur nominale. Exemple: 2 Pique = 2 points</li></ul>",
+        "it": "<ul><li><strong>Carta figura (J, Q, K)</strong> = 10 punti</li><li><strong>Asso (A)</strong> = 1 o 11, a seconda di cosa è meglio per la tua mano</li><li><strong>Carte numerate (2–10)</strong> = valore nominale. Esempio: 2 Picche = 2 punti</li></ul>",
+        "es": "<ul><li><strong>Carta figura (J, Q, K)</strong> = 10 puntos</li><li><strong>As (A)</strong> = 1 o 11, el que sea mejor para tu mano</li><li><strong>Cartas numeradas (2–10)</strong> = valor nominal. Ejemplo: 2 Picas = 2 puntos</li></ul>",
+        "pt": "<ul><li><strong>Carta figura (J, Q, K)</strong> = 10 pontos</li><li><strong>Ás (A)</strong> = 1 ou 11, o que for melhor para sua mão</li><li><strong>Cartas numeradas (2–10)</strong> = valor nominal. Exemplo: 2 Espadas = 2 pontos</li></ul>"
+      },
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_2.webm"
+      },
+      "ctaButton": {
+        "enabled": false,
+        "text": {
+          "en": "Play Blackjack",
+          "de": "Blackjack spielen",
+          "fr": "Jouer au Blackjack",
+          "it": "Gioca a Blackjack",
+          "es": "Jugar Blackjack",
+          "pt": "Jogar Blackjack"
+        }
+      },
+      "helpText": {
+        "enabled": false,
+        "text": {
+          "en": "Need more info?",
+          "de": "Brauchen Sie mehr Infos?",
+          "fr": "Besoin de plus d'infos?",
+          "it": "Hai bisogno di più informazioni?",
+          "es": "Necesitas más información?",
+          "pt": "Precisa de mais informações?"
+        },
+        "link": {
+          "en": "Discover Blackjack",
+          "de": "Blackjack entdecken",
+          "fr": "Découvrir le Blackjack",
+          "it": "Scopri il Blackjack",
+          "es": "Descubre Blackjack",
+          "pt": "Descubra Blackjack"
+        }
+      }
+    },
+    {
+      "id": "story3",
+      "topText": {
+        "en": "Game start",
+        "de": "Spielstart",
+        "fr": "Début du jeu",
+        "it": "Inizio del gioco",
+        "es": "Inicio del juego",
+        "pt": "Início do jogo"
+      },
+      "header": {
+        "en": "How the game starts",
+        "de": "Wie das Spiel beginnt",
+        "fr": "Comment le jeu commence",
+        "it": "Come inizia il gioco",
+        "es": "Cómo comienza el juego",
+        "pt": "Como o jogo começa"
+      },
+      "description": {
+        "en": "You and the dealer each get 2 cards. Your cards are visible, while the dealer shows only 1. You win if you have Ace + 10, unless the dealer also has the same",
+        "de": "Du und der Dealer bekommt jeder 2 Karten. Deine Karten sind sichtbar, während der Dealer nur 1 zeigt. Du gewinnst, wenn du Ass + 10 hast, es sei denn, der Dealer hat dasselbe",
+        "fr": "Toi et le croupier recevez chacun 2 cartes. Tes cartes sont visibles, tandis que le croupier n'en montre qu'une. Tu gagnes si tu as As + 10, sauf si le croupier a la même chose",
+        "it": "Tu e il dealer ricevete ognuno 2 carte. Le tue carte sono visibili, mentre il dealer ne mostra solo 1. Vinci se hai Asso + 10, a meno che il dealer non abbia lo stesso",
+        "es": "Tú y el crupier recibís cada uno 2 cartas. Tus cartas son visibles, mientras que el crupier muestra solo 1. Ganas si tienes As + 10, a menos que el crupier también tenga lo mismo",
+        "pt": "Você e o dealer recebem cada um 2 cartas. Suas cartas são visíveis, enquanto o dealer mostra apenas 1. Você ganha se tiver Ás + 10, a menos que o dealer também tenha o mesmo"
+      },
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_3.webm"
+      },
+      "ctaButton": {
+        "enabled": false,
+        "text": {
+          "en": "Play Blackjack",
+          "de": "Blackjack spielen",
+          "fr": "Jouer au Blackjack",
+          "it": "Gioca a Blackjack",
+          "es": "Jugar Blackjack",
+          "pt": "Jogar Blackjack"
+        }
+      },
+      "helpText": {
+        "enabled": false,
+        "text": {
+          "en": "Need more info?",
+          "de": "Brauchen Sie mehr Infos?",
+          "fr": "Besoin de plus d'infos?",
+          "it": "Hai bisogno di più informazioni?",
+          "es": "Necesitas más información?",
+          "pt": "Precisa de mais informações?"
+        },
+        "link": {
+          "en": "Discover Blackjack",
+          "de": "Blackjack entdecken",
+          "fr": "Découvrir le Blackjack",
+          "it": "Scopri il Blackjack",
+          "es": "Descubre Blackjack",
+          "pt": "Descubra Blackjack"
+        }
+      }
+    },
+    {
+      "id": "story4",
+      "topText": {
+        "en": "Key strategies",
+        "de": "Wichtige Strategien",
+        "fr": "Stratégies clés",
+        "it": "Strategie chiave",
+        "es": "Estrategias clave",
+        "pt": "Estratégias-chave"
+      },
+      "header": {
+        "en": "When to Hit",
+        "de": "Wann man zieht",
+        "fr": "Quand tirer",
+        "it": "Quando pescare",
+        "es": "Cuándo pedir",
+        "pt": "Quando pedir"
+      },
+      "description": {
+        "en": "If your hand is under 11, choose <strong>Hit</strong> for one extra card and get closer to 21. But if your total goes over 21, you may bust and lose the round",
+        "de": "Wenn deine Hand unter 11 ist, wähle <strong>Hit</strong> für eine zusätzliche Karte und komm näher an 21. Aber wenn dein Gesamtwert über 21 geht, kannst du busten und die Runde verlieren",
+        "fr": "Si ta main est sous 11, choisis <strong>Hit</strong> pour une carte supplémentaire et rapproche-toi de 21. Mais si ton total dépasse 21, tu peux faire buste et perdre le tour",
+        "it": "Se la tua mano è sotto 11, scegli <strong>Hit</strong> per una carta extra e avvicinati a 21. Ma se il tuo totale supera 21, puoi fare bust e perdere il round",
+        "es": "Si tu mano está por debajo de 11, elige <strong>Hit</strong> para una carta extra y acércate a 21. Pero si tu total supera 21, puedes hacer bust y perder la ronda",
+        "pt": "Se sua mão estiver abaixo de 11, escolha <strong>Hit</strong> para uma carta extra e aproxime-se de 21. Mas se seu total passar de 21, você pode fazer bust e perder a rodada"
+      },
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_4.webm"
+      },
+      "ctaButton": {
+        "enabled": false,
+        "text": {
+          "en": "Play Blackjack",
+          "de": "Blackjack spielen",
+          "fr": "Jouer au Blackjack",
+          "it": "Gioca a Blackjack",
+          "es": "Jugar Blackjack",
+          "pt": "Jogar Blackjack"
+        }
+      },
+      "helpText": {
+        "enabled": false,
+        "text": {
+          "en": "Need more info?",
+          "de": "Brauchen Sie mehr Infos?",
+          "fr": "Besoin de plus d'infos?",
+          "it": "Hai bisogno di più informazioni?",
+          "es": "Necesitas más información?",
+          "pt": "Precisa de mais informações?"
+        },
+        "link": {
+          "en": "Discover Blackjack",
+          "de": "Blackjack entdecken",
+          "fr": "Découvrir le Blackjack",
+          "it": "Scopri il Blackjack",
+          "es": "Descubre Blackjack",
+          "pt": "Descubra Blackjack"
+        }
+      }
+    },
+    {
+      "id": "story5",
+      "topText": {
+        "en": "Key strategies",
+        "de": "Wichtige Strategien",
+        "fr": "Stratégies clés",
+        "it": "Strategie chiave",
+        "es": "Estrategias clave",
+        "pt": "Estratégias-chave"
+      },
+      "header": {
+        "en": "When to Stand",
+        "de": "Wann man stehen bleibt",
+        "fr": "Quand rester",
+        "it": "Quando stare",
+        "es": "Cuándo plantarse",
+        "pt": "Quando parar"
+      },
+      "description": {
+        "en": "If your hand is 17 or higher and seems strong, choose <strong>Stand</strong> to keep it",
+        "de": "Wenn deine Hand 17 oder höher ist und stark erscheint, wähle <strong>Stand</strong> um sie zu behalten",
+        "fr": "Si ta main est 17 ou plus et semble forte, choisis <strong>Stand</strong> pour la garder",
+        "it": "Se la tua mano è 17 o superiore e sembra forte, scegli <strong>Stand</strong> per mantenerla",
+        "es": "Si tu mano es 17 o más y parece fuerte, elige <strong>Stand</strong> para mantenerla",
+        "pt": "Se sua mão for 17 ou mais e parecer forte, escolha <strong>Stand</strong> para mantê-la"
+      },
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_1.webm"
+      },
+      "ctaButton": {
+        "enabled": false,
+        "text": {
+          "en": "Play Blackjack",
+          "de": "Blackjack spielen",
+          "fr": "Jouer au Blackjack",
+          "it": "Gioca a Blackjack",
+          "es": "Jugar Blackjack",
+          "pt": "Jogar Blackjack"
+        }
+      },
+      "helpText": {
+        "enabled": false,
+        "text": {
+          "en": "Need more info?",
+          "de": "Brauchen Sie mehr Infos?",
+          "fr": "Besoin de plus d'infos?",
+          "it": "Hai bisogno di più informazioni?",
+          "es": "Necesitas más información?",
+          "pt": "Precisa de mais informações?"
+        },
+        "link": {
+          "en": "Discover Blackjack",
+          "de": "Blackjack entdecken",
+          "fr": "Découvrir le Blackjack",
+          "it": "Scopri il Blackjack",
+          "es": "Descubre Blackjack",
+          "pt": "Descubra Blackjack"
+        }
+      }
+    },
+    {
+      "id": "story6",
+      "topText": {
+        "en": "Other strategies",
+        "de": "Andere Strategien",
+        "fr": "Autres stratégies",
+        "it": "Altre strategie",
+        "es": "Otras estrategias",
+        "pt": "Outras estratégias"
+      },
+      "header": {
+        "en": "When to Split",
+        "de": "Wann man teilt",
+        "fr": "Quand diviser",
+        "it": "Quando dividere",
+        "es": "Cuándo dividir",
+        "pt": "Quando dividir"
+      },
+      "description": {
+        "en": "If you have a pair of identical cards, <strong>split</strong> them into 2 separate hands",
+        "de": "Wenn du ein Paar identischer Karten hast, <strong>teile</strong> sie in 2 separate Hände",
+        "fr": "Si tu as une paire de cartes identiques, <strong>divise</strong>-les en 2 mains séparées",
+        "it": "Se hai una coppia di carte identiche, <strong>dividi</strong>le in 2 mani separate",
+        "es": "Si tienes un par de cartas idénticas, <strong>divídelas</strong> en 2 manos separadas",
+        "pt": "Se você tiver um par de cartas idênticas, <strong>divida</strong>-as em 2 mãos separadas"
+      },
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_2.webm"
+      },
+      "ctaButton": {
+        "enabled": false,
+        "text": {
+          "en": "Play Blackjack",
+          "de": "Blackjack spielen",
+          "fr": "Jouer au Blackjack",
+          "it": "Gioca a Blackjack",
+          "es": "Jugar Blackjack",
+          "pt": "Jogar Blackjack"
+        }
+      },
+      "helpText": {
+        "enabled": false,
+        "text": {
+          "en": "Need more info?",
+          "de": "Brauchen Sie mehr Infos?",
+          "fr": "Besoin de plus d'infos?",
+          "it": "Hai bisogno di più informazioni?",
+          "es": "Necesitas más información?",
+          "pt": "Precisa de mais informações?"
+        },
+        "link": {
+          "en": "Discover Blackjack",
+          "de": "Blackjack entdecken",
+          "fr": "Découvrir le Blackjack",
+          "it": "Scopri il Blackjack",
+          "es": "Descubre Blackjack",
+          "pt": "Descubra Blackjack"
+        }
+      }
+    },
+    {
+      "id": "story7",
+      "topText": {
+        "en": "Other strategies",
+        "de": "Andere Strategien",
+        "fr": "Autres stratégies",
+        "it": "Altre strategie",
+        "es": "Otras estrategias",
+        "pt": "Outras estratégias"
+      },
+      "header": {
+        "en": "When to Double",
+        "de": "Wann man verdoppelt",
+        "fr": "Quand doubler",
+        "it": "Quando raddoppiare",
+        "es": "Cuándo doblar",
+        "pt": "Quando dobrar"
+      },
+      "description": {
+        "en": "<strong>Double</strong> your bet to get one card if your hand totals 9,10, or 11",
+        "de": "<strong>Verdopple</strong> deine Wette um eine Karte zu bekommen, wenn deine Hand 9, 10 oder 11 ergibt",
+        "fr": "<strong>Double</strong> ta mise pour obtenir une carte si ta main totalise 9, 10 ou 11",
+        "it": "<strong>Raddoppia</strong> la tua scommessa per ottenere una carta se la tua mano totalizza 9, 10 o 11",
+        "es": "<strong>Dobla</strong> tu apuesta para obtener una carta si tu mano totaliza 9, 10 u 11",
+        "pt": "<strong>Dobre</strong> sua aposta para obter uma carta se sua mão totalizar 9, 10 ou 11"
+      },
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_3.webm"
+      },
+      "ctaButton": {
+        "enabled": false,
+        "text": {
+          "en": "Play Blackjack",
+          "de": "Blackjack spielen",
+          "fr": "Jouer au Blackjack",
+          "it": "Gioca a Blackjack",
+          "es": "Jugar Blackjack",
+          "pt": "Jogar Blackjack"
+        }
+      },
+      "helpText": {
+        "enabled": false,
+        "text": {
+          "en": "Need more info?",
+          "de": "Brauchen Sie mehr Infos?",
+          "fr": "Besoin de plus d'infos?",
+          "it": "Hai bisogno di più informazioni?",
+          "es": "Necesitas más información?",
+          "pt": "Precisa de mais informações?"
+        },
+        "link": {
+          "en": "Discover Blackjack",
+          "de": "Blackjack entdecken",
+          "fr": "Découvrir le Blackjack",
+          "it": "Scopri il Blackjack",
+          "es": "Descubre Blackjack",
+          "pt": "Descubra Blackjack"
+        }
+      }
+    },
+    {
+      "id": "story8",
+      "topText": {
+        "en": "Winning combination",
+        "de": "Gewinnkombination",
+        "fr": "Combinaison gagnante",
+        "it": "Combinazione vincente",
+        "es": "Combinación ganadora",
+        "pt": "Combinação vencedora"
+      },
+      "header": {
+        "en": "Best hand in Blackjack",
+        "de": "Beste Hand im Blackjack",
+        "fr": "Meilleure main au Blackjack",
+        "it": "Migliore mano nel Blackjack",
+        "es": "Mejor mano en Blackjack",
+        "pt": "Melhor mão no Blackjack"
+      },
+      "description": {
+        "en": "The best hand is an Ace + a 10-point card (10, J, Q, or K). It's called Blackjack and pays 3:2",
+        "de": "Die beste Hand ist ein Ass + eine 10-Punkte-Karte (10, J, Q oder K). Es heißt Blackjack und zahlt 3:2",
+        "fr": "La meilleure main est un As + une carte de 10 points (10, J, Q ou K). C'est appelé Blackjack et paie 3:2",
+        "it": "La migliore mano è un Asso + una carta da 10 punti (10, J, Q o K). Si chiama Blackjack e paga 3:2",
+        "es": "La mejor mano es un As + una carta de 10 puntos (10, J, Q o K). Se llama Blackjack y paga 3:2",
+        "pt": "A melhor mão é um Ás + uma carta de 10 pontos (10, J, Q ou K). É chamado Blackjack e paga 3:2"
+      },
+      "video": {
+        "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_4.webm"
+      },
+      "ctaButton": {
+        "enabled": true,
+        "text": {
+          "en": "Play Blackjack",
+          "de": "Blackjack spielen",
+          "fr": "Jouer au Blackjack",
+          "it": "Gioca a Blackjack",
+          "es": "Jugar Blackjack",
+          "pt": "Jogar Blackjack"
+        }
+      },
+      "helpText": {
+        "enabled": true,
+        "text": {
+          "en": "Need more info?",
+          "de": "Brauchen Sie mehr Infos?",
+          "fr": "Besoin de plus d'infos?",
+          "it": "Hai bisogno di più informazioni?",
+          "es": "Necesitas más información?",
+          "pt": "Precisa de mais informações?"
+        },
+        "link": {
+          "en": "Discover Blackjack",
+          "de": "Blackjack entdecken",
+          "fr": "Découvrir le Blackjack",
+          "it": "Scopri il Blackjack",
+          "es": "Descubre Blackjack",
+          "pt": "Descubra Blackjack"
+        }
+      }
+    }
+  ]
+}

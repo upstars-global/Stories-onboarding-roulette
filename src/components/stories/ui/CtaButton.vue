@@ -54,7 +54,7 @@ defineProps({
 }
 @supports (height: 100dvh) {
   .call-to-action-button {
-    bottom: to-dvh(16px, 900px);
+    bottom: to-dvh(16px);
   }
 }
 
