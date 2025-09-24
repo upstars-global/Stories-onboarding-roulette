@@ -282,8 +282,8 @@
         "pt": "Se sua mão for 17 ou mais e parecer forte, escolha <strong>Stand</strong> para mantê-la"
       },
       "video": {
-        "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
-        "webm": "/src/assets/videos/stories/en/story_1.webm"
+        "h265": "/src/assets/videos/stories/en/story_5-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_5.webm"
       },
       "ctaButton": {
         "enabled": true,
@@ -343,8 +343,8 @@
         "pt": "Se você tiver um par de cartas idênticas, <strong>divida</strong>-as em 2 mãos separadas"
       },
       "video": {
-        "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
-        "webm": "/src/assets/videos/stories/en/story_2.webm"
+        "h265": "/src/assets/videos/stories/en/story_6-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_6.webm"
       },
       "ctaButton": {
         "enabled": true,

@@ -252,6 +252,55 @@ function startProgressLoopFor(video: HTMLVideoElement) {
   }
 }
 
+const animateListItems = (
+  seg: gsap.core.Timeline,
+  deskSel: string,
+  deskText: string
+) => {
+  const el = document.querySelector(deskSel) as HTMLElement | null;
+  if (!el) return;
+
+  el.innerHTML = deskText;
+  const items = el.querySelectorAll('li');
+  items.forEach((li, i) => {
+    const fullText = li.innerText.trim();
+    li.textContent = '';
+
+    seg.to(
+      li,
+      {
+        duration: 1,
+        text: { value: fullText, padSpace: false, delimiter: '' },
+        ease: 'none',
+        onStart: () => {
+          li.classList.add('animate-bullet'); // Показываем булет при анимации
+        },
+      },
+      i === 0 ? '>' : '+=0.2'
+    );
+  });
+};
+
+const animateRegularText = (
+  seg: gsap.core.Timeline,
+  deskSel: string,
+  deskText: string
+) => {
+  const el = document.querySelector(deskSel) as HTMLElement | null;
+  if (!el) return;
+
+  el.textContent = '';
+  seg.to(
+    el,
+    {
+      duration: 2,
+      text: { value: deskText || '', padSpace: false, delimiter: '' },
+      ease: 'none',
+    },
+    '>'
+  );
+};
+
 const buildStoryTimeline = (index: number) => {
   const storyNum = index + 1;
   const headerSel = `#header${storyNum}`;
@@ -262,20 +311,20 @@ const buildStoryTimeline = (index: number) => {
 
   const seg = gsap.timeline();
   gsap.set([headerSel, deskSel], { opacity: 0, marginTop: '7dvh' });
+
   seg.to(headerSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 });
   seg.to(deskSel, { marginTop: '0dvh', duration: 0.4 }, '<0.1');
+
   seg.add(() => {
-    const el = document.querySelector(deskSel);
-    if (el) el.textContent = '';
+    seg.to(deskSel, { opacity: 1 }, '+0.1');
+
+    if (deskText.includes('<li')) {
+      animateListItems(seg, deskSel, deskText);
+    } else {
+      animateRegularText(seg, deskSel, deskText);
+    }
   });
-  seg.to(deskSel, {
-    opacity: 1,
-  });
-  seg.to(deskSel, {
-    duration: 1,
-    text: { value: deskText || '', padSpace: false, delimiter: '' },
-    ease: 'none',
-  });
+
   return seg;
 };
 

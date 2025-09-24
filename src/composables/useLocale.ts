@@ -1,6 +1,6 @@
 import { ref, type Ref } from 'vue';
 import type { SupportedLanguage } from '@/composables/useQueryParams';
-import type { LanguageCode } from '@/types/langs.generated';
+import type { LanguageCode } from '@/types/langs';
 
 export interface UseLocaleReturn {
   texts: Ref<{ userLanguage: LanguageCode }>;
