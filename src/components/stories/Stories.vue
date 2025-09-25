@@ -273,7 +273,7 @@ const animateListItems = (
         text: { value: fullText, padSpace: false, delimiter: '' },
         ease: 'none',
         onStart: () => {
-          li.classList.add('animate-bullet'); // Показываем булет при анимации
+          li.classList.add('animate-bullet');
         },
       },
       i === 0 ? '>' : '+=0.2'
