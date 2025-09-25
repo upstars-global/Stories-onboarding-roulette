@@ -134,7 +134,7 @@ import {
 } from '@components/stories/ui';
 import StorySlide from '@components/stories/StorySlide.vue';
 
-import gsap from 'gsap';
+import { gsap } from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
 
 import { useQueryParams } from '@/composables/useQueryParams';
