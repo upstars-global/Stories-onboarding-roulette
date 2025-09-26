@@ -393,9 +393,11 @@
   width: 100dvw;
   height: 100dvh;
   z-index: 0;
+  object-fit: cover;
   @include media-up(m) {
     top: -12dvh;
     height: 117%;
+    object-fit: contain;
   }
 
   .has-help-text & {
