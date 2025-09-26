@@ -58,8 +58,6 @@ const handleClick = (): void => {
 </script>
 
 <style lang="scss" scoped>
-@import '@scss';
-
 .mute-button {
   display: flex;
   z-index: 500;
@@ -72,7 +70,7 @@ const handleClick = (): void => {
   align-items: center;
   cursor: pointer;
 
-  @include media(M) {
+  @include media-up(m) {
     height: to-dvh(24px, 900px);
     width: to-dvh(24px, 900px);
   }
@@ -99,7 +97,7 @@ const handleClick = (): void => {
 .sound-icons {
   fill: var(--color-text-alt);
   transition: fill 0.3s linear;
-  @include media(M) {
+  @include media-up(m) {
     fill: var(--color-text-body);
   }
 }
@@ -108,7 +106,7 @@ const handleClick = (): void => {
   fill: var(--color-text-alt);
 }
 
-@include media(M) {
+@include media-up(m) {
   .mute-button:hover .sound-icons {
     fill: var(--color-text-alt);
   }

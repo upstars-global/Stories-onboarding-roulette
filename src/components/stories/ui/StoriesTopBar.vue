@@ -38,8 +38,6 @@ const segmentProgress = (index: number): string => {
 </script>
 
 <style lang="scss" scoped>
-@import '@scss';
-
 .top-bar {
   top: 0;
   left: 0;
@@ -53,15 +51,16 @@ const segmentProgress = (index: number): string => {
   pointer-events: none;
   user-select: none;
   -moz-user-select: none;
-  @include media(M) {
+  @include media-up(m) {
     top: to-percent-y(63px, 900px);
   }
 }
+
 .bar-container {
   top: 0;
   position: relative;
   width: to-percent-x(328px);
-  @include media(M) {
+  @include media-up(m) {
     width: to-dvh(394px, 900px);
   }
 }
@@ -73,7 +72,7 @@ const segmentProgress = (index: number): string => {
   width: 100%;
   display: flex;
   z-index: 10;
-  @include media(M) {
+  @include media-up(m) {
     width: to-dvh(394px, 900px);
     margin-top: to-dvh(24px, 900px);
   }
@@ -85,7 +84,7 @@ const segmentProgress = (index: number): string => {
 
   &:not(:last-child) {
     margin-right: to-dvh(4px);
-    @include media(M) {
+    @include media-up(m) {
       margin-right: to-dvh(4px, 900px);
     }
   }
@@ -98,7 +97,7 @@ const segmentProgress = (index: number): string => {
   width: 100%;
   height: to-dvh(4px);
   background-color: var(--color-progress-empty);
-  border-radius: to-dvh(4px);
+  border-radius: $border-radius-xs;
 }
 
 .progress-line {
@@ -107,50 +106,8 @@ const segmentProgress = (index: number): string => {
   left: 0;
   height: to-dvh(4px);
   background-color: var(--color-progress-filled);
-  border-radius: to-dvh(4px);
+  border-radius: $border-radius-xs;
   transition: none;
   will-change: width;
-}
-
-.profile-row {
-  position: relative;
-  width: 100%;
-  margin-top: 0.75rem;
-  @include media(M) {
-    width: 52dvh;
-  }
-}
-
-.profile-stroke {
-  position: relative;
-  display: flex;
-  width: 3.25rem;
-  height: 3.25rem;
-  justify-content: center;
-  align-items: center;
-  background: var(--color-primary-gradient);
-  border-radius: 4rem;
-  z-index: 5;
-}
-
-.story-name {
-  font-family: Rubik, system-ui, sans-serif;
-  letter-spacing: 0.01rem;
-  position: absolute;
-  font-weight: $font-weight--bold;
-  font-size: 1.25rem;
-  left: 4rem;
-  top: 0.25rem;
-  z-index: 1;
-}
-
-.story-step {
-  font-family: Rubik, system-ui, sans-serif;
-  position: absolute;
-  font-weight: $font-weight--normal;
-  font-size: 0.75rem;
-  left: 4rem;
-  top: 1.75rem;
-  z-index: 1;
 }
 </style>

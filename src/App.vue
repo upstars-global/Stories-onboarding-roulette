@@ -8,6 +8,4 @@
 import Stories from '@components/stories/Stories.vue';
 </script>
 
-<style lang="scss">
-@import '@scss';
-</style>
+<style lang="scss"></style>

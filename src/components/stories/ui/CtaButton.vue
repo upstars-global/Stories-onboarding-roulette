@@ -17,8 +17,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@import '@scss';
-
 .call-to-action-button {
   position: absolute;
   bottom: to-percent-y(16px);
@@ -45,7 +43,7 @@ defineProps({
   box-sizing: border-box;
   white-space: nowrap;
   text-align: center;
-  @include media(M) {
+  @include media-up(m) {
     bottom: to-dvh(17px, 900px);
     width: to-dvh(394px, 900px);
     height: to-dvh(48.24px, 900px);
@@ -69,7 +67,7 @@ defineProps({
 .custom-layout .call-to-action-button {
   bottom: to-percent-y(70px);
 
-  @include media(M) {
+  @include media-up(m) {
     bottom: to-dvh(62px, 900px);
   }
 }

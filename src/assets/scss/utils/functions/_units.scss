@@ -1,6 +1,8 @@
 // =============================================================================
 // UNIT FUNCTIONS
 // =============================================================================
+
+@use '../../tokens/design' as design;
 // Functions for converting between different CSS units (px, rem, em, %, etc.)
 // These functions help maintain consistent sizing across the design system
 
@@ -43,11 +45,11 @@
 // @param {Number} $px - Pixel value to convert
 // @param {Number} $container - Container size (default: design width from tokens)
 // @return {String} CSS calc() expression for percentage
-@function to-percent-x($px, $design-width: $design-width) {
+@function to-percent-x($px, $design-width: design.$design-width) {
   @return calc(#{_num($px)} / #{_num($design-width)} * 100%);
 }
 
-@function to-percent-y($px, $design-height: $design-height) {
+@function to-percent-y($px, $design-height: design.$design-height) {
   @return calc(#{_num($px)} / #{_num($design-height)} * 100%);
 }
 
@@ -79,7 +81,7 @@
 // @param {Number} $px - Pixel value to convert
 // @param {Number} $design-size - Design size (default: design width from tokens)
 // @return {String} CSS calc() expression for vmin
-@function to-vmin($px, $design-size: $design-width) {
+@function to-vmin($px, $design-size: design.$design-width) {
   @return calc(#{_num($px)} / #{_num($design-size)} * 100vmin);
 }
 
@@ -87,7 +89,7 @@
 // @param {Number} $px - Pixel value to convert
 // @param {Number} $design-size - Design size (default: design height from tokens)
 // @return {String} CSS calc() expression for vmax
-@function to-vmax($px, $design-size: $design-height) {
+@function to-vmax($px, $design-size: design.$design-height) {
   @return calc(#{_num($px)} / #{_num($design-size)} * 100vmax);
 }
 

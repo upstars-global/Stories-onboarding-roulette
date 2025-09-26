@@ -42,8 +42,6 @@ const handleClick = (): void => {
 </script>
 
 <style lang="scss" scoped>
-@import '@scss';
-
 .play-button {
   position: absolute;
   top: 50%;
@@ -59,7 +57,7 @@ const handleClick = (): void => {
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
-  @include media(M) {
+  @include media-up(m) {
     width: to-dvh(50px, 900px);
     height: to-dvh(50px, 900px);
   }
@@ -78,7 +76,7 @@ const handleClick = (): void => {
   width: to-dvh(24px);
   height: to-dvh(24px);
   z-index: 1;
-  @include media(M) {
+  @include media-up(m) {
     width: to-dvh(24px, 900px);
     height: to-dvh(24px, 900px);
   }
@@ -95,7 +93,7 @@ const handleClick = (): void => {
 }
 
 .play-icon-path {
-  fill: #ffffff;
+  fill: $color-white;
   transition: fill 0.3s linear;
 }
 

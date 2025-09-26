@@ -9,8 +9,6 @@ import close_btn from '@/assets/images/icons/close.svg?url';
 </script>
 
 <style lang="scss" scoped>
-@import '@scss';
-
 .close-button {
   position: absolute;
   display: flex;
@@ -22,7 +20,7 @@ import close_btn from '@/assets/images/icons/close.svg?url';
   align-items: center;
   cursor: pointer;
   z-index: $z-max;
-  @include media(M) {
+  @include media-up(m) {
     top: 0;
     left: 0;
     width: to-dvh(24px, 900px);

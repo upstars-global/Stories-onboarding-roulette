@@ -1,25 +1,18 @@
-@import 'tokens/colors';
-@import 'tokens/breakpoints';
-@import 'tokens/typography';
-@import 'tokens/shadows';
-@import 'tokens/scale.spacing';
-@import 'tokens/scale.radius';
-@import 'tokens/design';
-@import 'tokens/utilities';
-@import 'tokens/z-index';
+// =============================================================================
+// DESIGN SYSTEM INDEX
+// =============================================================================
+// Только @forward без CSS с побочными эффектами
 
-@import 'utils/functions/math';
-@import 'utils/functions/viewport';
-@import 'utils/functions/units';
+// Tokens
+@forward 'tokens/colors';
+@forward 'tokens/breakpoints';
+@forward 'tokens/typography';
+@forward 'tokens/design';
+@forward 'tokens/z-index';
 
-@import 'utils/mixins/media';
-@import 'utils/mixins/fonts';
-@import 'utils/mixins/layout';
-@import 'utils/mixins/components';
+// Functions
+@forward 'utils/functions/viewport';
+@forward 'utils/functions/units';
 
-/* =============================================================================
-   COMPATIBILITY
-   =============================================================================
-   Для обратной совместимости со старым кодом
-*/
-@import 'compatibility';
+// Mixins
+@forward 'utils/mixins/media';

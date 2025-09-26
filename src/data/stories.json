@@ -72,6 +72,7 @@
         }
       }
     },
+
     {
       "id": "story2",
       "topText": {
@@ -133,6 +134,7 @@
         }
       }
     },
+
     {
       "id": "story3",
       "topText": {
@@ -194,6 +196,7 @@
         }
       }
     },
+
     {
       "id": "story4",
       "topText": {
@@ -255,6 +258,7 @@
         }
       }
     },
+
     {
       "id": "story5",
       "topText": {
@@ -316,6 +320,7 @@
         }
       }
     },
+
     {
       "id": "story6",
       "topText": {
@@ -377,6 +382,7 @@
         }
       }
     },
+
     {
       "id": "story7",
       "topText": {
@@ -404,8 +410,8 @@
         "pt": "<strong>Dobre</strong> sua aposta para obter uma carta se sua mão totalizar 9, 10 ou 11"
       },
       "video": {
-        "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
-        "webm": "/src/assets/videos/stories/en/story_3.webm"
+        "h265": "/src/assets/videos/stories/en/story_7-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_7.webm"
       },
       "ctaButton": {
         "enabled": true,
@@ -438,6 +444,7 @@
         }
       }
     },
+
     {
       "id": "story8",
       "topText": {
@@ -465,8 +472,8 @@
         "pt": "A melhor mão é um Ás + uma carta de 10 pontos (10, J, Q ou K). É chamado Blackjack e paga 3:2"
       },
       "video": {
-        "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
-        "webm": "/src/assets/videos/stories/en/story_4.webm"
+        "h265": "/src/assets/videos/stories/en/story_8-h265.mp4",
+        "webm": "/src/assets/videos/stories/en/story_8.webm"
       },
       "ctaButton": {
         "enabled": true,
@@ -480,7 +487,7 @@
         }
       },
       "helpText": {
-        "enabled": true,
+        "enabled": false,
         "text": {
           "en": "Need more info?",
           "de": "Brauchen Sie mehr Infos?",

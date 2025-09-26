@@ -35,12 +35,10 @@ const positionClass = computed((): string => {
 </script>
 
 <style lang="scss" scoped>
-@import '@scss';
-
 .control-button {
   display: none;
   z-index: 500;
-  @include media(M) {
+  @include media-up(m) {
     cursor: pointer;
     top: 50%;
     display: flex;
