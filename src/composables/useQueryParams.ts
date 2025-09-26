@@ -23,7 +23,7 @@ const DEFAULTS: QueryParams = {
   userLanguage: 'en',
   currency: '',
   endLink: '',
-  gameLink: 'categories/blackjakk',
+  gameLink: 'live/categories/blackjakk',
   storiesTotal: 4,
 };
 
