@@ -23,6 +23,7 @@
       class="text_container"
       :class="{
         'has-help-text': currentStory?.helpText?.enabled,
+        'first-slide': currentStoryIndex === 0,
       }"
     >
       <template v-for="(story, index) in stories" :key="`story-${story.id}`">
