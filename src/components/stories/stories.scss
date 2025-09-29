@@ -57,7 +57,7 @@
   -ms-user-select: none;
   user-select: none;
   outline: none;
-  @include media-up(m) {
+  @include media-up(md) {
     width: auto;
     left: 50%;
     transform: translate(-50%);
@@ -73,8 +73,8 @@
   display: flex;
   background: #032807; // Default background for all slides
 
-  // First slide gets gradient background
-  &.first-slide {
+  // Intro slides (first two) get gradient background
+  &.intro-slides {
     background: linear-gradient(
       0deg,
       #fd7f00 0%,
@@ -89,7 +89,7 @@
     );
   }
 
-  @include media-up(m) {
+  @include media-up(md) {
     width: to-dvh(432px, 900px);
     left: 50%;
     top: 50%;
@@ -113,7 +113,7 @@
   width: to-percent-x(328px);
   height: 87%;
   position: absolute;
-  @include media-up(m) {
+  @include media-up(md) {
     top: to-percent-y(104%, 768px);
     left: to-percent-x(19px, 432px);
     width: to-percent-x(394px, 432px);
@@ -142,7 +142,7 @@
     font-size: 3.5dvh;
   }
 
-  @include media-up(m) {
+  @include media-up(md) {
     margin-bottom: to-dvh(12px, 900px);
     font-size: to-dvh(34px, 900px);
   }
@@ -163,7 +163,7 @@
   @media (max-aspect-ratio: 1/2) {
     font-size: 1.8dvh;
   }
-  @include media-up(m) {
+  @include media-up(md) {
     font-size: to-dvh(17px, 900px);
   }
   ul {
@@ -172,7 +172,7 @@
     margin-top: to-dvh(10px);
     padding: 0;
     padding-left: to-dvh(7px);
-    @include media-up(m) {
+    @include media-up(md) {
       margin-top: to-dvh(10px, 900px);
       padding-left: to-dvh(7px, 900px);
     }
@@ -183,7 +183,7 @@
       padding-left: to-dvh(14px);
       text-indent: 0;
 
-      @include media-up(m) {
+      @include media-up(md) {
         padding-left: to-dvh(14px, 900px);
       }
 
@@ -214,7 +214,7 @@
   user-select: none;
   pointer-events: none;
   z-index: 0;
-  @include media-up(m) {
+  @include media-up(md) {
     height: 90%;
     top: 5%;
     border-radius: 1rem;
@@ -238,7 +238,7 @@
   top: to-dvh(38px);
   z-index: 9999;
   cursor: pointer;
-  @include media-up(m) {
+  @include media-up(md) {
     left: 50%;
     transform: translate(to-dvh(175px, 900px));
     margin-left: 0;
@@ -254,7 +254,7 @@
   top: to-dvh(38px);
   z-index: 9999;
   cursor: pointer;
-  @include media-up(m) {
+  @include media-up(md) {
     left: 50%;
     transform: translate(to-dvh(169px, 900px));
     margin-left: 0;
@@ -267,7 +267,7 @@
   z-index: 500;
   top: 0;
   left: 45dvh;
-  @include media-up(m) {
+  @include media-up(md) {
     left: 50%;
     transform: translate(to-dvh(114px, 900px));
     top: to-dvh(112px, 900px);
@@ -283,7 +283,7 @@
   margin-left: to-percent-x(16px);
   z-index: 10;
   align-items: center;
-  @include media-up(m) {
+  @include media-up(md) {
     margin-top: to-dvh(75px, 900px);
     margin-left: 0;
     left: 50%;
@@ -301,7 +301,7 @@
   height: to-dvh(44px, 640px);
   aspect-ratio: 1/1;
   z-index: 5;
-  @include media-up(m) {
+  @include media-up(md) {
     width: to-dvh(44px, 900px);
     height: to-dvh(44px, 900px);
   }
@@ -318,7 +318,7 @@
   margin-left: to-dvh(16px, 900px);
   line-height: $line-height-loose;
 
-  @include media-up(m) {
+  @include media-up(md) {
     max-width: 34dvh;
     font-size: to-dvh(14px, 900px);
   }
@@ -338,7 +338,7 @@
   font-style: normal;
   font-weight: $font-weight-normal;
   line-height: $line-height-normal;
-  @include media-up(m) {
+  @include media-up(md) {
     font-size: to-dvh(12px, 900px);
   }
 
@@ -394,7 +394,7 @@
   height: 100dvh;
   z-index: 0;
   object-fit: cover;
-  @include media-up(m) {
+  @include media-up(md) {
     top: -12dvh;
     height: 117%;
     object-fit: contain;
@@ -403,14 +403,14 @@
   .has-help-text & {
     // top: -14.5dvh;
 
-    // @include media-up(m) {
+    // @include media-up(md) {
     //   top: -9.5dvh;
     //   height: 115%;
     // }
 
     top: to-dvh(-39px);
 
-    @include media-up(m) {
+    @include media-up(md) {
       top: -5.5dvh;
     }
   }
@@ -443,7 +443,7 @@
   text-align: center;
   color: var(--color-text-alt, #f7f7f7);
 
-  @include media-up(m) {
+  @include media-up(md) {
     bottom: to-dvh(16px, 900px);
   }
 }

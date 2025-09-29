@@ -20,7 +20,7 @@ import close_btn from '@/assets/images/icons/close.svg?url';
   align-items: center;
   cursor: pointer;
   z-index: $z-max;
-  @include media-up(m) {
+  @include media-up(md) {
     top: 0;
     left: 0;
     width: to-dvh(24px, 900px);

@@ -68,7 +68,7 @@ const handleClick = (): void => {
 .desktop-pause-play-button {
   display: none;
   z-index: 500;
-  @include media-up(m) {
+  @include media-up(md) {
     display: flex;
     position: absolute;
     top: 0;

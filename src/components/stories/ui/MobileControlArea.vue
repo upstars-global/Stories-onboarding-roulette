@@ -28,7 +28,7 @@ const positionClass = computed((): string => {
   top: 0;
   z-index: 9996;
   user-select: none;
-  @include media-up(m) {
+  @include media-up(md) {
     display: none;
   }
 }

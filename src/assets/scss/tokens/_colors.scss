@@ -17,6 +17,8 @@ $color-white: #fff;
 $color-progress-filled: #c1b3db;
 $color-progress-empty: rgba(0, 10, 18, 0.16);
 
+$color-layer-body: #110e1b;
+
 :root {
   --color-primary-1: #{$color-primary-1};
   --color-primary-3: #{$color-primary-3};
@@ -33,4 +35,6 @@ $color-progress-empty: rgba(0, 10, 18, 0.16);
 
   --color-progress-filled: #{$color-progress-filled};
   --color-progress-empty: #{$color-progress-empty};
+
+  --color-layer-body: #{$color-layer-body};
 }

@@ -70,7 +70,7 @@ const handleClick = (): void => {
   align-items: center;
   cursor: pointer;
 
-  @include media-up(m) {
+  @include media-up(md) {
     height: to-dvh(24px, 900px);
     width: to-dvh(24px, 900px);
   }
@@ -97,7 +97,7 @@ const handleClick = (): void => {
 .sound-icons {
   fill: var(--color-text-alt);
   transition: fill 0.3s linear;
-  @include media-up(m) {
+  @include media-up(md) {
     fill: var(--color-text-body);
   }
 }
@@ -106,7 +106,7 @@ const handleClick = (): void => {
   fill: var(--color-text-alt);
 }
 
-@include media-up(m) {
+@include media-up(md) {
   .mute-button:hover .sound-icons {
     fill: var(--color-text-alt);
   }

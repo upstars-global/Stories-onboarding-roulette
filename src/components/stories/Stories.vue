@@ -1,12 +1,15 @@
 <template>
   <div class="story-container">
+    <!-- Orientation Lock -->
+    <OrientationLock :user-language="userLanguage" />
+
     <StoriesTopBar
       :progress
       :number-of-segments="numberOfSegments"
       :current-index="currentStoryIndex"
     />
     <div class="info_row">
-      <img :src="assets.storyIcon" class="story_icon" alt="" />
+      <img :src="ui.storyIcon" class="story_icon" alt="" />
       <div class="story_icon_top_text">
         <b>{{ getLocalizedText(title, userLanguage) }} </b>
         <br />
@@ -23,7 +26,7 @@
       class="text_container"
       :class="{
         'has-help-text': currentStory?.helpText?.enabled,
-        'first-slide': currentStoryIndex === 0,
+        'intro-slides': currentStoryIndex <= 1,
       }"
     >
       <template v-for="(story, index) in stories" :key="`story-${story.id}`">
@@ -45,11 +48,7 @@
 
       <CtaButton
         v-if="currentStory?.ctaButton?.enabled"
-        :button-text="
-          currentStory?.ctaButton?.text
-            ? getLocalizedText(currentStory.ctaButton.text, userLanguage)
-            : 'Start game'
-        "
+        :button-text="getLocalizedText(ui.ctaButton.text, userLanguage)"
         @click="goToGame"
       />
 
@@ -58,17 +57,9 @@
         class="help-text"
         style="display: none"
       >
-        {{
-          currentStory.helpText.text
-            ? getLocalizedText(currentStory.helpText.text, userLanguage)
-            : 'Need more info? '
-        }}
+        {{ getLocalizedText(ui.helpText.text, userLanguage) }}
         <a href="#" class="help-text-link">
-          {{
-            currentStory.helpText.link
-              ? getLocalizedText(currentStory.helpText.link, userLanguage)
-              : 'Read our guide'
-          }}
+          {{ getLocalizedText(ui.helpText.link, userLanguage) }}
         </a>
       </div>
     </div>
@@ -132,6 +123,7 @@ import {
   CtaButton,
   CloseButton,
   CustomVideoPlayButton,
+  OrientationLock,
 } from '@components/stories/ui';
 import StorySlide from '@components/stories/StorySlide.vue';
 
@@ -176,7 +168,7 @@ const {
   gameLink: qpGame,
 } = useQueryParams();
 useLocale(ref(qpLang));
-const { assets, title, stories } = useStoriesData();
+const { title, ui, stories } = useStoriesData();
 const userLanguage = qpLang;
 
 const end_link = ref(qpEnd);

@@ -51,7 +51,7 @@ const segmentProgress = (index: number): string => {
   pointer-events: none;
   user-select: none;
   -moz-user-select: none;
-  @include media-up(m) {
+  @include media-up(md) {
     top: to-percent-y(63px, 900px);
   }
 }
@@ -60,7 +60,7 @@ const segmentProgress = (index: number): string => {
   top: 0;
   position: relative;
   width: to-percent-x(328px);
-  @include media-up(m) {
+  @include media-up(md) {
     width: to-dvh(394px, 900px);
   }
 }
@@ -72,7 +72,7 @@ const segmentProgress = (index: number): string => {
   width: 100%;
   display: flex;
   z-index: 10;
-  @include media-up(m) {
+  @include media-up(md) {
     width: to-dvh(394px, 900px);
     margin-top: to-dvh(24px, 900px);
   }
@@ -84,7 +84,7 @@ const segmentProgress = (index: number): string => {
 
   &:not(:last-child) {
     margin-right: to-dvh(4px);
-    @include media-up(m) {
+    @include media-up(md) {
       margin-right: to-dvh(4px, 900px);
     }
   }

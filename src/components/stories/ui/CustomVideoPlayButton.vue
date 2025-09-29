@@ -57,7 +57,7 @@ const handleClick = (): void => {
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
-  @include media-up(m) {
+  @include media-up(md) {
     width: to-dvh(50px, 900px);
     height: to-dvh(50px, 900px);
   }
@@ -76,7 +76,7 @@ const handleClick = (): void => {
   width: to-dvh(24px);
   height: to-dvh(24px);
   z-index: 1;
-  @include media-up(m) {
+  @include media-up(md) {
     width: to-dvh(24px, 900px);
     height: to-dvh(24px, 900px);
   }

@@ -38,7 +38,7 @@ const positionClass = computed((): string => {
 .control-button {
   display: none;
   z-index: 500;
-  @include media-up(m) {
+  @include media-up(md) {
     cursor: pointer;
     top: 50%;
     display: flex;
