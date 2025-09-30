@@ -20,8 +20,6 @@ const positionClass = computed((): string => {
 </script>
 
 <style lang="scss" scoped>
-@import '@scss';
-
 .control-area {
   position: absolute;
   height: 100%;
@@ -30,7 +28,7 @@ const positionClass = computed((): string => {
   top: 0;
   z-index: 9996;
   user-select: none;
-  @include media(M) {
+  @include media-up(md) {
     display: none;
   }
 }

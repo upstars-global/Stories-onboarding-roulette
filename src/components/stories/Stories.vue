@@ -1,12 +1,18 @@
 <template>
   <div class="story-container">
+    <!-- Orientation Warning -->
+    <OrientationWarning
+      :user-language="userLanguage"
+      @warning-visible="onWarningVisible"
+    />
+
     <StoriesTopBar
       :progress
       :number-of-segments="numberOfSegments"
       :current-index="currentStoryIndex"
     />
     <div class="info_row">
-      <img :src="assets.storyIcon" class="story_icon" alt="" />
+      <img :src="ui.storyIcon" class="story_icon" alt="" />
       <div class="story_icon_top_text">
         <b>{{ getLocalizedText(title, userLanguage) }} </b>
         <br />
@@ -47,7 +53,7 @@
         :button-text="
           currentStory?.ctaButton?.text
             ? getLocalizedText(currentStory.ctaButton.text, userLanguage)
-            : 'Start game'
+            : getLocalizedText(ui.ctaButton.text, userLanguage)
         "
         @click="goToGame"
       />
@@ -57,17 +63,9 @@
         class="help-text"
         style="display: none"
       >
-        {{
-          currentStory.helpText.text
-            ? getLocalizedText(currentStory.helpText.text, userLanguage)
-            : 'Need more info? '
-        }}
+        {{ getLocalizedText(ui.helpText.text, userLanguage) }}
         <a href="#" class="help-text-link">
-          {{
-            currentStory.helpText.link
-              ? getLocalizedText(currentStory.helpText.link, userLanguage)
-              : 'Read our guide'
-          }}
+          {{ getLocalizedText(ui.helpText.link, userLanguage) }}
         </a>
       </div>
     </div>
@@ -131,6 +129,7 @@ import {
   CtaButton,
   CloseButton,
   CustomVideoPlayButton,
+  OrientationWarning,
 } from '@components/stories/ui';
 import StorySlide from '@components/stories/StorySlide.vue';
 
@@ -175,7 +174,7 @@ const {
   gameLink: qpGame,
 } = useQueryParams();
 useLocale(ref(qpLang));
-const { assets, title, stories } = useStoriesData();
+const { title, ui, stories } = useStoriesData();
 const userLanguage = qpLang;
 
 const end_link = ref(qpEnd);
@@ -361,6 +360,14 @@ const onToggleMute = (muted: boolean) => {
     video.muted = muted;
   }
   window.parent.postMessage(muted ? 'mute_video' : 'unmute_video', '*');
+};
+
+const onWarningVisible = (isVisible: boolean) => {
+  if (isVisible) {
+    onPause();
+  } else {
+    onPlay();
+  }
 };
 
 const onNext = () => {

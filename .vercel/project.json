@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_eHlBkRlXqK8fkcwrlA641UAXRriH",
+  "orgId": "team_RRYcSHrnCCQxN7mI8zEsGTAO",
+  "projectName": "stories-onboarding-blackjack",
+  "settings": {
+    "createdAt": 1758895233681,
+    "framework": "vite",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "22.x"
+  }
+}

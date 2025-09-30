@@ -65,12 +65,10 @@ const handleClick = (): void => {
 </script>
 
 <style lang="scss" scoped>
-@import '@scss';
-
 .desktop-pause-play-button {
   display: none;
   z-index: 500;
-  @include media(M) {
+  @include media-up(md) {
     display: flex;
     position: absolute;
     top: 0;

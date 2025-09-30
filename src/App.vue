@@ -9,5 +9,5 @@ import Stories from '@components/stories/Stories.vue';
 </script>
 
 <style lang="scss">
-@import '@scss';
+@import '@/assets/scss/index.scss';
 </style>

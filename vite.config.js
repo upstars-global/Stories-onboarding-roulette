@@ -12,8 +12,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-          @use "@/assets/scss/utils/functions/_index.scss" as *;
-          @use "@/assets/scss/utils/mixins/_index.scss" as *;
+          @use "@/assets/scss/index.scss" as *;
         `,
       },
     },
@@ -23,7 +22,6 @@ export default defineConfig({
       '@components': path.resolve(__dirname, './src/components'),
       '@plugins': path.resolve(__dirname, './src/plugins'),
       '@src': path.resolve(__dirname, './src'),
-      '@scss': path.resolve(__dirname, './src/assets/scss'),
       '@': path.resolve(__dirname, './src'),
     },
   },

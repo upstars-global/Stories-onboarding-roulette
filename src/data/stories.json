@@ -1,202 +1,220 @@
 {
-  "assets": {
-    "storyIcon": "/src/assets/images/icons/story_icon.webp"
-  },
-  "title": {
-    "en": "How to: Roulette",
-    "de": "How to: Roulette",
-    "fr": "Comment jouer : Roulette",
-    "it": "Come fare: Roulette",
-    "es": "How to: Roulette",
-    "pt": "Como jogar: Roleta"
-  },
-  "stories": [
-    {
-      "id": "story1",
-      "topText": {
-        "en": "<span>Step 1.</span>Get to know Roulette",
-        "de": "<span>Schritt 1.</span>Lerne Roulette kennen",
-        "fr": "<span>Étape 1.</span>Découvre la Roulette",
-        "it": "<span>Passo 1.</span>Conosci la Roulette",
-        "es": "<span>Paso 1.</span>Conoce la Ruleta",
-        "pt": "<span>Passo 1.</span>Conheça a Roleta"
-      },
-      "header": {
-        "en": "🎉 Welcome to Live Roulette! 🚀",
-        "de": "🎉 Willkommen bei Live Roulette! 🚀",
-        "fr": "🎉 Bienvenue à la Roulette en live ! 🚀",
-        "it": "🎉 Benvenuto/a alla Live Roulette! 🚀",
-        "es": "🎉 ¡Bienvenido a la Ruleta Live! 🚀",
-        "pt": "🎉 Bem-vindo à Roleta Live! 🚀"
-      },
-      "description": {
-        "en": "Roulette is a classic casino game where you bet on which pocket the ball will land in on the wheel",
-        "de": "Roulette ist ein klassisches Casinospiel, bei dem du darauf wettest, in welches Fach die Kugel auf dem Rad fallen wird",
-        "fr": "La Roulette est un jeu de casino classique où tu paries sur la case de la roue dans laquelle la bille va s'arrêter",
-        "it": "La Roulette è un classico gioco da casinò in cui punti su quale tasca cadrà la pallina nella ruota",
-        "es": "La Ruleta es un clásico del casino donde apuestas en qué casilla caerá la bola en la rueda",
-        "pt": "A roleta é um clássico jogo de cassino no qual você aposta em qual bolso a bola vai cair na roda"
-      },
-      "video": {
-        "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
-        "webm": "/src/assets/videos/stories/en/story_1.webm"
-      },
-      "ctaButton": {
-        "enabled": true,
-        "text": {
-          "en": "Start game",
-          "de": "Spiel starten",
-          "fr": "Commencer le jeu",
-          "it": "Inizia il gioco",
-          "es": "Comenzar juego",
-          "pt": "Começar jogo"
-        }
-      }
+  "stories": {
+    "title": {
+      "en": "How to: Roulette",
+      "de": "How to: Roulette",
+      "fr": "Comment jouer : Roulette",
+      "it": "Come fare: Roulette",
+      "es": "How to: Roulette",
+      "pt": "Como jogar: Roleta"
     },
-    {
-      "id": "story2",
-      "topText": {
-        "en": "<span>Step 2.</span>Placing your bet",
-        "de": "<span>Schritt 2.</span>Deinen Einsatz platzieren",
-        "fr": "<span>Étape 2.</span>Placer ta mise",
-        "it": "<span>Passo 2.</span>Piazzare la puntata",
-        "es": "<span>Paso 2.</span>Realiza tu apuesta",
-        "pt": "<span>Passo 2.</span>Faça sua aposta"
-      },
-      "header": {
-        "en": "💡 How to bet",
-        "de": "💡 So setzt du",
-        "fr": "💡 Comment miser",
-        "it": "💡 Come puntare",
-        "es": "💡 Cómo apostar",
-        "pt": "💡 Como apostar"
-      },
-      "description": {
-        "en": "Select your chips and place them on  your chosen numbers, colours, or sections. It's quick and easy!",
-        "de": "Wähle deine Chips und platziere sie auf den gewünschten Zahlen, Farben oder Bereichen. Es ist schnell und einfach!",
-        "fr": "Sélectionne tes jetons et place-les sur les numéros, les couleurs ou les sections de ton choix. C'est simple et rapide !",
-        "it": "Seleziona le tue fiches e posizionale sui numeri, colori o sezioni scelti. È veloce e semplice!",
-        "es": "Selecciona tus fichas y colócalas en tus números, colores o secciones elegidos. ¡Es rápido y sencillo!",
-        "pt": "Escolha suas fichas e coloque-as nos números, cores ou seções de sua escolha. É rápido e fácil!"
-      },
-      "video": {
-        "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
-        "webm": "/src/assets/videos/stories/en/story_2.webm"
-      },
-      "ctaButton": {
-        "enabled": true,
-        "text": {
-          "en": "Start game",
-          "de": "Spiel starten",
-          "fr": "Commencer le jeu",
-          "it": "Inizia il gioco",
-          "es": "Comenzar juego",
-          "pt": "Começar jogo"
-        }
-      }
-    },
-    {
-      "id": "story3",
-      "topText": {
-        "en": "<span>Step 3.</span>Wait for the ball to land",
-        "de": "<span>Schritt 3.</span>Warte, bis die Kugel landet",
-        "fr": "<span>Étape 3.</span>Attends que la bille s'arrête",
-        "it": "<span>Passo 3.</span>Aspetta che la pallina si fermi",
-        "es": "<span>Paso 3.</span>Espera a que caiga la bola",
-        "pt": "<span>Passo 3.</span>Espere a bola parar"
-      },
-      "header": {
-        "en": "🎯 What happens after you bet? ",
-        "de": "🎯 Was passiert nach deinem Einsatz?",
-        "fr": "🎯 Que se passe-t-il après avoir misé ?",
-        "it": "🎯 Cosa succede dopo aver puntato?",
-        "es": "🎯 ¿Qué sucede después de apostar?",
-        "pt": "🎯 O que acontece depois da aposta?"
-      },
-      "description": {
-        "en": "Once all bets are placed, the dealer spins the wheel. Just relax and watch the ball land on a number",
-        "de": "Sobald alle Einsätze platziert sind, dreht der Dealer das Rad. Lehne dich zurück und beobachte, wie die Kugel auf einer Zahl landet",
-        "fr": "Une fois toutes les mises placées, le croupier fait tourner la roue. Détends-toi et regarde la bille s'arrêter sur un numéro",
-        "it": "Una volta piazzate tutte le puntate, il croupier fa girare la ruota. Rilassati e guarda la pallina fermarsi su un numero",
-        "es": "Cuando todas las apuestas están hechas, el crupier hace girar la rueda. Solo relájate y mira dónde cae la bola",
-        "pt": "Depois que todas as apostas forem feitas, o crupiê gira a roleta. Basta relaxar e assistir a bola cair em um número"
-      },
-      "video": {
-        "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
-        "webm": "/src/assets/videos/stories/en/story_3.webm"
-      },
-      "ctaButton": {
-        "enabled": true,
-        "text": {
-          "en": "Start game",
-          "de": "Spiel starten",
-          "fr": "Commencer le jeu",
-          "it": "Inizia il gioco",
-          "es": "Comenzar juego",
-          "pt": "Começar jogo"
-        }
-      }
-    },
-    {
-      "id": "story4",
-      "topText": {
-        "en": "<span>Step 4.</span>Find out the result",
-        "de": "<span>Schritt 4.</span>Finde das Ergebnis heraus",
-        "fr": "<span>Étape 4.</span>Découvre le résultat",
-        "it": "<span>Passo 4.</span>Scopri il risultato",
-        "es": "<span>Paso 4.</span>Descubre el resultado",
-        "pt": "<span>Passo 4.</span>Descubra o resultado"
-      },
-      "header": {
-        "en": "🏆 Did you win?",
-        "de": "🏆 Hast du gewonnen?",
-        "fr": "🏆 As-tu gagné ?",
-        "it": "🏆 Hai vinto?",
-        "es": "🏆 ¿Ganaste?",
-        "pt": "🏆 Você ganhou?"
-      },
-      "description": {
-        "en": "If the ball lands on your number, colour, or section, you win! Congratulations! 🎉",
-        "de": "Wenn die Kugel auf deiner Zahl, Farbe oder deinem Bereich landet, hast du gewonnen! Herzlichen Glückwunsch! 🎉",
-        "fr": "Si la bille s'arrête sur ton numéro, ta couleur ou ta section, tu gagnes ! Félicitations ! 🎉",
-        "it": "Se la pallina si ferma sul tuo numero, colore o sezione, vinci! Congratulazioni! 🎉",
-        "es": "Si la bola cae en tu número, color o sección, ¡ganas! ¡Felicidades! 🎉",
-        "pt": "Se a bola cair no seu número, cor ou seção, você ganha! Parabéns! 🎉"
-      },
-      "video": {
-        "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
-        "webm": "/src/assets/videos/stories/en/story_4.webm"
-      },
-      "ctaButton": {
-        "enabled": true,
-        "text": {
-          "en": "Try your luck",
-          "de": "Versuch dein Glück",
-          "fr": "Tente ta chance",
-          "it": "Prova la fortuna",
-          "es": "Prueba tu suerte",
-          "pt": "Tente sua sorte"
-        }
-      },
-      "helpText": {
-        "enabled": true,
-        "text": {
-          "en": "Need more info? ",
-          "de": "Brauchst du mehr Infos? ",
-          "fr": "Besoin de plus d'infos? ",
-          "it": "Hai bisogno di più informazioni? ",
-          "es": "¿Necesitas más información? ",
-          "pt": "Precisa de mais informações? "
+    "items": [
+      {
+        "id": "story1",
+        "topText": {
+          "en": "<span>Step 1.</span>Get to know Roulette",
+          "de": "<span>Schritt 1.</span>Lerne Roulette kennen",
+          "fr": "<span>Étape 1.</span>Découvre la Roulette",
+          "it": "<span>Passo 1.</span>Conosci la Roulette",
+          "es": "<span>Paso 1.</span>Conoce la Ruleta",
+          "pt": "<span>Passo 1.</span>Conheça a Roleta"
         },
-        "link": {
-          "en": "Read our guide",
-          "de": "Lies unseren Guide",
-          "fr": "Lis notre guide",
-          "it": "Leggi la nostra guida",
-          "es": "Lee nuestra guía",
-          "pt": "Leia nosso guia"
+        "header": {
+          "en": "🎉 Welcome to Live Roulette! 🚀",
+          "de": "🎉 Willkommen bei Live Roulette! 🚀",
+          "fr": "🎉 Bienvenue à la Roulette en live ! 🚀",
+          "it": "🎉 Benvenuto/a alla Live Roulette! 🚀",
+          "es": "🎉 ¡Bienvenido a la Ruleta Live! 🚀",
+          "pt": "🎉 Bem-vindo à Roleta Live! 🚀"
+        },
+        "description": {
+          "en": "Roulette is a classic casino game where you bet on which pocket the ball will land in on the wheel",
+          "de": "Roulette ist ein klassisches Casinospiel, bei dem du darauf wettest, in welches Fach die Kugel auf dem Rad fallen wird",
+          "fr": "La Roulette est un jeu de casino classique où tu paries sur la case de la roue dans laquelle la bille va s'arrêter",
+          "it": "La Roulette è un classico gioco da casinò in cui punti su quale tasca cadrà la pallina nella ruota",
+          "es": "La Ruleta es un clásico del casino donde apuestas en qué casilla caerá la bola en la rueda",
+          "pt": "A roleta é um clássico jogo de cassino no qual você aposta em qual bolso a bola vai cair na roda"
+        },
+        "video": {
+          "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
+          "webm": "/src/assets/videos/stories/en/story_1.webm"
+        },
+        "ctaButton": {
+          "enabled": true
+        },
+        "helpText": {
+          "enabled": false
         }
+      },
+      {
+        "id": "story2",
+        "topText": {
+          "en": "<span>Step 2.</span>Placing your bet",
+          "de": "<span>Schritt 2.</span>Deinen Einsatz platzieren",
+          "fr": "<span>Étape 2.</span>Placer ta mise",
+          "it": "<span>Passo 2.</span>Piazzare la puntata",
+          "es": "<span>Paso 2.</span>Realiza tu apuesta",
+          "pt": "<span>Passo 2.</span>Faça sua aposta"
+        },
+        "header": {
+          "en": "💡 How to bet",
+          "de": "💡 So setzt du",
+          "fr": "💡 Comment miser",
+          "it": "💡 Come puntare",
+          "es": "💡 Cómo apostar",
+          "pt": "💡 Como apostar"
+        },
+        "description": {
+          "en": "Select your chips and place them on your chosen numbers, colours, or sections. It's quick and easy!",
+          "de": "Wähle deine Chips und platziere sie auf den gewünschten Zahlen, Farben oder Bereichen. Es ist schnell und einfach!",
+          "fr": "Sélectionne tes jetons et place-les sur les numéros, les couleurs ou les sections de ton choix. C'est simple et rapide !",
+          "it": "Seleziona le tue fiches e posizionale sui numeri, colori o sezioni scelti. È veloce e semplice!",
+          "es": "Selecciona tus fichas y colócalas en tus números, colores o secciones elegidos. ¡Es rápido y sencillo!",
+          "pt": "Selecione suas fichas e coloque-as nos números, cores ou seções escolhidos. É rápido e fácil!"
+        },
+        "video": {
+          "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
+          "webm": "/src/assets/videos/stories/en/story_2.webm"
+        },
+        "ctaButton": {
+          "enabled": true
+        },
+        "helpText": {
+          "enabled": false
+        }
+      },
+      {
+        "id": "story3",
+        "topText": {
+          "en": "<span>Step 3.</span>Wait for the ball to land",
+          "de": "<span>Schritt 3.</span>Warte, bis die Kugel landet",
+          "fr": "<span>Étape 3.</span>Attends que la bille s'arrête",
+          "it": "<span>Passo 3.</span>Aspetta che la pallina si fermi",
+          "es": "<span>Paso 3.</span>Espera a que caiga la bola",
+          "pt": "<span>Passo 3.</span>Espere a bola parar"
+        },
+        "header": {
+          "en": "🎯 What happens after you bet?",
+          "de": "🎯 Was passiert nach deinem Einsatz?",
+          "fr": "🎯 Que se passe-t-il après avoir misé ?",
+          "it": "🎯 Cosa succede dopo aver puntato?",
+          "es": "🎯 ¿Qué sucede después de apostar?",
+          "pt": "🎯 O que acontece depois da aposta?"
+        },
+        "description": {
+          "en": "Once all bets are placed, the dealer spins the wheel. Just relax and watch the ball land on a number",
+          "de": "Sobald alle Einsätze platziert sind, dreht der Dealer das Rad. Lehne dich zurück und beobachte, wie die Kugel auf einer Zahl landet",
+          "fr": "Une fois toutes les mises placées, le croupier fait tourner la roue. Détends-toi et regarde la bille s'arrêter sur un numéro",
+          "it": "Una volta piazzate tutte le puntate, il croupier fa girare la ruota. Rilassati e guarda la pallina fermarsi su un numero",
+          "es": "Cuando todas las apuestas están hechas, el crupier hace girar la rueda. Solo relájate y mira dónde cae la bola",
+          "pt": "Quando todas as apostas estão feitas, o crupiê gira a roda. Apenas relaxe e veja onde a bola cai"
+        },
+        "video": {
+          "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
+          "webm": "/src/assets/videos/stories/en/story_3.webm"
+        },
+        "ctaButton": {
+          "enabled": true
+        },
+        "helpText": {
+          "enabled": false
+        }
+      },
+      {
+        "id": "story4",
+        "topText": {
+          "en": "<span>Step 4.</span>Find out the result",
+          "de": "<span>Schritt 4.</span>Finde das Ergebnis heraus",
+          "fr": "<span>Étape 4.</span>Découvre le résultat",
+          "it": "<span>Passo 4.</span>Scopri il risultato",
+          "es": "<span>Paso 4.</span>Descubre el resultado",
+          "pt": "<span>Passo 4.</span>Descubra o resultado"
+        },
+        "header": {
+          "en": "🏆 Did you win?",
+          "de": "🏆 Hast du gewonnen?",
+          "fr": "🏆 As-tu gagné ?",
+          "it": "🏆 Hai vinto?",
+          "es": "🏆 ¿Ganaste?",
+          "pt": "🏆 Você ganhou?"
+        },
+        "description": {
+          "en": "If the ball lands on your number, colour, or section, you win! Congratulations! 🎉",
+          "de": "Wenn die Kugel auf deiner Zahl, Farbe oder deinem Bereich landet, hast du gewonnen! Herzlichen Glückwunsch! 🎉",
+          "fr": "Si la bille s'arrête sur ton numéro, ta couleur ou ta section, tu gagnes ! Félicitations ! 🎉",
+          "it": "Se la pallina si ferma sul tuo numero, colore o sezione, vinci! Congratulazioni! 🎉",
+          "es": "Si la bola cae en tu número, color o sección, ¡ganas! ¡Felicidades! 🎉",
+          "pt": "Se a bola cair no seu número, cor ou seção, você ganha! Parabéns! 🎉"
+        },
+        "video": {
+          "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
+          "webm": "/src/assets/videos/stories/en/story_4.webm"
+        },
+        "ctaButton": {
+          "enabled": true,
+          "text": {
+            "en": "Try your luck",
+            "de": "Versuch dein Glück",
+            "fr": "Tente ta chance",
+            "it": "Prova la fortuna",
+            "es": "Prueba tu suerte",
+            "pt": "Tente sua sorte"
+          }
+        },
+        "helpText": {
+          "enabled": true
+        }
+      }
+    ]
+  },
+  "ui": {
+    "storyIcon": "/src/assets/images/icons/story_icon.webp",
+    "orientationLock": {
+      "icon": "/src/assets/images/icons/rotate-device.svg",
+      "title": {
+        "en": "Turn your phone",
+        "de": "Drehe dein Handy",
+        "fr": "Tournez votre téléphone",
+        "it": "Gira il telefono",
+        "es": "Gira tu teléfono",
+        "pt": "Gire o seu telefone"
+      },
+      "description": {
+        "en": "To watch WinSpirit Stories, turn your phone vertically",
+        "de": "Um WinSpirit Stories anzusehen, drehe dein Handy vertikal",
+        "fr": "Pour regarder WinSpirit Stories, tournez votre téléphone verticalement",
+        "it": "Per guardare WinSpirit Stories, gira il telefono in verticale",
+        "es": "Para ver WinSpirit Stories, gira tu teléfono verticalmente",
+        "pt": "Para assistir ao WinSpirit Stories, gire o seu telefone na vertical"
+      }
+    },
+    "ctaButton": {
+      "text": {
+        "en": "Start game",
+        "de": "Spiel starten",
+        "fr": "Commencer le jeu",
+        "it": "Inizia il gioco",
+        "es": "Comenzar juego",
+        "pt": "Começar jogo"
+      }
+    },
+    "helpText": {
+      "text": {
+        "en": "Need more info? ",
+        "de": "Brauchst du mehr Infos? ",
+        "fr": "Besoin de plus d'infos? ",
+        "it": "Hai bisogno di più informazioni? ",
+        "es": "¿Necesitas más información? ",
+        "pt": "Precisa de mais informações? "
+      },
+      "link": {
+        "en": "Read our guide",
+        "de": "Lies unseren Guide",
+        "fr": "Lis notre guide",
+        "it": "Leggi la nostra guida",
+        "es": "Lee nuestra guía",
+        "pt": "Leia nosso guia"
       }
     }
-  ]
+  }
 }
