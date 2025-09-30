@@ -27,7 +27,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
-  'orientation-lock': [isLocked: boolean];
+  'warning-visible': [isVisible: boolean];
 }>();
 
 const { ui } = useStoriesData();
@@ -42,7 +42,7 @@ onMounted(() => {
   intersectionObserver = new IntersectionObserver(
     (entries: IntersectionObserverEntry[]) => {
       const isVisible = entries[0]?.isIntersecting ?? false;
-      emit('orientation-lock', isVisible);
+      emit('warning-visible', isVisible);
     }
   );
 
