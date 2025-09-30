@@ -23,6 +23,7 @@
     "moduleResolution": "bundler",
     "module": "ESNext",
     "target": "ES2022",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"]
   }
 }

@@ -31,6 +31,8 @@ export default [
         HTMLVideoElement: 'readonly',
         Event: 'readonly',
         MessageEvent: 'readonly',
+        IntersectionObserver: 'readonly',
+        IntersectionObserverEntry: 'readonly',
         // Node.js globals for vite.config.js
         __dirname: 'readonly',
         URL: 'readonly',

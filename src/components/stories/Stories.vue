@@ -1,7 +1,9 @@
 <template>
   <div class="story-container">
-    <!-- Orientation Lock -->
-    <OrientationLock :user-language="userLanguage" />
+    <OrientationWarning
+      :user-language="userLanguage"
+      @warning-visible="onWarningVisible"
+    />
 
     <StoriesTopBar
       :progress
@@ -123,7 +125,7 @@ import {
   CtaButton,
   CloseButton,
   CustomVideoPlayButton,
-  OrientationLock,
+  OrientationWarning,
 } from '@components/stories/ui';
 import StorySlide from '@components/stories/StorySlide.vue';
 
@@ -403,6 +405,14 @@ const onToggleMute = (muted: boolean) => {
     video.muted = muted;
   }
   window.parent.postMessage(muted ? 'mute_video' : 'unmute_video', '*');
+};
+
+const onWarningVisible = (isVisible: boolean) => {
+  if (isVisible) {
+    onPause();
+  } else {
+    onPlay();
+  }
 };
 
 const onNext = () => {

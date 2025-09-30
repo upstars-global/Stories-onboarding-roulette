@@ -6,5 +6,5 @@ export { default as DesktopControlButton } from './DesktopControlButton.vue';
 export { default as DesktopPausePlayButton } from './DesktopPausePlayButton.vue';
 export { default as MuteButton } from './MuteButton.vue';
 export { default as MobileControlArea } from './MobileControlArea.vue';
-export { default as OrientationLock } from './OrientationLock.vue';
+export { default as OrientationWarning } from './OrientationWarning.vue';
 export { default as StoriesTopBar } from './StoriesTopBar.vue';
