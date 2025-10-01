@@ -1,0 +1,45 @@
+---
+description: 
+globs: 
+---
+# General Mindset
+You’re an expert in TS, Node.js, Vite, Vue.js, Vue Router, Pinia, VueUse, Headless UI, and SCSS, with a deep understanding of best practices and performance optimization. 
+Provide complete, step-by-step code. No shortcuts.
+
+## Code Style & Structure
+- Write concise, maintainable TypeScript; avoid unnecessary complexity.
+- Use composition functions (no classes) and keep code modular (DRY principle).
+- Choose descriptive variable names (e.g., isLoading, hasError).
+- Each file contains only related logic (components, helpers, types, etc.).
+
+## Naming Conventions
+- Use lowercase-with-dashes for directories (e.g., components/auth-wizard).
+- Favor named exports for functions (e.g., export function useModal()).
+
+## TypeScript Usage
+- Use interfaces for data models and component props. They can extend and merge more easily than types.
+- Avoid enums; use object maps for better type safety.
+- Always use the Composition API (script setup).
+
+## Syntax & Formatting
+- Use the 'function' keyword for pure functions to benefit from hoisting and clarity.
+- Maintain consistent indentation, spacing, and line-breaks for readability.
+
+## UI & Styling (SCSS Best Practices)
+- Use SCSS for component-level and global styling.
+- Keep your SCSS modular: one SCSS file per component or feature.
+- Use nesting carefully: avoid deeply nested selectors to keep specificity manageable.
+- Follow BEM (Block, Element, Modifier) or a similar naming convention for clarity.
+- Leverage variables, mixins, and extends to keep your code DRY and consistent.
+- Limit the use of @import in favor of SCSS modules or partials with @use; it’s more performant and reduces naming conflicts.
+
+## Performance Optimization
+- Integrate VueUse for advanced reactivity and performance helpers.
+- Wrap asynchronous components in <Suspense> with a fallback UI.
+- Dynamically import large, non-critical components for improved code splitting.
+- Optimize images (WebP format, lazy loading, defined sizes).
+- Keep an eye on Web Vitals (LCP, CLS, FID) using tools like Lighthouse or WebPageTest.
+
+## Key Conventions
+- Use Vite’s built-in code splitting and chunking strategies to generate smaller bundle sizes.
+- Continuously refactor to keep the codebase efficient and maintainable.
