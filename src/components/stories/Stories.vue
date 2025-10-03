@@ -247,35 +247,6 @@ function startProgressLoopFor(video: HTMLVideoElement) {
   }
 }
 
-const animateListItems = (
-  seg: gsap.core.Timeline,
-  deskSel: string,
-  deskText: string
-) => {
-  const el = document.querySelector(deskSel) as HTMLElement | null;
-  if (!el) return;
-
-  el.innerHTML = deskText;
-  const items = el.querySelectorAll('li');
-  items.forEach((li, i) => {
-    const fullText = li.innerText.trim();
-    li.textContent = '';
-
-    seg.to(
-      li,
-      {
-        duration: 1,
-        text: { value: fullText, padSpace: false, delimiter: '' },
-        ease: 'none',
-        onStart: () => {
-          li.classList.add('animate-bullet');
-        },
-      },
-      i === 0 ? '>' : '+=0.2'
-    );
-  });
-};
-
 const animateRegularText = (
   seg: gsap.core.Timeline,
   deskSel: string,
@@ -296,6 +267,91 @@ const animateRegularText = (
   );
 };
 
+/**
+ * DOM-safe typewriter: types text node by text node while preserving all nested tags.
+ * Scope-limited: operates ONLY within the provided container selector.
+ */
+const animateListItems = (
+  seg: gsap.core.Timeline,
+  deskSel: string,
+  deskHTML: string
+) => {
+  const container = document.querySelector(deskSel) as HTMLElement | null;
+  if (!container) return;
+
+  // Render provided HTML into target container
+  container.innerHTML = deskHTML;
+  const items = container.querySelectorAll('li');
+
+  items.forEach((li, i) => {
+    // Collect all non-empty text nodes within current <li>
+    const textNodes: Array<{ node: globalThis.Text; full: string }> = [];
+    // 4 = SHOW_TEXT, 1 = FILTER_ACCEPT, 2 = FILTER_REJECT (avoid global NodeFilter reference)
+    const walker = document.createTreeWalker(li, 4, {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      acceptNode(node: any) {
+        const v = (node.nodeValue || '') as string;
+        return v.trim().length > 0 ? 1 : 2;
+      },
+    } as unknown as globalThis.NodeFilter);
+
+    let current = walker.nextNode() as globalThis.Node | null;
+    while (current) {
+      textNodes.push({
+        node: current as unknown as globalThis.Text,
+        full: (current.nodeValue || '') as string,
+      });
+      current = walker.nextNode() as globalThis.Node | null;
+    }
+
+    // Nothing to animate → still add bullet appearance
+    if (textNodes.length === 0) {
+      seg.add(
+        () => li.classList.add('animate-bullet'),
+        i === 0 ? '>' : '+=0.2'
+      );
+      return;
+    }
+
+    // Clear all text nodes to avoid flashes
+    textNodes.forEach((t) => (t.node.textContent = ''));
+
+    // Total characters across all text nodes
+    const totalChars = textNodes.reduce((acc, t) => acc + t.full.length, 0);
+    const proxy = { p: 0 };
+    const charsPerSecond = 40; // typing speed; tune if needed
+    const duration = Math.max(0.6, totalChars / charsPerSecond);
+
+    // Helper to populate nodes based on current progress
+    const renderProgress = (p: number) => {
+      let remain = Math.floor(p);
+      for (const t of textNodes) {
+        if (remain <= 0) {
+          t.node.textContent = '';
+          continue;
+        }
+        const take = Math.min(remain, t.full.length);
+        t.node.textContent = t.full.slice(0, take);
+        remain -= take;
+      }
+    };
+
+    // Animate progress across all nodes; add bullet class at start
+    seg.to(
+      proxy,
+      {
+        duration,
+        p: totalChars,
+        ease: 'none',
+        onStart: () => li.classList.add('animate-bullet'),
+        onUpdate: () => renderProgress(proxy.p),
+        onComplete: () => renderProgress(totalChars),
+      },
+      i === 0 ? '>' : '+=0.2'
+    );
+  });
+};
+
 const buildStoryTimeline = (index: number) => {
   const storyNum = index + 1;
   const headerSel = `#header${storyNum}`;
@@ -314,6 +370,7 @@ const buildStoryTimeline = (index: number) => {
     seg.to(deskSel, { opacity: 1 }, '+0.1');
 
     if (deskText.includes('<li')) {
+      // Печать списков с сохранением вложенных тегов
       animateListItems(seg, deskSel, deskText);
     } else {
       animateRegularText(seg, deskSel, deskText);
