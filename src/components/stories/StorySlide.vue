@@ -13,13 +13,12 @@
       @timeupdate="$emit('timeupdate', $event)"
       @loadedmetadata="$emit('loadedmetadata')"
     >
+      <source :src="story.video.webm" type="video/webm" />
       <source
         v-if="!isAndroid"
         :src="story.video.h265"
-        type="video/mp4"
-        codecs="h265"
+        type="video/mp4; codecs=hvc1"
       />
-      <source :src="story.video.webm" type="video/webm" />
     </video>
     <div :id="`header${currentIndex + 1}`" class="h1">{{ headerText }}</div>
     <div :id="`desk${currentIndex + 1}`" class="h2">{{ descriptionText }}</div>
