@@ -1,6 +1,17 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      // Set lang attribute before styles load to prevent FOUC for :lang() CSS selectors
+      (function () {
+        const p = new URLSearchParams(location.search);
+        const raw = (p.get('user_language') || '').toLowerCase();
+        const lang = raw.split('-')[0]; // fr-CA → fr
+        if (['en', 'fr', 'de', 'it', 'es', 'pt'].includes(lang)) {
+          document.documentElement.setAttribute('lang', lang);
+        }
+      })();
+    </script>
     <title>Verification</title>
     <meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
     <meta content="notranslate" name="google" />
