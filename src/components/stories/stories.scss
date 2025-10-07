@@ -146,6 +146,14 @@
     margin-bottom: to-dvh(12px, 900px);
     font-size: to-dvh(34px, 900px);
   }
+
+  &:is(:lang(fr), :lang(es), :lang(pt)) {
+    font-size: to-dvh(26px);
+
+    @include media-up(md) {
+      font-size: to-dvh(33px, 900px);
+    }
+  }
 }
 
 .h2 {
@@ -163,9 +171,19 @@
   @media (max-aspect-ratio: 1/2) {
     font-size: 1.8dvh;
   }
+
   @include media-up(md) {
     font-size: to-dvh(17px, 900px);
   }
+
+  &:is(:lang(fr), :lang(es), :lang(pt)) {
+    font-size: to-dvh(12px);
+
+    @include media-up(md) {
+      font-size: to-dvh(14px, 900px);
+    }
+  }
+
   ul {
     list-style: none;
     margin: 0;
