@@ -142,13 +142,13 @@
     font-size: to-dvh(34px, 900px);
   }
 
-  &:is(:lang(fr), :lang(es), :lang(pt)) {
-    font-size: to-dvh(26px);
+  // &:is(:lang(fr), :lang(es), :lang(pt)) {
+  //   font-size: to-dvh(26px);
 
-    @include media-up(md) {
-      font-size: to-dvh(33px, 900px);
-    }
-  }
+  //   @include media-up(md) {
+  //     font-size: to-dvh(33px, 900px);
+  //   }
+  // }
 }
 
 .h2 {
@@ -171,13 +171,13 @@
     font-size: to-dvh(17px, 900px);
   }
 
-  &:is(:lang(fr), :lang(es), :lang(pt)) {
-    font-size: to-dvh(12px);
+  // &:is(:lang(fr), :lang(es), :lang(pt)) {
+  //   font-size: to-dvh(12px);
 
-    @include media-up(md) {
-      font-size: to-dvh(14px, 900px);
-    }
-  }
+  //   @include media-up(md) {
+  //     font-size: to-dvh(14px, 900px);
+  //   }
+  // }
 
   ul {
     list-style: none;
