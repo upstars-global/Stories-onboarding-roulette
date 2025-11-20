@@ -649,6 +649,14 @@ watch(currentStoryIndex, (i: number) => {
   // Stop progress loop for previous story when switching to new story
   stopProgressLoop();
   rebuildTimelineFor(i);
+
+  // Notify parent when last segment starts
+  if (i === stories.value.length - 1) {
+    const message = 'opened_story:2';
+    window.parent.postMessage(message, '*');
+    // eslint-disable-next-line no-console
+    console.log(message);
+  }
 });
 </script>
 
