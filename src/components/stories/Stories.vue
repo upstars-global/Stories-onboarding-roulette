@@ -652,7 +652,7 @@ watch(currentStoryIndex, (i: number) => {
 
   // Notify parent when last segment starts
   if (i === stories.value.length - 1) {
-    const message = 'opened_story:2';
+    const message = 'opened_story:1';
     window.parent.postMessage(message, '*');
     // eslint-disable-next-line no-console
     console.log(message);
