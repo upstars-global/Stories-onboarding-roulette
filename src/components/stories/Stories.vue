@@ -425,6 +425,7 @@ const onPlay = () => {
     video
       .play()
       .then(() => {
+        window.parent.postMessage('click_play', '*');
         // Start smooth progress tracking once video actually starts playing
         startProgressLoopFor(video);
         tl.play(); // start text animation only after video starts
