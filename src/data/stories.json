@@ -1,12 +1,12 @@
 {
   "stories": {
     "title": {
-      "en": "Blackjack",
-      "de": "Blackjack",
-      "fr": "Blackjack",
-      "it": "Blackjack",
-      "es": "Blackjack",
-      "pt": "Blackjack"
+      "en": "Baccarat",
+      "de": "Baccarat",
+      "fr": "Baccarat",
+      "it": "Baccarat",
+      "es": "Baccarat",
+      "pt": "Baccarat"
     },
     "items": [
       {
@@ -15,25 +15,25 @@
           "en": "About game",
           "de": "Über das Spiel",
           "fr": "À propos du jeu",
-          "it": "Informazioni sul Gioco",
-          "es": "Acerca del Juego",
-          "pt": "Sobre o Jogo"
+          "it": "Informazioni sul gioco",
+          "es": "Sobre el juego",
+          "pt": "Sobre o jogo"
         },
         "header": {
-          "en": "What is Blackjack",
-          "de": "Was ist Blackjack",
-          "fr": "Qu'est-ce que le Blackjack",
-          "it": "Cos'è il Blackjack",
-          "es": "Qué es el Blackjack",
-          "pt": "O que é Blackjack"
+          "en": "What is Baccarat",
+          "de": "Was ist Baccarat",
+          "fr": "Qu'est-ce que le Baccarat",
+          "it": "Cos'è il Baccarat",
+          "es": "¿Qué es Baccarat?",
+          "pt": "O que é Baccarat"
         },
         "description": {
-          "en": "In this game, you play against the dealer. To win, your hand must be close to 21",
-          "de": "In diesem Spiel spielst du gegen den Dealer. Um zu gewinnen, muss deine Hand möglichst nah an 21 sein",
-          "fr": "Dans ce jeu, tu joues contre le croupier. Pour gagner, ta main doit être la plus proche possible de 21",
-          "it": "In questo gioco, giochi contro il dealer. Per vincere, la tua mano deve essere vicina a 21",
-          "es": "En este juego, juegas contra el crupier. Para ganar, tu mano debe estar cerca de 21",
-          "pt": "Neste jogo, você joga contra o dealer. Para ganar, sua mão deve estar próxima de 21"
+          "en": "Baccarat is a simple card game. You bet on Player, Banker, or Tie. The goal is to get closest to 9",
+          "de": "Baccarat ist ein leicht verständliches Kartenspiel. Du setzt auf Player, Banker oder Tie. Das Ziel ist es, so nah wie möglich an 9 zu kommen",
+          "fr": "Le Baccarat est un jeu de cartes simple. Vous pariez sur le Joueur, le Banquier ou l'Égalité. L'objectif est de se rapprocher le plus possible de 9",
+          "it": "Il Baccarat è un gioco di carte semplice. Si scommette su Player, Banker o Tie. L'obiettivo è avvicinarsi il più possibile a 9",
+          "es": "Baccarat es un juego de cartas simple. Apuestas por Player, Banker o Tie. El objetivo es acercarse lo más posible a 9",
+          "pt": "Baccarat é um jogo de cartas simples. Você aposta no Player, Banker ou Tie. O objetivo é chegar o mais perto possível de 9"
         },
         "video": {
           "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
@@ -50,28 +50,28 @@
       {
         "id": "story2",
         "topText": {
-          "en": "Card values",
-          "de": "Kartenwerte",
-          "fr": "Valeur des cartes",
-          "it": "Valori delle carte",
-          "es": "Valores de las cartas",
-          "pt": "Valores das cartas"
+          "en": "Game start",
+          "de": "Spielstart",
+          "fr": "Début du jeu",
+          "it": "Inizio del gioco",
+          "es": "Inicio del juego",
+          "pt": "Início do jogo"
         },
         "header": {
-          "en": "Value of each card",
-          "de": "Wert jeder Karte",
-          "fr": "La valeur de chaque carte",
-          "it": "Valori delle carte",
-          "es": "Valores de las cartas",
-          "pt": "Valores das cartas"
+          "en": "How a round starts",
+          "de": "Wie beginnt eine Runde",
+          "fr": "Comment un tour commence",
+          "it": "Come inizia un round",
+          "es": "Cómo empieza una ronda",
+          "pt": "Como começa uma ronda"
         },
         "description": {
-          "en": "<ul><li><strong>Face card (J, Q, K)</strong> = 10 points</li><li><strong>Ace (A)</strong> = 1 or 11, whichever is better for your hand</li><li><strong>Number cards (2–10)</strong> = face value. Example: 2 Spades = 2 points</li></ul>",
-          "de": "<ul><li><strong>Bildkarte (J, Q, K)</strong> = 10 Punkte</li><li><strong>Ass (A)</strong> = 1 oder 11, je nachdem was besser für deine Hand ist</li><li><strong>Zahlenkarten (2–10)</strong> = Nennwert. Beispiel: 2 Pik = 2 Punkte</li></ul>",
-          "fr": "<ul><li><strong>Carte figure (V, D, R)</strong> = 10 points</li><li><strong>As (A)</strong> = 1 ou 11, selon ce qui est le mieux pour ta main</li><li><strong>Cartes numérotées (2–10)</strong> = valeur nominale. Exemple: 2 de Pique = 2 points</li></ul>",
-          "it": "<ul><li><strong>Carta figura (J, Q, K)</strong> = 10 punti</li><li><strong>Asso (A)</strong> = 1 o 11, a seconda di cosa è meglio per la tua mano</li><li><strong>Carte numerate (2–10)</strong> = valore nominale. Esempio: 2 Picche = 2 punti</li></ul>",
-          "es": "<ul><li><strong>Carta figura (J, Q, K)</strong> = 10 puntos</li><li><strong>As (A)</strong> = 1 o 11, el que sea mejor para tu mano</li><li><strong>Cartas numeradas (2–10)</strong> = valor nominal. Ejemplo: 2 Picas = 2 puntos</li></ul>",
-          "pt": "<ul><li><strong>Carta figura (J, Q, K)</strong> = 10 pontos</li><li><strong>Ás (A)</strong> = 1 ou 11, o que for melhor para sua mão</li><li><strong>Cartas numeradas (2–10)</strong> = valor nominal. Exemplo: 2 Espadas = 2 pontos</li></ul>"
+          "en": "Place your bet on Player, Banker, or Tie. Both receive two cards. The hand closest to 9 wins",
+          "de": "Setze auf Player, Banker oder Tie. Beide erhalten zwei Karten — die Hand, die näher an 9 liegt, gewinnt",
+          "fr": "Placez votre pari sur le Joueur, le Banquier ou l'Égalité. Chacun reçoit deux cartes. La main la plus proche de 9 gagne",
+          "it": "Effettua la tua scommessa su Player, Banker o Tie. Entrambi ricevono due carte. La mano più vicina a 9 vince",
+          "es": "Realiza tu apuesta por Player, Banker o Tie. Ambos reciben dos cartas. La mano más cercana a 9 gana",
+          "pt": "Faça a sua aposta no Player, Banker ou Tie. Ambos recebem duas cartas. A mão mais próxima de 9 vence"
         },
         "video": {
           "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
@@ -88,28 +88,28 @@
       {
         "id": "story3",
         "topText": {
-          "en": "Game start",
-          "de": "Spielstart",
-          "fr": "Début de la partie",
-          "it": "Inizio del Gioco",
-          "es": "Inicio del Juego",
-          "pt": "Início do Jogo"
+          "en": "Points",
+          "de": "Punkte",
+          "fr": "Les points",
+          "it": "Punti",
+          "es": "Puntos",
+          "pt": "Pontos"
         },
         "header": {
-          "en": "How the game starts",
-          "de": "Wie das Spiel beginnt",
-          "fr": "Comment la partie commence",
-          "it": "Come inizia il Gioco",
-          "es": "Cómo empieza el Juego",
-          "pt": "Como o jogo começa"
+          "en": "How are points calculated?",
+          "de": "Wie werden die Punkte berechnet?",
+          "fr": "Comment les points sont-ils calculés ?",
+          "it": "Come vengono calcolati i punti?",
+          "es": "¿Cómo se calculan los puntos?",
+          "pt": "Como são calculados os pontos?"
         },
         "description": {
-          "en": "You and the dealer each get 2 cards. Your cards are visible, while the dealer shows only 1. You win if you have Ace + 10, unless the dealer also has the same",
-          "de": "Du und der Dealer bekommt jeweils 2 Karten. Deine Karten sind sichtbar, während der Dealer nur 1 zeigt. Du gewinnst, wenn du Ass + 10 hast, es sei denn, der Dealer hat dasselbe",
-          "fr": "Toi et le croupier recevez 2 cartes chacun. Tes cartes sont visibles, tandis que le croupier n'en montre qu'une seule. Tu gagnes si tu as un As + un 10, sauf si le croupier a la même chose",
-          "it": "Tu e il dealer ricevete ciascuno 2 carte. Le tue carte sono visibili, mentre il dealer mostra solo 1. Vinci se hai Asso + 10, a meno che il dealer non abbia lo stesso",
-          "es": "Tú y el dealer recibís 2 cartas cada uno. Tus cartas son visibles, mientras que el dealer muestra solo 1. Ganas si tienes As + 10, a menos que el dealer tenga lo mismo",
-          "pt": "Você e o dealer recebem 2 cartas cada. Suas cartas são visíveis, enquanto o dealer mostra apenas 1. Você ganha se tiver Ás + 10, a menos que o dealer tenha o mesmo"
+          "en": "<ul><li>Cards 2–9 = face value</li><li>10, J, Q, K = 0</li><li>Ace = 1</li><li>If the total exceeds 9, only the last digit counts. Example: 15 = 5</li></ul>",
+          "de": "<ul><li>Karten 2–9 = Zahlenwert</li><li>10, J, Q, K = 0</li><li>Ass = 1</li><li>Wenn die Summe 9 überschreitet, zählt nur die letzte Ziffer — Beispiel: 15 = 5</li></ul>",
+          "fr": "<ul><li>Cartes 2–9 = valeur nominale</li><li>10, J, Q, K = 0</li><li>As = 1</li><li>Si le total dépasse 9, seul le dernier chiffre compte. Exemple : 15 = 5</li></ul>",
+          "it": "<ul><li>Carte 2–9 = valore nominale</li><li>10, J, Q, K = 0</li><li>Asso = 1</li><li>Se il totale supera 9, conta solo l'ultima cifra. Esempio: 15 = 5</li></ul>",
+          "es": "<ul><li>Cartas 2–9 = valor nominal</li><li>10, J, Q, K = 0</li><li>As = 1</li><li>Si el total supera 9, solo cuenta el último dígito. Ejemplo: 15 = 5</li></ul>",
+          "pt": "<ul><li>Cartas 2–9 = valor nominal</li><li>10, J, Q, K = 0</li><li>Ás = 1</li><li>Se o total ultrapassar 9, apenas o último dígito conta. Exemplo: 15 = 5</li></ul>"
         },
         "video": {
           "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
@@ -126,32 +126,49 @@
       {
         "id": "story4",
         "topText": {
-          "en": "Key strategies",
-          "de": "Wichtige Strategien",
-          "fr": "Stratégies clés ",
-          "it": "Strategie Chiave",
-          "es": "Estrategias Clave",
-          "pt": "Estratégias Principais"
+          "en": "Third card rules",
+          "de": "Regeln für die dritte Karte",
+          "fr": "Règles de la troisième carte",
+          "it": "Regole della terza carta",
+          "es": "Reglas de la tercera carta",
+          "pt": "Regras da terceira carta"
         },
         "header": {
-          "en": "When to Hit",
-          "de": "Wann man Hit wählt",
-          "fr": "Quand Tirer",
-          "it": "Quando Chiedere Carta (Hit)",
-          "es": "Cuándo Pedir Carta (Hit)",
-          "pt": "Quando Pedir Carta (Hit)"
+          "en": "When does the Player draw a third card?",
+          "de": "Wann zieht der Spieler eine dritte Karte?",
+          "fr": "Quand le joueur tire-t-il une troisième carte ?",
+          "it": "Quando il giocatore pesca una terza carta?",
+          "es": "¿Cuándo roba una tercera carta el Jugador?",
+          "pt": "Quando o Jogador recebe uma terceira carta?"
         },
         "description": {
-          "en": "If your hand is under 11, choose <strong>Hit</strong> for one extra card and get closer to 21. But if your total goes over 21, you may bust and lose the round",
-          "de": "Wenn deine Hand unter 11 liegt, wähle <strong>Hit</strong>, um eine zusätzliche Karte zu bekommen und näher an 21 heranzukommen. Aber wenn dein Gesamtwert über 21 geht, kannst du dich überkaufen und die Runde verlieren",
-          "fr": "Si ta main est inférieure à 11, choisis de <strong>Tirer</strong> pour obtenir une carte supplémentaire et te rapprocher de 21. Mais si ton total dépasse 21, tu sautes et perds la manche",
-          "it": "Se la tua mano è sotto 11, scegli <strong>Hit</strong> per ricevere una carta extra e avvicinarti a 21. Ma se il totale supera 21, rischi di sballare e perdere il round",
-          "es": "Si tu mano es menor a 11, elige <strong>Hit</strong> para recibir una carta extra y acercarte a 21. Pero si el total supera 21, puedes pasarte y perder la ronda",
-          "pt": "Se sua mão for menor que 11, escolha <strong>Hit</strong> para receber uma carta extra e se aproximar de 21. Mas se o total passar de 21, você pode estourar e perder a rodada"
+          "en": "If the total is 0–5",
+          "de": "Wenn die Gesamtsumme 0–5 beträgt",
+          "fr": "Si le total est compris entre 0 et 5",
+          "it": "Se il totale è compreso tra 0 e 5",
+          "es": "Si el total es 0–5",
+          "pt": "Se o total for 0–5"
         },
         "video": {
-          "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
-          "webm": "/src/assets/videos/stories/en/story_4.webm"
+          "h265": "/src/assets/videos/stories/en/story_4_5-h265.mp4",
+          "webm": "/src/assets/videos/stories/en/story_4_5.webm"
+        },
+        "phaseSwitchAt": 10.733,
+        "secondHeader": {
+          "en": "When does the Banker draw a third card?",
+          "de": "Wann zieht die Bank eine dritte Karte?",
+          "fr": "Quand le Banquier tire-t-il une troisième carte ?",
+          "it": "Quando il Banco pesca una terza carta?",
+          "es": "¿Cuándo roba una tercera carta la Banca?",
+          "pt": "Quando o Banqueiro recebe uma terceira carta?"
+        },
+        "secondDescription": {
+          "en": "<ul><li>0–2 → Always draws</li><li>3 → Draws (except if Player has 8)</li><li>4 → Draws if Player 2–7</li><li>5 → Draws if Player 4–7</li><li>6 → Draws if Player 6–7</li><li>7 → Stands</li></ul>",
+          "de": "<ul><li>0–2 → Zieht immer eine dritte Karte</li><li>3 → Zieht eine dritte Karte (außer wenn der Spieler eine 8 hat)</li><li>4 → Zieht eine dritte Karte, wenn der Spieler 2–7 hat</li><li>5 → Zieht eine dritte Karte, wenn der Spieler 4–7 hat</li><li>6 → Zieht eine dritte Karte, wenn der Spieler 6–7 hat</li><li>7 → Bleibt stehen</li></ul>",
+          "fr": "<ul><li>0–2 → Tire toujours une carte</li><li>3 → Tire une carte (sauf si le Joueur a 8)</li><li>4 → Tire une carte si le Joueur a 2–7</li><li>5 → Tire une carte si le Joueur a 4–7</li><li>6 → Tire une carte si le Joueur a 6–7</li><li>7 → Reste</li></ul>",
+          "it": "<ul><li>0–2 → Pesca sempre una carta</li><li>3 → Pesca una carta (tranne se il Giocatore ha 8)</li><li>4 → Pesca una carta se il Giocatore ha 2–7</li><li>5 → Pesca una carta se il Giocatore ha 4–7</li><li>6 → Pesca una carta se il Giocatore ha 6–7</li><li>7 → Sta</li></ul>",
+          "es": "<ul><li>0–2 → Siempre roba</li><li>3 → Roba (excepto si el Jugador tiene 8)</li><li>4 → Roba si el Jugador tiene 2–7</li><li>5 → Roba si el Jugador tiene 4–7</li><li>6 → Roba si el Jugador tiene 6–7</li><li>7 → Se planta</li></ul>",
+          "pt": "<ul><li>0–2 → Recebe sempre</li><li>3 → Recebe (exceto se o Jogador tiver 8)</li><li>4 → Recebe se o Jogador tiver 2–7</li><li>5 → Recebe se o Jogador tiver 4–7</li><li>6 → Recebe se o Jogador tiver 6–7</li><li>7 → Mantém a mão atual</li></ul>"
         },
         "ctaButton": {
           "enabled": true
@@ -164,66 +181,28 @@
       {
         "id": "story5",
         "topText": {
-          "en": "Key strategies",
-          "de": "Wichtige Strategien",
-          "fr": "Stratégies clés",
-          "it": "Strategie Chiave",
-          "es": "Estrategias Clave",
-          "pt": "Estratégias Principais"
+          "en": "Payouts",
+          "de": "Auszahlungen",
+          "fr": "Paiements",
+          "it": "Pagamenti",
+          "es": "Pagos",
+          "pt": "Pagamentos"
         },
         "header": {
-          "en": "When to Stand",
-          "de": "Wann man Stand wählt",
-          "fr": "Quand Rester",
-          "it": "Quando Stare (Stand)",
-          "es": "Cuándo Plantarse (Stand)",
-          "pt": "Quando Parar (Stand)"
+          "en": "Baccarat payouts",
+          "de": "Baccarat Auszahlungen",
+          "fr": "Paiements du Baccarat",
+          "it": "Pagamenti del Baccarat",
+          "es": "Pagos en Baccarat",
+          "pt": "Pagamentos do Baccarat"
         },
         "description": {
-          "en": "If your hand is 17 or higher and seems strong, choose <strong>Stand</strong> to keep it",
-          "de": "Wenn deine Hand 17 oder höher ist und stark aussieht, wähle <strong>Stand</strong>, um sie zu behalten",
-          "fr": "Si ta main est de 17 ou plus et qu'elle semble forte, choisis de <strong>Rester</strong> pour la conserver",
-          "it": "Se la tua mano è 17 o più e sembra forte, scegli <strong>Stand</strong> per mantenerla",
-          "es": "Si tu mano es 17 o más y parece fuerte, elige <strong>Stand</strong> para mantenerla",
-          "pt": "Se sua mão for 17 ou mais e parecer forte, escolha <strong>Stand</strong> para mantê-la"
-        },
-        "video": {
-          "h265": "/src/assets/videos/stories/en/story_5-h265.mp4",
-          "webm": "/src/assets/videos/stories/en/story_5.webm"
-        },
-        "ctaButton": {
-          "enabled": true
-        },
-        "helpText": {
-          "enabled": false
-        }
-      },
-
-      {
-        "id": "story6",
-        "topText": {
-          "en": "Other strategies",
-          "de": "Weitere Strategien",
-          "fr": "Autres stratégies",
-          "it": "Altre Strategie",
-          "es": "Otras Estrategias",
-          "pt": "Outras Estratégias"
-        },
-        "header": {
-          "en": "When to Split",
-          "de": "Wann man Split",
-          "fr": "Quand Séparer",
-          "it": "Quando Dividere",
-          "es": "Cuándo Dividir",
-          "pt": "Quando Dividir"
-        },
-        "description": {
-          "en": "If you have a pair of identical cards, <strong>split</strong>  them into 2 separate hands",
-          "de": "Wenn du ein Paar identischer Karten hast, <strong>teile</strong> sie in 2 separate Hände",
-          "fr": "Si tu as une paire de cartes identiques, <strong>sépare</strong>-les en 2 mains distinctes",
-          "it": "Se hai una coppia di carte identiche, <strong>dividile</strong> in 2 mani separate",
-          "es": "Si tienes un par de cartas idénticas, <strong>divídelas</strong> en 2 manos separadas",
-          "pt": "Se você tiver um par de cartas idênticas, <strong>divida</strong>-as em 2 mãos separadas"
+          "en": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (5% commission or choose no commission tables)</li><li><strong>Payout €10: Bet €5 - Win €5 (+ stake back)</strong></li><li>Tie - 8:1 or 9:1</li><li><strong>Payout €45: Bet €5 - Win €40 (+ €5 stake back)</strong></li></ul>",
+          "de": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (5 % Kommission oder wähle Tische ohne Kommission)</li><li><strong>Auszahlung 10 €: Einsatz 5 € - Gewinn 5 € (+ Einsatz zurück)</strong></li><li>Tie - 8:1 oder 9:1</li><li><strong>Auszahlung 45 €: Einsatz 5 € - Gewinn 40 € (+ 5 € Einsatz zurück)</strong></li></ul>",
+          "fr": "<ul><li>Joueur - 1:1</li><li>Banquier - 1:1 (commission de 5 % ou choisissez des tables sans commission)</li><li><strong>Paiement 10 € : Pari 5 € - Gain 5 € (+ mise restituée)</strong></li><li>Égalité - 8:1 ou 9:1</li><li><strong>Paiement 45 € : Pari 5 € - Gain 40 € (+ 5 € de mise restituée)</strong></li></ul>",
+          "it": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (commissione del 5% oppure scegli tavoli senza commissione)</li><li><strong>Pagamento €10: Scommessa €5 - Vincita €5 (+ puntata restituita)</strong></li><li>Tie - 8:1 o 9:1</li><li><strong>Pagamento €45: Scommessa €5 - Vincita €40 (+ €5 di puntata restituita)</strong></li></ul>",
+          "es": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (5% de comisión o elige mesas sin comisión)</li><li><strong>Pago €10: Apuesta €5 - Gana €5 (+ devolución de la apuesta)</strong></li><li>Tie - 8:1 o 9:1</li><li><strong>Pago €45: Apuesta €5 - Gana €40 (+ €5 de devolución de la apuesta)</strong></li></ul>",
+          "pt": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (comissão de 5% ou escolha mesas sem comissão)</li><li><strong>Pagamento €10: Aposta €5 - Vitória €5 (+ aposta devolvida)</strong></li><li>Tie - 8:1 ou 9:1</li><li><strong>Pagamento €45: Aposta €5 - Vitória €40 (+ €5 de aposta devolvida)</strong></li></ul>"
         },
         "video": {
           "h265": "/src/assets/videos/stories/en/story_6-h265.mp4",
@@ -233,83 +212,7 @@
           "enabled": true
         },
         "helpText": {
-          "enabled": false
-        }
-      },
-
-      {
-        "id": "story7",
-        "topText": {
-          "en": "Other strategies",
-          "de": "Weitere Strategien",
-          "fr": "Autres stratégies",
-          "it": "Altre Strategie",
-          "es": "Otras Estrategias",
-          "pt": "Outras Estratégias"
-        },
-        "header": {
-          "en": "When to Double",
-          "de": "Wann man Double wählt",
-          "fr": "Quand Doubler",
-          "it": "Quando Raddoppiare",
-          "es": "Cuándo Doblar",
-          "pt": "Quando Dobrar"
-        },
-        "description": {
-          "en": "<strong>Double</strong> your bet to get one card if your hand totals 9,10, or 11",
-          "de": "Oder <strong>verdopple</strong> deinen Einsatz, um eine Karte zu bekommen, wenn deine Hand 9, 10 oder 11 ergibt",
-          "fr": "Ou <strong>double</strong> ta mise pour obtenir une seule carte si ta main totalise 9, 10 ou 11",
-          "it": "Oppure <strong>raddoppia</strong> la tua scommessa per ricevere una carta se la tua mano totalizza 9, 10 o 11",
-          "es": "O <strong>dobla</strong> tu Apuesta para recibir una carta si tu mano suma 9, 10 o 11",
-          "pt": "Ou <strong>dobre</strong> sua Aposta para receber uma carta se sua mão somar 9, 10 ou 11"
-        },
-        "video": {
-          "h265": "/src/assets/videos/stories/en/story_7-h265.mp4",
-          "webm": "/src/assets/videos/stories/en/story_7.webm"
-        },
-        "ctaButton": {
           "enabled": true
-        },
-        "helpText": {
-          "enabled": false
-        }
-      },
-
-      {
-        "id": "story8",
-        "topText": {
-          "en": "Winning combination",
-          "de": "Gewinnende Kombination",
-          "fr": "Combinaison gagnante",
-          "it": "Combinazione Vincente",
-          "es": "Combinación Ganadora",
-          "pt": "Combinação Vencedora"
-        },
-        "header": {
-          "en": "Best hand in Blackjack",
-          "de": "Beste Hand im Blackjack",
-          "fr": "La meilleure main au Blackjack",
-          "it": "La Migliore Mano nel Blackjack",
-          "es": "La Mejor Mano en Blackjack",
-          "pt": "A Melhor Mão no Blackjack"
-        },
-        "description": {
-          "en": "The best hand is an Ace + a 10-point card (10, J, Q, or K). It’s called Blackjack and pays 3:2",
-          "de": "Die beste Hand ist ein Ass + eine 10-Punkte-Karte (10, J, Q oder K). Sie wird Blackjack genannt und zahlt 3:2",
-          "fr": "La meilleure main est un As + une carte valant 10 points (10, V, D ou R). Elle s'appelle Blackjack et rapporte 3:2",
-          "it": "La mano migliore è Asso + una carta da 10 punti (10, J, Q o K). Si chiama Blackjack e paga 3:2",
-          "es": "La mejor mano es As + una carta de 10 puntos (10, J, Q o K). Se llama Blackjack y paga 3:2",
-          "pt": "A melhor mão é Ás + uma carta de 10 pontos (10, J, Q ou K). Isso é chamado de Blackjack e paga 3:2"
-        },
-        "video": {
-          "h265": "/src/assets/videos/stories/en/story_8-h265.mp4",
-          "webm": "/src/assets/videos/stories/en/story_8.webm"
-        },
-        "ctaButton": {
-          "enabled": true
-        },
-        "helpText": {
-          "enabled": false
         }
       }
     ]
@@ -337,30 +240,30 @@
     },
     "ctaButton": {
       "text": {
-        "en": "Play Blackjack",
-        "de": "Blackjack spielen",
-        "fr": "Jouer au Blackjack",
-        "it": "Gioca a Blackjack",
-        "es": "Jugar Blackjack",
-        "pt": "Jogar Blackjack"
+        "en": "Play Baccarat",
+        "de": "Baccarat spielen",
+        "fr": "Jouer au Baccarat",
+        "it": "Gioca a Baccarat",
+        "es": "Jugar Baccarat",
+        "pt": "Jogar Baccarat"
       }
     },
     "helpText": {
       "text": {
         "en": "Need more info?",
-        "de": "Brauchen Sie mehr Infos?",
-        "fr": "Besoin de plus d'infos?",
-        "it": "Hai bisogno di più informazioni?",
-        "es": "Necesitas más información?",
+        "de": "Brauchst du mehr Infos?",
+        "fr": "Besoin de plus d'informations ?",
+        "it": "Hai bisogno di maggiori informazioni?",
+        "es": "¿Necesitas más información?",
         "pt": "Precisa de mais informações?"
       },
       "link": {
-        "en": "Discover Blackjack",
-        "de": "Blackjack entdecken",
-        "fr": "Découvrir le Blackjack",
-        "it": "Scopri il Blackjack",
-        "es": "Descubre Blackjack",
-        "pt": "Descubra Blackjack"
+        "en": "Discover Baccarat",
+        "de": "Entdecke Baccarat",
+        "fr": "Découvrez le Baccarat",
+        "it": "Scopri il Baccarat",
+        "es": "Descubre Baccarat",
+        "pt": "Descubra o Baccarat"
       }
     }
   }

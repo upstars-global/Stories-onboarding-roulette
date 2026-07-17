@@ -6,6 +6,7 @@ export interface RawQueryParams {
   user_currency?: string;
   end_link?: string;
   game_link?: string;
+  discover_link?: string;
   stories_total?: string;
 }
 
@@ -15,6 +16,7 @@ export interface QueryParams {
   currency: string;
   endLink: string;
   gameLink: string;
+  discoverLink: string;
   storiesTotal: number;
 }
 
@@ -23,7 +25,8 @@ const DEFAULTS: QueryParams = {
   userLanguage: 'en',
   currency: '',
   endLink: '',
-  gameLink: 'live/categories/blackjakk',
+  gameLink: 'live/categories/baccarat',
+  discoverLink: '',
   storiesTotal: 4,
 };
 
@@ -51,6 +54,9 @@ function parseQueryString(query: string): RawQueryParams {
           break;
         case 'game_link':
           acc.game_link = decodedValue;
+          break;
+        case 'discover_link':
+          acc.discover_link = decodedValue;
           break;
         case 'stories_total':
           acc.stories_total = decodedValue;
@@ -93,6 +99,7 @@ export function useQueryParams(): QueryParams {
       : '';
 
     const gameLink = params.game_link || DEFAULTS.gameLink;
+    const discoverLink = params.discover_link || DEFAULTS.discoverLink;
     const storiesTotal = Math.max(
       1,
       parseInt(params.stories_total || '4', 10) || DEFAULTS.storiesTotal
@@ -104,6 +111,7 @@ export function useQueryParams(): QueryParams {
       currency,
       endLink,
       gameLink,
+      discoverLink,
       storiesTotal,
     };
   } catch {

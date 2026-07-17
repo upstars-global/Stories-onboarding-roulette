@@ -37,9 +37,13 @@ interface Props {
   autoplay?: boolean;
   muted?: boolean;
   videoLocked?: boolean;
+  /** 0 = primary header/description, 1 = secondHeader/secondDescription */
+  textPhase?: number;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  textPhase: 0,
+});
 
 interface Emits {
   ended: [];
@@ -52,15 +56,24 @@ defineEmits<Emits>();
 const videoRef = ref<HTMLVideoElement | null>(null);
 
 const videoId = computed(() => `story_${props.currentIndex + 1}`);
+
+const lang = computed(() => props.texts.userLanguage);
+
 const headerText = computed((): string => {
-  return props.story.header[props.texts.userLanguage] || props.story.header.en;
+  if (props.textPhase === 1 && props.story.secondHeader) {
+    return props.story.secondHeader[lang.value] || props.story.secondHeader.en;
+  }
+  return props.story.header[lang.value] || props.story.header.en;
 });
 
 const descriptionText = computed((): string => {
-  return (
-    props.story.description[props.texts.userLanguage] ||
-    props.story.description.en
-  );
+  if (props.textPhase === 1 && props.story.secondDescription) {
+    return (
+      props.story.secondDescription[lang.value] ||
+      props.story.secondDescription.en
+    );
+  }
+  return props.story.description[lang.value] || props.story.description.en;
 });
 
 defineExpose({

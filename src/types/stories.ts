@@ -47,6 +47,16 @@ export interface StoryData {
   video: StoryVideo;
   ctaButton: StoryCtaButton;
   helpText?: StoryHelpText;
+  // When true, this story shares the same progress-bar segment as the
+  // previous story (used to auto-advance sub-scenes within one visual step,
+  // e.g. "third card rules" for Player then Banker).
+  mergeProgressWithPrevious?: boolean;
+  // Optional mid-video text phase (e.g. glued Player→Banker clip):
+  // at `phaseSwitchAt` seconds swap to secondHeader/secondDescription
+  // without remounting the video element.
+  phaseSwitchAt?: number;
+  secondHeader?: LocalizedText;
+  secondDescription?: LocalizedText;
 }
 
 export interface OrientationLock {

@@ -73,8 +73,8 @@
   display: flex;
   background: #032807; // Default background for all slides
 
-  // Intro slides (first two) get gradient background
-  &.intro-slides {
+  // First slide gets orange gradient background (same as roulette/blackjack)
+  &.first-slide {
     background: linear-gradient(
       0deg,
       #fd7f00 0%,
@@ -146,14 +146,6 @@
     margin-bottom: to-dvh(12px, 900px);
     font-size: to-dvh(34px, 900px);
   }
-
-  &:is(:lang(fr), :lang(es), :lang(pt)) {
-    font-size: to-dvh(26px);
-
-    @include media-up(md) {
-      font-size: to-dvh(33px, 900px);
-    }
-  }
 }
 
 .h2 {
@@ -176,47 +168,204 @@
     font-size: to-dvh(17px, 900px);
   }
 
-  &:is(:lang(fr), :lang(es), :lang(pt)) {
+  ul {
+    list-style: none;
+    margin: 0;
+    margin-top: to-dvh(10px);
+    padding: 0;
+
+    @include media-up(md) {
+      margin-top: to-dvh(10px, 900px);
+    }
+
+    li {
+      list-style: none;
+      position: relative;
+      text-indent: 0;
+    }
+  }
+}
+
+/* Scene-scoped tuning (not applied globally to every slide). */
+.text_container.is-intro-scene {
+  // Only the body (.h2) is shrunk so it doesn't sit on the video art.
+  // The title (.h1) keeps its base size.
+  .h2:lang(de) {
     font-size: to-dvh(12px);
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 1.5dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(15px, 900px);
+    }
+  }
+
+  .h2:lang(fr) {
+    font-size: to-dvh(13px);
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 1.65dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(16px, 900px);
+    }
+  }
+}
+
+.text_container.is-points-scene {
+  // Points list — keep clear of mid video art.
+  .h2 {
+    font-size: to-dvh(12px);
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 1.55dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(15px, 900px);
+    }
+  }
+}
+
+/* Third-card titles must stay within EN's 2 lines (never 3).
+   Minimal per-breakpoint shrink, only for langs that overflow. */
+// Phase 1 (Player question) — is-third-card-scene without is-compact-body.
+.text_container.is-third-card-scene:not(.is-compact-body) {
+  // de/fr overflow to 3 lines only on desktop (md) — nudge md only.
+  .h1:lang(de),
+  .h1:lang(fr) {
+    @include media-up(md) {
+      font-size: to-dvh(33px, 900px);
+    }
+  }
+
+  .h1:lang(es) {
+    font-size: to-dvh(25px);
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 3.2dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(30px, 900px);
+    }
+  }
+
+  .h1:lang(pt) {
+    font-size: to-dvh(24px);
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 3.1dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(28px, 900px);
+    }
+  }
+}
+
+// Phase 2 (Banker question) — is-third-card-scene + is-compact-body.
+.text_container.is-third-card-scene.is-compact-body {
+  .h1:lang(fr) {
+    font-size: to-dvh(26px);
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 3.3dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(30px, 900px);
+    }
+  }
+
+  // es overflows only on desktop (md).
+  .h1:lang(es) {
+    @include media-up(md) {
+      font-size: to-dvh(33px, 900px);
+    }
+  }
+
+  .h1:lang(pt) {
+    font-size: to-dvh(24px);
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 3dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(28px, 900px);
+    }
+  }
+}
+
+.text_container.is-compact-body {
+  // Payouts (5): keep body above video mid-art.
+  .h2 {
+    font-size: to-dvh(12px);
+    line-height: 1.35;
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 1.5dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(15px, 900px);
+    }
+  }
+
+  .h2:is(:lang(de), :lang(fr), :lang(it), :lang(pt), :lang(es)) {
+    font-size: to-dvh(11px);
+    line-height: 1.3;
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 1.4dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(13px, 900px);
+    }
+  }
+}
+
+// Payouts (5): visual gap between "Payout €10 …" and "Tie …" line.
+.text_container.is-compact-body:not(.is-third-card-scene) {
+  .h2 ul li:nth-child(4) {
+    margin-top: to-dvh(10px);
+
+    @include media-up(md) {
+      margin-top: to-dvh(10px, 900px);
+    }
+  }
+}
+
+// Banker phase (4.2): denser list — clear of card art.
+.text_container.is-compact-body.is-third-card-scene {
+  .h2 {
+    font-size: to-dvh(11px);
+    line-height: 1.3;
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 1.4dvh;
+    }
 
     @include media-up(md) {
       font-size: to-dvh(14px, 900px);
     }
   }
 
-  ul {
-    list-style: none;
-    margin: 0;
-    margin-top: to-dvh(10px);
-    padding: 0;
-    padding-left: to-dvh(7px);
-    @include media-up(md) {
-      margin-top: to-dvh(10px, 900px);
-      padding-left: to-dvh(7px, 900px);
+  .h2:is(:lang(de), :lang(pt)) {
+    font-size: to-dvh(10px);
+    line-height: 1.28;
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 1.3dvh;
     }
 
-    li {
-      list-style: none;
-      position: relative;
-      padding-left: to-dvh(14px);
-      text-indent: 0;
-
-      @include media-up(md) {
-        padding-left: to-dvh(14px, 900px);
-      }
-
-      &::before {
-        content: '▪';
-        position: absolute;
-        left: 0;
-        color: inherit;
-        font-weight: bold;
-        opacity: 0;
-      }
-
-      &.animate-bullet::before {
-        opacity: 1;
-      }
+    @include media-up(md) {
+      font-size: to-dvh(13px, 900px);
     }
   }
 }
@@ -417,58 +566,63 @@
     height: 117%;
     object-fit: contain;
   }
-
-  .has-help-text & {
-    // top: -14.5dvh;
-
-    // @include media-up(md) {
-    //   top: -9.5dvh;
-    //   height: 115%;
-    // }
-
-    top: to-dvh(-39px);
-
-    @include media-up(md) {
-      top: -5.5dvh;
-    }
-  }
 }
 
-/* Initial hidden state for story headers and text */
+/* Initial hidden state for story headers and text (covers all 6 scenes to
+   avoid a flash of raw list HTML before the entrance animation runs). */
 #header1,
 #header2,
 #header3,
 #header4,
+#header5,
+#header6,
 #desk1,
 #desk2,
 #desk3,
-#desk4 {
+#desk4,
+#desk5,
+#desk6 {
   opacity: 0;
   margin-top: 7dvh;
 }
 
+// Help-text under CTA (last slide). Offsets match all other branches;
+// button lift is handled by `.custom-layout` / `customPosition` in CtaButton.vue.
 .help-text {
   position: absolute;
-  bottom: to-dvh(28px);
+  // Tight under CTA — matches Figma footer padding
+  bottom: to-dvh(12px);
   left: 50%;
   transform: translate(-50%);
   z-index: $z-max;
   width: 100%;
   font-family: $font-family-primary;
-  font-size: to-dvh(12px);
+  font-size: to-dvh(14px);
   font-weight: $font-weight-normal;
   line-height: $line-height-loose;
   text-align: center;
   color: var(--color-text-alt, #f7f7f7);
 
   @include media-up(md) {
-    bottom: to-dvh(16px, 900px);
+    bottom: to-dvh(12px, 900px);
+    font-size: to-dvh(14px, 900px);
+  }
+
+  // Longer copies (DE/FR/IT) wrap to a 2nd line at 14px — shrink to 12px
+  // so the row stays a single line across languages.
+  &:is(:lang(de), :lang(fr), :lang(it)) {
+    font-size: to-dvh(12px);
+
+    @include media-up(md) {
+      font-size: to-dvh(12px, 900px);
+    }
   }
 }
 
 .help-text-link {
   font-weight: $font-weight-bold;
-  color: currentColor;
+  // Figma: mint link under CTA (same family as primary CTA)
+  color: var(--color-primary-1, #00eda6);
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }

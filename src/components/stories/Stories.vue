@@ -6,9 +6,9 @@
     />
 
     <StoriesTopBar
-      :progress
+      :progress="segmentProgress"
       :number-of-segments="numberOfSegments"
-      :current-index="currentStoryIndex"
+      :current-index="currentSegmentIndex"
     />
     <div class="info_row">
       <img :src="ui.storyIcon" class="story_icon" alt="" />
@@ -27,8 +27,17 @@
       id="text_container_stories"
       class="text_container"
       :class="{
+        // has-help-text → video offset in stories.scss
+        // custom-layout → lifts CTA above help-text (CtaButton.vue, all branches)
         'has-help-text': currentStory?.helpText?.enabled,
-        'intro-slides': currentStoryIndex <= 1,
+        'custom-layout': currentStory?.helpText?.enabled,
+        'first-slide': currentStoryIndex === 0,
+        'is-intro-scene': currentStory?.id === 'story1',
+        'is-points-scene': currentStory?.id === 'story3',
+        'is-third-card-scene': currentStory?.id === 'story4',
+        'is-compact-body':
+          currentStory?.id === 'story5' ||
+          (currentStory?.id === 'story4' && textPhase === 1),
       }"
     >
       <template v-for="(story, index) in stories" :key="`story-${story.id}`">
@@ -42,6 +51,7 @@
           :autoplay="!isPaused"
           :muted="isMuted"
           :video-locked="showVideoPlayButton"
+          :text-phase="textPhase"
           @ended="onNext"
           @timeupdate="onTimeUpdate"
           @loadedmetadata="onLoadedMetadata"
@@ -51,16 +61,13 @@
       <CtaButton
         v-if="currentStory?.ctaButton?.enabled"
         :button-text="getLocalizedText(ui.ctaButton.text, userLanguage)"
+        :custom-position="!!currentStory?.helpText?.enabled"
         @click="goToGame"
       />
 
-      <div
-        v-if="currentStory?.helpText?.enabled"
-        class="help-text"
-        style="display: none"
-      >
+      <div v-if="currentStory?.helpText?.enabled" class="help-text">
         {{ getLocalizedText(ui.helpText.text, userLanguage) }}
-        <a href="#" class="help-text-link">
+        <a href="#" class="help-text-link" @click.prevent="goToDiscover">
           {{ getLocalizedText(ui.helpText.link, userLanguage) }}
         </a>
       </div>
@@ -156,6 +163,9 @@ const isLongPressing = ref<boolean>(false);
 const videoRefs = ref<VideoElement[]>([]);
 const currentStoryIndex = ref(0);
 const showVideoPlayButton = ref<boolean>(false);
+/** 0 = first text block, 1 = second mid-video phase (glued clip) */
+const textPhase = ref(0);
+let secondPhaseStarted = false;
 
 const leftControlRef = ref<HTMLElement | null>(null);
 const rightControlRef = ref<HTMLElement | null>(null);
@@ -168,6 +178,7 @@ const {
   userLanguage: qpLang,
   endLink: qpEnd,
   gameLink: qpGame,
+  discoverLink: qpDiscover,
 } = useQueryParams();
 useLocale(ref(qpLang));
 const { title, ui, stories } = useStoriesData();
@@ -175,11 +186,41 @@ const userLanguage = qpLang;
 
 const end_link = ref(qpEnd);
 const game_link = ref(qpGame);
+const discover_link = ref(qpDiscover);
 
 // === COMPUTED ===
 const isAndroid = computed(() => /android/i.test(navigator.userAgent));
 const currentStory = computed(() => stories.value[currentStoryIndex.value]);
-const numberOfSegments = computed<number>(() => stories.value.length);
+
+// Maps each story index to its progress-bar segment index. Stories flagged
+// with `mergeProgressWithPrevious` reuse the previous story's segment, so two
+// sub-scenes (e.g. Player/Banker third-card rules) share one progress step.
+const segmentIndexByStory = computed<number[]>(() => {
+  let seg = 0;
+  return stories.value.map((s, i) => {
+    if (i > 0 && !s.mergeProgressWithPrevious) seg++;
+    return seg;
+  });
+});
+const numberOfSegments = computed<number>(() => {
+  const arr = segmentIndexByStory.value;
+  return (arr[arr.length - 1] ?? 0) + 1;
+});
+const currentSegmentIndex = computed<number>(
+  () => segmentIndexByStory.value[currentStoryIndex.value] ?? 0
+);
+// Progress of the current segment (0-100). For grouped segments each sub-scene
+// gets an equal slice, so the bar keeps advancing across the auto-advance.
+const segmentProgress = computed<number>(() => {
+  const seg = currentSegmentIndex.value;
+  const indices = segmentIndexByStory.value.reduce<number[]>((acc, s, i) => {
+    if (s === seg) acc.push(i);
+    return acc;
+  }, []);
+  const subCount = indices.length || 1;
+  const subPos = Math.max(0, indices.indexOf(currentStoryIndex.value));
+  return ((subPos + progress.value / 100) / subCount) * 100;
+});
 // true, if explicit user action (Play) is required to start video
 const isUserPlayRequired = computed(() => showVideoPlayButton.value);
 
@@ -225,6 +266,7 @@ function startProgressLoopFor(video: HTMLVideoElement) {
     let handle = 0;
     const tick = () => {
       if (isPaused.value) return;
+      maybeSwitchTextPhase(video);
       const d = video.duration || 0;
       if (d > 0) progress.value = (video.currentTime / d) * 100;
       handle = v.requestVideoFrameCallback(tick);
@@ -239,6 +281,7 @@ function startProgressLoopFor(video: HTMLVideoElement) {
         rafId = null;
         return;
       }
+      maybeSwitchTextPhase(video);
       const d = video.duration || 0;
       if (d > 0) progress.value = (video.currentTime / d) * 100;
       rafId = window.requestAnimationFrame(tick);
@@ -415,6 +458,11 @@ const goToGame = () => {
     );
 };
 
+const goToDiscover = () => {
+  if (discover_link.value)
+    window.parent.postMessage('go_to_link:' + discover_link.value, '*');
+};
+
 const onPlay = () => {
   isPaused.value = false;
   showVideoPlayButton.value = false;
@@ -514,12 +562,62 @@ const onLoadedMetadata = () => {
   }
 };
 
-const onTimeUpdate = (e: Event) => {
-  if (!isPaused.value) {
-    const video = e.target as HTMLVideoElement;
-    if (video && video.duration) {
-      progress.value = (video.currentTime / video.duration) * 100;
+/**
+ * Mid-video text swap for glued clips (e.g. Player → Banker on story4).
+ * Top bar text stays; H1 crossfades; description re-types. Video is not remounted.
+ */
+const playSecondTextPhase = async () => {
+  const story = currentStory.value;
+  if (!story?.secondHeader || !story.secondDescription) return;
+
+  const storyNum = currentStoryIndex.value + 1;
+  const headerSel = `#header${storyNum}`;
+  const deskSel = `#desk${storyNum}`;
+  const deskText = getLocalizedText(story.secondDescription, userLanguage);
+
+  // Brief exit of phase-1 text, then same bottom→up entrance as the first phase.
+  await gsap.to([headerSel, deskSel], {
+    opacity: 0,
+    duration: 0.2,
+    ease: 'power1.in',
+  });
+
+  textPhase.value = 1;
+  await nextTick();
+
+  const deskEl = document.querySelector(deskSel) as HTMLElement | null;
+  if (deskEl) deskEl.innerHTML = '';
+
+  gsap.set([headerSel, deskSel], { opacity: 0, marginTop: '7dvh' });
+
+  const seg = gsap.timeline();
+  seg.to(headerSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 });
+  seg.to(deskSel, { marginTop: '0dvh', duration: 0.4 }, '<0.1');
+  seg.add(() => {
+    seg.to(deskSel, { opacity: 1 }, '+0.1');
+    if (deskText.includes('<li')) {
+      animateListItems(seg, deskSel, deskText);
+    } else {
+      animateRegularText(seg, deskSel, deskText);
     }
+  });
+};
+
+const maybeSwitchTextPhase = (video: HTMLVideoElement) => {
+  const at = currentStory.value?.phaseSwitchAt;
+  if (at == null || secondPhaseStarted) return;
+  if (video.currentTime >= at) {
+    secondPhaseStarted = true;
+    void playSecondTextPhase();
+  }
+};
+
+const onTimeUpdate = (e: Event) => {
+  const video = e.target as HTMLVideoElement;
+  if (!video) return;
+  maybeSwitchTextPhase(video);
+  if (!isPaused.value && video.duration) {
+    progress.value = (video.currentTime / video.duration) * 100;
   }
 };
 
@@ -649,6 +747,8 @@ onUnmounted(() => {
 watch(currentStoryIndex, (i: number) => {
   // Stop progress loop for previous story when switching to new story
   stopProgressLoop();
+  textPhase.value = 0;
+  secondPhaseStarted = false;
   rebuildTimelineFor(i);
 
   // Notify parent when last segment starts
