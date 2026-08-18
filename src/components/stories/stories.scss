@@ -128,19 +128,23 @@
   transition: opacity 0.2s ease;
 }
 
+/* Figma Mobile/H1: Sora 800, 24px / 125%; body: 16px / 150%.
+   Кегль привязан к ширине вьюпорта, а не к высоте: перенос строк задаёт ширина
+   текстовой колонки (`to-percent-x(328px)`), поэтому только при vw-привязке
+   разбивка строк на любом телефоне совпадает с макетом 360x640. Второй предел в
+   dvh нужен на экранах шире 9:16 (типичный iPhone с панелями Safari — 390x664):
+   там запас над артом растёт медленнее ширины, поэтому кегль берёт меньшее из
+   двух — по сути вписывается и в ширину, и в высоту макета. */
 .h1 {
-  margin-bottom: to-dvh(10px);
-  font-size: to-dvh(28px);
+  margin-bottom: to-vw(10px);
+  font-size: min(to-vw(24px), to-dvh(24px));
   color: var(--color-text-alt);
   text-align: left;
   font-family: $font-family-primary;
   font-style: normal;
   font-weight: $font-weight-extrabold;
   position: relative;
-  line-height: $line-height-snug;
-  @media (max-aspect-ratio: 1/2) {
-    font-size: 3.5dvh;
-  }
+  line-height: 1.25;
 
   @include media-up(md) {
     margin-bottom: to-dvh(12px, 900px);
@@ -149,7 +153,7 @@
 }
 
 .h2 {
-  font-size: to-dvh(14px);
+  font-size: min(to-vw(16px), to-dvh(16px));
   color: var(--color-text-body);
   text-align: left;
   font-family: $font-family-primary;
@@ -158,11 +162,8 @@
   position: relative;
   line-height: $line-height-relaxed;
   max-width: 100%;
-  margin-top: to-dvh(10px);
+  margin-top: to-vw(10px);
   word-break: break-word;
-  @media (max-aspect-ratio: 1/2) {
-    font-size: 1.8dvh;
-  }
 
   @include media-up(md) {
     font-size: to-dvh(17px, 900px);
@@ -171,7 +172,7 @@
   ul {
     list-style: none;
     margin: 0;
-    margin-top: to-dvh(10px);
+    margin-top: to-vw(10px);
     padding: 0;
 
     @include media-up(md) {
@@ -186,121 +187,31 @@
   }
 }
 
-/* Scene-scoped tuning (not applied globally to every slide). */
-.text_container.is-intro-scene {
-  // Only the body (.h2) is shrunk so it doesn't sit on the video art.
-  // The title (.h1) keeps its base size.
-  // FR/PT run to 4 lines at base size and reach the art block.
-  .h2:is(:lang(fr), :lang(pt)) {
-    font-size: to-dvh(13px);
+/* Запас над артом задан самим видео: карточка запечена в кадр на 240..568, то
+   есть на 360x640 под текст остаётся 152px (на слайде 3 арт начинается ниже, с
+   271, — там запас больше). Английская длина текста влезает макетными 24/16, а
+   остальные языки длиннее и уперлись бы в арт, поэтому им кегль уменьшен по их
+   самому длинному слайду — один размер на всю историю, чтобы шрифт не прыгал от
+   слайда к слайду. Значения подобраны замером всех 5 слайдов x 6 локалей. */
+.h1:is(:lang(de), :lang(es), :lang(it), :lang(pt), :lang(fr)) {
+  font-size: min(to-vw(20px), to-dvh(20px));
 
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 1.65dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(16px, 900px);
-    }
+  // Десктоп остаётся на базовом кегле: там колонка шире и запас над артом другой.
+  @include media-up(md) {
+    font-size: to-dvh(34px, 900px);
   }
 }
 
-/* Steps list (2). FR is the only locale that overflows: its title always wraps
-   to 2 lines and the 4-step list then runs onto the wheel. */
-.text_container.is-steps-scene {
-  .h1:lang(fr) {
-    font-size: to-dvh(24px);
+.h2:is(:lang(de), :lang(es), :lang(it), :lang(pt), :lang(fr)) {
+  font-size: min(to-vw(13px), to-dvh(13px));
 
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 3dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(29px, 900px);
-    }
-  }
-
-  .h2:lang(fr) {
-    font-size: to-dvh(12px);
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 1.5dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(15px, 900px);
-    }
-  }
-}
-
-/* Multipliers (3). Titles must stay within EN's 2 lines (never 3), otherwise
-   the body text lands on the video art. Smallest shrink that fits each locale. */
-.text_container.is-multipliers-scene {
-  .h1:is(:lang(de), :lang(es)) {
-    font-size: to-dvh(26px);
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 3.25dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(31px, 900px);
-    }
-  }
-
-  .h1:lang(it) {
-    font-size: to-dvh(25px);
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 3.1dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(30px, 900px);
-    }
-  }
-
-  .h1:lang(pt) {
-    font-size: to-dvh(24px);
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 3dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(29px, 900px);
-    }
+  @include media-up(md) {
+    font-size: to-dvh(17px, 900px);
   }
 }
 
 .text_container.is-compact-body {
-  // Payouts (5): keep body above video mid-art.
-  .h2 {
-    font-size: to-dvh(12px);
-    line-height: 1.35;
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 1.5dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(15px, 900px);
-    }
-  }
-
-  .h2:is(:lang(de), :lang(fr), :lang(it), :lang(pt), :lang(es)) {
-    font-size: to-dvh(11px);
-    line-height: 1.3;
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 1.4dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(13px, 900px);
-    }
-  }
-
-  // Visual gap between the bet/wheel lines and the payout total.
+  // Payouts (5): визуальный отрыв итоговой выплаты от строк ставки и колеса.
   .h2 ul li:nth-child(3) {
     margin-top: to-dvh(10px);
 
@@ -537,7 +448,7 @@
   z-index: $z-max;
   width: 100%;
   font-family: $font-family-primary;
-  font-size: to-dvh(14px);
+  font-size: to-vw(14px);
   font-weight: $font-weight-normal;
   line-height: $line-height-loose;
   text-align: center;
@@ -548,10 +459,10 @@
     font-size: to-dvh(14px, 900px);
   }
 
-  // Longer copies wrap to a 2nd row at 14px, which collides with the lifted
-  // CTA. Shrink per locale by exactly what it takes to stay on one row.
+  // Строка должна остаться одной: перенос сталкивает её с поднятой кнопкой.
+  // Кегль привязан к ширине, потому что перенос задаёт ширина экрана.
   &:is(:lang(de), :lang(es), :lang(pt)) {
-    font-size: to-dvh(12px);
+    font-size: to-vw(12px);
 
     @include media-up(md) {
       font-size: to-dvh(12px, 900px);
@@ -559,7 +470,7 @@
   }
 
   &:lang(it) {
-    font-size: to-dvh(11px);
+    font-size: to-vw(11px);
 
     @include media-up(md) {
       font-size: to-dvh(11px, 900px);
@@ -567,7 +478,7 @@
   }
 
   &:lang(fr) {
-    font-size: to-dvh(10px);
+    font-size: to-vw(10px);
 
     @include media-up(md) {
       font-size: to-dvh(10px, 900px);
