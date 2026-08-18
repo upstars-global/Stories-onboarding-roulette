@@ -32,9 +32,6 @@
         'has-help-text': currentStory?.helpText?.enabled,
         'custom-layout': currentStory?.helpText?.enabled,
         'first-slide': currentStoryIndex === 0,
-        'is-intro-scene': currentStory?.id === 'story1',
-        'is-steps-scene': currentStory?.id === 'story2',
-        'is-multipliers-scene': currentStory?.id === 'story3',
         'is-compact-body': currentStory?.id === 'story5',
       }"
     >
@@ -45,6 +42,7 @@
           :story
           :texts="{ userLanguage }"
           :is-android="isAndroid"
+          :prefers-h265="prefersH265"
           :current-index="currentStoryIndex"
           :autoplay="!isPaused"
           :muted="isMuted"
@@ -188,6 +186,18 @@ const discover_link = ref(qpDiscover);
 
 // === COMPUTED ===
 const isAndroid = computed(() => /android/i.test(navigator.userAgent));
+
+// Фон истории рисует приложение, а видео прозрачно вокруг карточки. WebKit
+// проигрывает VP9, но альфу в нём игнорирует: прозрачное становится чёрным и
+// фон не проступает. Поэтому Safari и всем браузерам на iOS отдаём HEVC с
+// альфой первым источником, остальным webm остаётся первым.
+const prefersH265 = computed(() => {
+  const ua = navigator.userAgent;
+  const isIOS = /iP(hone|ad|od)/.test(ua);
+  const isSafari =
+    /safari/i.test(ua) && !/chrome|chromium|android|crios|fxios|edg/i.test(ua);
+  return isIOS || isSafari;
+});
 const currentStory = computed(() => stories.value[currentStoryIndex.value]);
 
 // Maps each story index to its progress-bar segment index. Stories flagged

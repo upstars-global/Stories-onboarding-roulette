@@ -13,11 +13,11 @@
       @timeupdate="$emit('timeupdate', $event)"
       @loadedmetadata="$emit('loadedmetadata')"
     >
-      <source :src="story.video.webm" type="video/webm" />
       <source
-        v-if="!isAndroid"
-        :src="story.video.h265"
-        type="video/mp4; codecs=hvc1"
+        v-for="source in videoSources"
+        :key="source.src"
+        :src="source.src"
+        :type="source.type"
       />
     </video>
     <div :id="`header${currentIndex + 1}`" class="h1">{{ headerText }}</div>
@@ -29,10 +29,17 @@
 import { ref, computed } from 'vue';
 import type { StoryData } from '@/types';
 
+interface VideoSource {
+  src: string;
+  type: string;
+}
+
 interface Props {
   story: StoryData;
   texts: { userLanguage: string };
   isAndroid: boolean;
+  /** WebKit не поддерживает альфу в VP9, ему нужен HEVC первым источником. */
+  prefersH265?: boolean;
   currentIndex: number;
   autoplay?: boolean;
   muted?: boolean;
@@ -42,6 +49,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  prefersH265: false,
   textPhase: 0,
 });
 
@@ -56,6 +64,17 @@ defineEmits<Emits>();
 const videoRef = ref<HTMLVideoElement | null>(null);
 
 const videoId = computed(() => `story_${props.currentIndex + 1}`);
+
+const videoSources = computed((): VideoSource[] => {
+  const webm: VideoSource = { src: props.story.video.webm, type: 'video/webm' };
+  if (props.isAndroid) return [webm];
+
+  const h265: VideoSource = {
+    src: props.story.video.h265,
+    type: 'video/mp4; codecs=hvc1',
+  };
+  return props.prefersH265 ? [h265, webm] : [webm, h265];
+});
 
 const lang = computed(() => props.texts.userLanguage);
 
