@@ -1,39 +1,39 @@
 {
   "stories": {
     "title": {
-      "en": "Baccarat",
-      "de": "Baccarat",
-      "fr": "Baccarat",
-      "it": "Baccarat",
-      "es": "Baccarat",
-      "pt": "Baccarat"
+      "en": "Game shows",
+      "de": "Game Shows",
+      "fr": "Game shows",
+      "it": "Game shows",
+      "es": "Game shows",
+      "pt": "Game shows"
     },
     "items": [
       {
         "id": "story1",
         "topText": {
-          "en": "About game",
-          "de": "Über das Spiel",
-          "fr": "À propos du jeu",
-          "it": "Informazioni sul gioco",
-          "es": "Sobre el juego",
-          "pt": "Sobre o jogo"
+          "en": "About games",
+          "de": "Über die Spiele",
+          "fr": "À propos des jeux",
+          "it": "Informazioni sui giochi",
+          "es": "Sobre los juegos",
+          "pt": "Sobre os jogos"
         },
         "header": {
-          "en": "What is Baccarat",
-          "de": "Was ist Baccarat",
-          "fr": "Qu'est-ce que le Baccarat",
-          "it": "Cos'è il Baccarat",
-          "es": "¿Qué es Baccarat?",
-          "pt": "O que é Baccarat"
+          "en": "What are Game shows?",
+          "de": "Was sind Game Shows?",
+          "fr": "Que sont les jeux type émission TV ?",
+          "it": "Cosa sono i Game shows?",
+          "es": "¿Qué son los Game shows?",
+          "pt": "O que são Game shows?"
         },
         "description": {
-          "en": "Baccarat is a simple card game. You bet on Player, Banker, or Tie. The goal is to get closest to 9",
-          "de": "Baccarat ist ein leicht verständliches Kartenspiel. Du setzt auf Player, Banker oder Tie. Das Ziel ist es, so nah wie möglich an 9 zu kommen",
-          "fr": "Le Baccarat est un jeu de cartes simple. Vous pariez sur le Joueur, le Banquier ou l'Égalité. L'objectif est de se rapprocher le plus possible de 9",
-          "it": "Il Baccarat è un gioco di carte semplice. Si scommette su Player, Banker o Tie. L'obiettivo è avvicinarsi il più possibile a 9",
-          "es": "Baccarat es un juego de cartas simple. Apuestas por Player, Banker o Tie. El objetivo es acercarse lo más posible a 9",
-          "pt": "Baccarat é um jogo de cartas simples. Você aposta no Player, Banker ou Tie. O objetivo é chegar o mais perto possível de 9"
+          "en": "Game shows are Live casino games presented in the TV-style format featuring a real host, a giant wheel and multipliers.",
+          "de": "Game Shows sind Live-Casino-Spiele im TV-Format mit einem echten Moderator, einem großen Rad und Multiplikatoren.",
+          "fr": "Les jeux type émission TV sont des jeux Live Casino présentés dans un format télévisé, avec un véritable animateur, une roue géante et des multiplicateurs.",
+          "it": "I Game shows sono giochi del Casinò Live presentati in formato stile TV con un vero host, una ruota gigante e moltiplicatori.",
+          "es": "Los Game shows son juegos de Casino en Vivo presentados en formato estilo TV con un host real, una rueda gigante y multiplicadores.",
+          "pt": "Game shows são jogos de Casino ao vivo apresentados em formato de TV, com um apresentador real, uma roda gigante e multiplicadores."
         },
         "video": {
           "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
@@ -50,28 +50,28 @@
       {
         "id": "story2",
         "topText": {
-          "en": "Game start",
-          "de": "Spielstart",
-          "fr": "Début du jeu",
-          "it": "Inizio del gioco",
-          "es": "Inicio del juego",
-          "pt": "Início do jogo"
+          "en": "How it works",
+          "de": "Wie funktioniert es",
+          "fr": "Comment cela fonctionne",
+          "it": "Come funziona",
+          "es": "Cómo funciona",
+          "pt": "Como funciona"
         },
         "header": {
-          "en": "How a round starts",
-          "de": "Wie beginnt eine Runde",
-          "fr": "Comment un tour commence",
-          "it": "Come inizia un round",
-          "es": "Cómo empieza una ronda",
-          "pt": "Como começa uma ronda"
+          "en": "How does it works?",
+          "de": "Wie funktioniert es?",
+          "fr": "Comment cela fonctionne-t-il ?",
+          "it": "Come funziona?",
+          "es": "¿Cómo funciona?",
+          "pt": "Como funciona?"
         },
         "description": {
-          "en": "Place your bet on Player, Banker, or Tie. Both receive two cards. The hand closest to 9 wins",
-          "de": "Setze auf Player, Banker oder Tie. Beide erhalten zwei Karten — die Hand, die näher an 9 liegt, gewinnt",
-          "fr": "Placez votre pari sur le Joueur, le Banquier ou l'Égalité. Chacun reçoit deux cartes. La main la plus proche de 9 gagne",
-          "it": "Effettua la tua scommessa su Player, Banker o Tie. Entrambi ricevono due carte. La mano più vicina a 9 vince",
-          "es": "Realiza tu apuesta por Player, Banker o Tie. Ambos reciben dos cartas. La mano más cercana a 9 gana",
-          "pt": "Faça a sua aposta no Player, Banker ou Tie. Ambos recebem duas cartas. A mão mais próxima de 9 vence"
+          "en": "<ul><li>1. Choose one or several segments</li><li>2. Place your bets</li><li>3. The host spins the wheel</li><li>4. If your segment wins - you get reward</li></ul>",
+          "de": "<ul><li>1. Wähle ein oder mehrere Segmente</li><li>2. Platziere deine Einsätze</li><li>3. Der Moderator dreht das Rad</li><li>4. Wenn dein Segment gewinnt — erhältst du eine Belohnung</li></ul>",
+          "fr": "<ul><li>1. Choisir un ou plusieurs segments</li><li>2. Placer vos mises</li><li>3. L'animateur fait tourner la roue</li><li>4. Si votre segment gagne, vous recevez une récompense</li></ul>",
+          "it": "<ul><li>1. Scegli uno o più segmenti</li><li>2. Effettua le tue scommesse</li><li>3. L'host gira la ruota</li><li>4. Se il tuo segmento vince — ottieni una ricompensa</li></ul>",
+          "es": "<ul><li>1. Elige uno o varios segmentos</li><li>2. Realiza tus apuestas</li><li>3. El host gira la rueda</li><li>4. Si tu segmento gana — recibes recompensa</li></ul>",
+          "pt": "<ul><li>1. Escolha um ou vários segmentos</li><li>2. Faça as suas apostas</li><li>3. O apresentador gira a roda</li><li>4. Se o seu segmento ganhar — você recebe a recompensa</li></ul>"
         },
         "video": {
           "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
@@ -88,28 +88,28 @@
       {
         "id": "story3",
         "topText": {
-          "en": "Points",
-          "de": "Punkte",
-          "fr": "Les points",
-          "it": "Punti",
-          "es": "Puntos",
-          "pt": "Pontos"
+          "en": "Multipliers",
+          "de": "Multiplikatoren",
+          "fr": "Multiplicateurs",
+          "it": "Moltiplicatori",
+          "es": "Multiplicadores",
+          "pt": "Multiplicadores"
         },
         "header": {
-          "en": "How are points calculated?",
-          "de": "Wie werden die Punkte berechnet?",
-          "fr": "Comment les points sont-ils calculés ?",
-          "it": "Come vengono calcolati i punti?",
-          "es": "¿Cómo se calculan los puntos?",
-          "pt": "Como são calculados os pontos?"
+          "en": "Multipliers boost your wins",
+          "de": "Multiplikatoren erhöhen deine Gewinne",
+          "fr": "Les multiplicateurs augmentent vos gains",
+          "it": "I moltiplicatori aumentano le tue vincite",
+          "es": "Los multiplicadores aumentan tus ganancias",
+          "pt": "Os multiplicadores aumentam os seus ganhos"
         },
         "description": {
-          "en": "<ul><li>Cards 2–9 = face value</li><li>10, J, Q, K = 0</li><li>Ace = 1</li><li>If the total exceeds 9, only the last digit counts. Example: 15 = 5</li></ul>",
-          "de": "<ul><li>Karten 2–9 = Zahlenwert</li><li>10, J, Q, K = 0</li><li>Ass = 1</li><li>Wenn die Summe 9 überschreitet, zählt nur die letzte Ziffer — Beispiel: 15 = 5</li></ul>",
-          "fr": "<ul><li>Cartes 2–9 = valeur nominale</li><li>10, J, Q, K = 0</li><li>As = 1</li><li>Si le total dépasse 9, seul le dernier chiffre compte. Exemple : 15 = 5</li></ul>",
-          "it": "<ul><li>Carte 2–9 = valore nominale</li><li>10, J, Q, K = 0</li><li>Asso = 1</li><li>Se il totale supera 9, conta solo l'ultima cifra. Esempio: 15 = 5</li></ul>",
-          "es": "<ul><li>Cartas 2–9 = valor nominal</li><li>10, J, Q, K = 0</li><li>As = 1</li><li>Si el total supera 9, solo cuenta el último dígito. Ejemplo: 15 = 5</li></ul>",
-          "pt": "<ul><li>Cartas 2–9 = valor nominal</li><li>10, J, Q, K = 0</li><li>Ás = 1</li><li>Se o total ultrapassar 9, apenas o último dígito conta. Exemplo: 15 = 5</li></ul>"
+          "en": "Some segments activate random multipliers: x2, x5, x7, x20. Your bet can instantly increase on the next spin depending on the rules of the game.",
+          "de": "Einige Segmente aktivieren zufällige Multiplikatoren: x2, x5, x7, x20. Dein Einsatz kann sich im nächsten Spin sofort erhöhen, abhängig von den Spielregeln.",
+          "fr": "Certains segments activent des multiplicateurs aléatoires : x2, x5, x7, x20. Votre mise peut augmenter instantanément au prochain tour selon les règles du jeu.",
+          "it": "Alcuni segmenti attivano moltiplicatori casuali: x2, x5, x7, x20. La tua scommessa può aumentare istantaneamente al giro successivo a seconda delle regole del gioco.",
+          "es": "Algunos segmentos activan multiplicadores aleatorios: x2, x5, x7, x20. Tu apuesta puede aumentar al instante en el siguiente giro según las reglas del juego.",
+          "pt": "Alguns segmentos ativam multiplicadores aleatórios: x2, x5, x7, x20. A sua aposta pode aumentar instantaneamente na próxima rodada, dependendo das regras do jogo."
         },
         "video": {
           "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
@@ -126,49 +126,32 @@
       {
         "id": "story4",
         "topText": {
-          "en": "Third card rules",
-          "de": "Regeln für die dritte Karte",
-          "fr": "Règles de la troisième carte",
-          "it": "Regole della terza carta",
-          "es": "Reglas de la tercera carta",
-          "pt": "Regras da terceira carta"
+          "en": "Bonus rounds",
+          "de": "Bonusrunden",
+          "fr": "Tours bonus",
+          "it": "Round bonus",
+          "es": "Rondas de bono",
+          "pt": "Rodadas de bónus"
         },
         "header": {
-          "en": "When does the Player draw a third card?",
-          "de": "Wann zieht der Spieler eine dritte Karte?",
-          "fr": "Quand le joueur tire-t-il une troisième carte ?",
-          "it": "Quando il giocatore pesca una terza carta?",
-          "es": "¿Cuándo roba una tercera carta el Jugador?",
-          "pt": "Quando o Jogador recebe uma terceira carta?"
+          "en": "Bonus rounds in Game shows",
+          "de": "Bonusrunden in Game Shows",
+          "fr": "Tours bonus dans les jeux type émission TV",
+          "it": "Round bonus nei Game shows",
+          "es": "Rondas de bono en Game shows",
+          "pt": "Rodadas de bónus em Game shows"
         },
         "description": {
-          "en": "If the total is 0–5",
-          "de": "Wenn die Gesamtsumme 0–5 beträgt",
-          "fr": "Si le total est compris entre 0 et 5",
-          "it": "Se il totale è compreso tra 0 e 5",
-          "es": "Si el total es 0–5",
-          "pt": "Se o total for 0–5"
+          "en": "Some segments unlock interactive mini-games with bigger multipliers and high win potential.",
+          "de": "Einige Segmente schalten interaktive Mini-Spiele mit höheren Multiplikatoren und großem Gewinnpotenzial frei.",
+          "fr": "Certains segments débloquent des mini-jeux interactifs avec des multiplicateurs plus élevés et un fort potentiel de gain.",
+          "it": "Alcuni segmenti sbloccano mini-giochi interattivi con moltiplicatori più alti e un alto potenziale di vincita.",
+          "es": "Algunos segmentos desbloquean mini-juegos interactivos con multiplicadores más altos y gran potencial de ganancias.",
+          "pt": "Alguns segmentos desbloqueiam mini-jogos interativos com multiplicadores maiores e alto potencial de ganhos."
         },
         "video": {
-          "h265": "/src/assets/videos/stories/en/story_4_5-h265.mp4",
-          "webm": "/src/assets/videos/stories/en/story_4_5.webm"
-        },
-        "phaseSwitchAt": 10.733,
-        "secondHeader": {
-          "en": "When does the Banker draw a third card?",
-          "de": "Wann zieht die Bank eine dritte Karte?",
-          "fr": "Quand le Banquier tire-t-il une troisième carte ?",
-          "it": "Quando il Banco pesca una terza carta?",
-          "es": "¿Cuándo roba una tercera carta la Banca?",
-          "pt": "Quando o Banqueiro recebe uma terceira carta?"
-        },
-        "secondDescription": {
-          "en": "<ul><li>0–2 → Always draws</li><li>3 → Draws (except if Player has 8)</li><li>4 → Draws if Player 2–7</li><li>5 → Draws if Player 4–7</li><li>6 → Draws if Player 6–7</li><li>7 → Stands</li></ul>",
-          "de": "<ul><li>0–2 → Zieht immer eine dritte Karte</li><li>3 → Zieht eine dritte Karte (außer wenn der Spieler eine 8 hat)</li><li>4 → Zieht eine dritte Karte, wenn der Spieler 2–7 hat</li><li>5 → Zieht eine dritte Karte, wenn der Spieler 4–7 hat</li><li>6 → Zieht eine dritte Karte, wenn der Spieler 6–7 hat</li><li>7 → Bleibt stehen</li></ul>",
-          "fr": "<ul><li>0–2 → Tire toujours une carte</li><li>3 → Tire une carte (sauf si le Joueur a 8)</li><li>4 → Tire une carte si le Joueur a 2–7</li><li>5 → Tire une carte si le Joueur a 4–7</li><li>6 → Tire une carte si le Joueur a 6–7</li><li>7 → Reste</li></ul>",
-          "it": "<ul><li>0–2 → Pesca sempre una carta</li><li>3 → Pesca una carta (tranne se il Giocatore ha 8)</li><li>4 → Pesca una carta se il Giocatore ha 2–7</li><li>5 → Pesca una carta se il Giocatore ha 4–7</li><li>6 → Pesca una carta se il Giocatore ha 6–7</li><li>7 → Sta</li></ul>",
-          "es": "<ul><li>0–2 → Siempre roba</li><li>3 → Roba (excepto si el Jugador tiene 8)</li><li>4 → Roba si el Jugador tiene 2–7</li><li>5 → Roba si el Jugador tiene 4–7</li><li>6 → Roba si el Jugador tiene 6–7</li><li>7 → Se planta</li></ul>",
-          "pt": "<ul><li>0–2 → Recebe sempre</li><li>3 → Recebe (exceto se o Jogador tiver 8)</li><li>4 → Recebe se o Jogador tiver 2–7</li><li>5 → Recebe se o Jogador tiver 4–7</li><li>6 → Recebe se o Jogador tiver 6–7</li><li>7 → Mantém a mão atual</li></ul>"
+          "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
+          "webm": "/src/assets/videos/stories/en/story_4.webm"
         },
         "ctaButton": {
           "enabled": true
@@ -189,24 +172,24 @@
           "pt": "Pagamentos"
         },
         "header": {
-          "en": "Baccarat payouts",
-          "de": "Baccarat Auszahlungen",
-          "fr": "Paiements du Baccarat",
-          "it": "Pagamenti del Baccarat",
-          "es": "Pagos en Baccarat",
-          "pt": "Pagamentos do Baccarat"
+          "en": "Payouts in Game shows",
+          "de": "Auszahlungen in Game Shows",
+          "fr": "Paiements dans les jeux type émission TV",
+          "it": "Pagamenti nei Game shows",
+          "es": "Pagos en Game shows",
+          "pt": "Pagamentos em Game shows"
         },
         "description": {
-          "en": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (5% commission or choose no commission tables)</li><li><strong>Payout €10: Bet €5 - Win €5 (+ stake back)</strong></li><li>Tie - 8:1 or 9:1</li><li><strong>Payout €45: Bet €5 - Win €40 (+ €5 stake back)</strong></li></ul>",
-          "de": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (5 % Kommission oder wähle Tische ohne Kommission)</li><li><strong>Auszahlung 10 €: Einsatz 5 € - Gewinn 5 € (+ Einsatz zurück)</strong></li><li>Tie - 8:1 oder 9:1</li><li><strong>Auszahlung 45 €: Einsatz 5 € - Gewinn 40 € (+ 5 € Einsatz zurück)</strong></li></ul>",
-          "fr": "<ul><li>Joueur - 1:1</li><li>Banquier - 1:1 (commission de 5 % ou choisissez des tables sans commission)</li><li><strong>Paiement 10 € : Pari 5 € - Gain 5 € (+ mise restituée)</strong></li><li>Égalité - 8:1 ou 9:1</li><li><strong>Paiement 45 € : Pari 5 € - Gain 40 € (+ 5 € de mise restituée)</strong></li></ul>",
-          "it": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (commissione del 5% oppure scegli tavoli senza commissione)</li><li><strong>Pagamento €10: Scommessa €5 - Vincita €5 (+ puntata restituita)</strong></li><li>Tie - 8:1 o 9:1</li><li><strong>Pagamento €45: Scommessa €5 - Vincita €40 (+ €5 di puntata restituita)</strong></li></ul>",
-          "es": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (5% de comisión o elige mesas sin comisión)</li><li><strong>Pago €10: Apuesta €5 - Gana €5 (+ devolución de la apuesta)</strong></li><li>Tie - 8:1 o 9:1</li><li><strong>Pago €45: Apuesta €5 - Gana €40 (+ €5 de devolución de la apuesta)</strong></li></ul>",
-          "pt": "<ul><li>Player - 1:1</li><li>Banker - 1:1 (comissão de 5% ou escolha mesas sem comissão)</li><li><strong>Pagamento €10: Aposta €5 - Vitória €5 (+ aposta devolvida)</strong></li><li>Tie - 8:1 ou 9:1</li><li><strong>Pagamento €45: Aposta €5 - Vitória €40 (+ €5 de aposta devolvida)</strong></li></ul>"
+          "en": "<ul><li>Bet €5</li><li>Wheel hits x5</li><li><strong>Payout 30 EUR: bet 5 EUR - get 25 EUR</strong></li></ul>",
+          "de": "<ul><li>Setze €5</li><li>Rad landet auf x5</li><li><strong>Auszahlung 30 EUR: Einsatz 5 EUR — Gewinn 25 EUR</strong></li></ul>",
+          "fr": "<ul><li>Misez 5 EUR</li><li>La roue s'arrête sur x5</li><li><strong>Paiement : 30 EUR — misez 5 EUR — recevez 25 EUR</strong></li></ul>",
+          "it": "<ul><li>Scommetti €5</li><li>La ruota si ferma su x5</li><li><strong>Pagamento 30 EUR: scommessa 5 EUR — ottieni 25 EUR</strong></li></ul>",
+          "es": "<ul><li>Apuesta 5 EUR</li><li>La rueda cae en x5</li><li><strong>Pago 30 EUR: apuesta 5 EUR — obtén 25 EUR</strong></li></ul>",
+          "pt": "<ul><li>Aposta 5 EUR</li><li>A roda cai em x5</li><li><strong>Pagamento 30 EUR: aposta 5 EUR — recebe 25 EUR</strong></li></ul>"
         },
         "video": {
-          "h265": "/src/assets/videos/stories/en/story_6-h265.mp4",
-          "webm": "/src/assets/videos/stories/en/story_6.webm"
+          "h265": "/src/assets/videos/stories/en/story_5-h265.mp4",
+          "webm": "/src/assets/videos/stories/en/story_5.webm"
         },
         "ctaButton": {
           "enabled": true
@@ -240,12 +223,12 @@
     },
     "ctaButton": {
       "text": {
-        "en": "Play Baccarat",
-        "de": "Baccarat spielen",
-        "fr": "Jouer au Baccarat",
-        "it": "Gioca a Baccarat",
-        "es": "Jugar Baccarat",
-        "pt": "Jogar Baccarat"
+        "en": "Play Game shows",
+        "de": "Game Shows spielen",
+        "fr": "Jouer aux jeux type émission TV",
+        "it": "Giocare ai Game shows",
+        "es": "Jugar Game shows",
+        "pt": "Jogar Game shows"
       }
     },
     "helpText": {
@@ -258,12 +241,12 @@
         "pt": "Precisa de mais informações?"
       },
       "link": {
-        "en": "Discover Baccarat",
-        "de": "Entdecke Baccarat",
-        "fr": "Découvrez le Baccarat",
-        "it": "Scopri il Baccarat",
-        "es": "Descubre Baccarat",
-        "pt": "Descubra o Baccarat"
+        "en": "Discover Game shows",
+        "de": "Entdecke Game Shows",
+        "fr": "Découvrez les jeux type émission TV",
+        "it": "Scopri i Game shows",
+        "es": "Descubre Game shows",
+        "pt": "Descubra Game shows"
       }
     }
   }

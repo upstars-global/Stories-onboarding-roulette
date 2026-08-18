@@ -25,7 +25,7 @@ const DEFAULTS: QueryParams = {
   userLanguage: 'en',
   currency: '',
   endLink: '',
-  gameLink: 'live/categories/baccarat',
+  gameLink: 'live/categories/game-shows',
   discoverLink: '',
   storiesTotal: 4,
 };

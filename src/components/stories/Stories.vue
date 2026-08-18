@@ -33,11 +33,9 @@
         'custom-layout': currentStory?.helpText?.enabled,
         'first-slide': currentStoryIndex === 0,
         'is-intro-scene': currentStory?.id === 'story1',
-        'is-points-scene': currentStory?.id === 'story3',
-        'is-third-card-scene': currentStory?.id === 'story4',
-        'is-compact-body':
-          currentStory?.id === 'story5' ||
-          (currentStory?.id === 'story4' && textPhase === 1),
+        'is-steps-scene': currentStory?.id === 'story2',
+        'is-multipliers-scene': currentStory?.id === 'story3',
+        'is-compact-body': currentStory?.id === 'story5',
       }"
     >
       <template v-for="(story, index) in stories" :key="`story-${story.id}`">

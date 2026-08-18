@@ -190,19 +190,8 @@
 .text_container.is-intro-scene {
   // Only the body (.h2) is shrunk so it doesn't sit on the video art.
   // The title (.h1) keeps its base size.
-  .h2:lang(de) {
-    font-size: to-dvh(12px);
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 1.5dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(15px, 900px);
-    }
-  }
-
-  .h2:lang(fr) {
+  // FR/PT run to 4 lines at base size and reach the art block.
+  .h2:is(:lang(fr), :lang(pt)) {
     font-size: to-dvh(13px);
 
     @media (max-aspect-ratio: 1/2) {
@@ -215,13 +204,26 @@
   }
 }
 
-.text_container.is-points-scene {
-  // Points list — keep clear of mid video art.
-  .h2 {
+/* Steps list (2). FR is the only locale that overflows: its title always wraps
+   to 2 lines and the 4-step list then runs onto the wheel. */
+.text_container.is-steps-scene {
+  .h1:lang(fr) {
+    font-size: to-dvh(24px);
+
+    @media (max-aspect-ratio: 1/2) {
+      font-size: 3dvh;
+    }
+
+    @include media-up(md) {
+      font-size: to-dvh(29px, 900px);
+    }
+  }
+
+  .h2:lang(fr) {
     font-size: to-dvh(12px);
 
     @media (max-aspect-ratio: 1/2) {
-      font-size: 1.55dvh;
+      font-size: 1.5dvh;
     }
 
     @include media-up(md) {
@@ -230,61 +232,30 @@
   }
 }
 
-/* Third-card titles must stay within EN's 2 lines (never 3).
-   Minimal per-breakpoint shrink, only for langs that overflow. */
-// Phase 1 (Player question) — is-third-card-scene without is-compact-body.
-.text_container.is-third-card-scene:not(.is-compact-body) {
-  // de/fr overflow to 3 lines only on desktop (md) — nudge md only.
-  .h1:lang(de),
-  .h1:lang(fr) {
-    @include media-up(md) {
-      font-size: to-dvh(33px, 900px);
-    }
-  }
-
-  .h1:lang(es) {
-    font-size: to-dvh(25px);
+/* Multipliers (3). Titles must stay within EN's 2 lines (never 3), otherwise
+   the body text lands on the video art. Smallest shrink that fits each locale. */
+.text_container.is-multipliers-scene {
+  .h1:is(:lang(de), :lang(es)) {
+    font-size: to-dvh(26px);
 
     @media (max-aspect-ratio: 1/2) {
-      font-size: 3.2dvh;
+      font-size: 3.25dvh;
     }
 
     @include media-up(md) {
-      font-size: to-dvh(30px, 900px);
+      font-size: to-dvh(31px, 900px);
     }
   }
 
-  .h1:lang(pt) {
-    font-size: to-dvh(24px);
+  .h1:lang(it) {
+    font-size: to-dvh(25px);
 
     @media (max-aspect-ratio: 1/2) {
       font-size: 3.1dvh;
     }
 
     @include media-up(md) {
-      font-size: to-dvh(28px, 900px);
-    }
-  }
-}
-
-// Phase 2 (Banker question) — is-third-card-scene + is-compact-body.
-.text_container.is-third-card-scene.is-compact-body {
-  .h1:lang(fr) {
-    font-size: to-dvh(26px);
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 3.3dvh;
-    }
-
-    @include media-up(md) {
       font-size: to-dvh(30px, 900px);
-    }
-  }
-
-  // es overflows only on desktop (md).
-  .h1:lang(es) {
-    @include media-up(md) {
-      font-size: to-dvh(33px, 900px);
     }
   }
 
@@ -296,7 +267,7 @@
     }
 
     @include media-up(md) {
-      font-size: to-dvh(28px, 900px);
+      font-size: to-dvh(29px, 900px);
     }
   }
 }
@@ -328,44 +299,13 @@
       font-size: to-dvh(13px, 900px);
     }
   }
-}
 
-// Payouts (5): visual gap between "Payout €10 …" and "Tie …" line.
-.text_container.is-compact-body:not(.is-third-card-scene) {
-  .h2 ul li:nth-child(4) {
+  // Visual gap between the bet/wheel lines and the payout total.
+  .h2 ul li:nth-child(3) {
     margin-top: to-dvh(10px);
 
     @include media-up(md) {
       margin-top: to-dvh(10px, 900px);
-    }
-  }
-}
-
-// Banker phase (4.2): denser list — clear of card art.
-.text_container.is-compact-body.is-third-card-scene {
-  .h2 {
-    font-size: to-dvh(11px);
-    line-height: 1.3;
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 1.4dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(14px, 900px);
-    }
-  }
-
-  .h2:is(:lang(de), :lang(pt)) {
-    font-size: to-dvh(10px);
-    line-height: 1.28;
-
-    @media (max-aspect-ratio: 1/2) {
-      font-size: 1.3dvh;
-    }
-
-    @include media-up(md) {
-      font-size: to-dvh(13px, 900px);
     }
   }
 }
@@ -608,13 +548,29 @@
     font-size: to-dvh(14px, 900px);
   }
 
-  // Longer copies (DE/FR/IT) wrap to a 2nd line at 14px — shrink to 12px
-  // so the row stays a single line across languages.
-  &:is(:lang(de), :lang(fr), :lang(it)) {
+  // Longer copies wrap to a 2nd row at 14px, which collides with the lifted
+  // CTA. Shrink per locale by exactly what it takes to stay on one row.
+  &:is(:lang(de), :lang(es), :lang(pt)) {
     font-size: to-dvh(12px);
 
     @include media-up(md) {
       font-size: to-dvh(12px, 900px);
+    }
+  }
+
+  &:lang(it) {
+    font-size: to-dvh(11px);
+
+    @include media-up(md) {
+      font-size: to-dvh(11px, 900px);
+    }
+  }
+
+  &:lang(fr) {
+    font-size: to-dvh(10px);
+
+    @include media-up(md) {
+      font-size: to-dvh(10px, 900px);
     }
   }
 }
