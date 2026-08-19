@@ -71,23 +71,13 @@
   width: 100%;
   height: 100%;
   display: flex;
-  background: #032807; // Default background for all slides
-
-  // First slide gets orange gradient background (same as roulette/blackjack)
-  &.first-slide {
-    background: linear-gradient(
-      0deg,
-      #fd7f00 0%,
-      #f97002 8.17%,
-      #db430c 24.62%,
-      #d03304 46.39%,
-      #d43403 53.37%,
-      #c33105 67.14%,
-      #9e1a04 82.01%,
-      #920f04 93.04%,
-      #790303 100%
-    );
-  }
+  // Backdrop for .bg_video's mix-blend-mode: the video box starts exactly at this
+  // element's top edge, so this opaque gradient is what the blend mixes with.
+  // Deliberately NOT a stacking context (no isolation, no z-index): that would
+  // scope the CTA button's z-index locally and let #story_controls (9998, a
+  // sibling) swallow taps meant for the button on mobile.
+  background: linear-gradient(180deg, #1e133f 0%, #622bf1 100%),
+    var(--color-layer-body, #110e1b);
 
   @include media-up(md) {
     width: to-dvh(432px, 900px);
@@ -103,8 +93,10 @@
   }
 }
 
+// No z-index here on purpose: it would make this a stacking context and seal
+// .bg_video (a child) off from the .text_container gradient, so the video's
+// mix-blend-mode would have no backdrop to blend with.
 .stories-segment {
-  z-index: 1;
   pointer-events: none;
   user-select: none;
   -moz-user-select: none;
@@ -128,16 +120,37 @@
   transition: opacity 0.2s ease;
 }
 
-/* Figma Mobile/H1: Sora 800, 24px / 125%; body: 16px / 150%.
-   Кегль привязан к ширине вьюпорта, а не к высоте: перенос строк задаёт ширина
-   текстовой колонки (`to-percent-x(328px)`), поэтому только при vw-привязке
-   разбивка строк на любом телефоне совпадает с макетом 360x640. Второй предел в
-   dvh нужен на экранах шире 9:16 (типичный iPhone с панелями Safari — 390x664):
-   там запас над артом растёт медленнее ширины, поэтому кегль берёт меньшее из
-   двух — по сути вписывается и в ширину, и в высоту макета. */
+/* Font size is defined by a single number per breakpoint — mobile, in design px @360x640.
+   Line breaks are determined by the text column width, not the screen height, so on mobile
+   the size is vw-based: the ratio of "font size / column width" stays constant and the
+   line breaks on any phone match the design.
+
+   The desktop size is not set separately — it is derived from the mobile value via
+   $text-col-scale: the `.stories-segment` column is 328px out of 360 on mobile and
+   394px out of 432 on desktop. With the 394/328 multiplier the "font size / column width"
+   ratio is identical at both breakpoints, so the line count on desktop matches mobile.
+   Previously desktop used its own 34/17 — which caused headings to break one line more
+   than in the design.
+
+   The `to-dvh` second limit on mobile is a guard for viewports wider than 9:16: there
+   the video (object-fit: cover) is cropped on the sides and the art moves up, so the
+   font takes the smaller of the two values and the text does not overlap the card.
+   On phones the aspect is always narrower than 9:16, so `to-vw` wins — exactly the
+   design-matched line break. */
+$text-col-scale: 1.20122; // 394 / 328
+
+@mixin text-size($mobile-px) {
+  font-size: min(to-vw($mobile-px), to-dvh($mobile-px));
+
+  @include media-up(md) {
+    font-size: to-dvh($mobile-px * $text-col-scale, 900px);
+  }
+}
+
+/* Figma Mobile/H1: Sora 800, 24px / 125%; body: 16px / 150%. */
 .h1 {
   margin-bottom: to-vw(10px);
-  font-size: min(to-vw(24px), to-dvh(24px));
+  @include text-size(24px);
   color: var(--color-text-alt);
   text-align: left;
   font-family: $font-family-primary;
@@ -148,12 +161,11 @@
 
   @include media-up(md) {
     margin-bottom: to-dvh(12px, 900px);
-    font-size: to-dvh(34px, 900px);
   }
 }
 
 .h2 {
-  font-size: min(to-vw(16px), to-dvh(16px));
+  @include text-size(16px);
   color: var(--color-text-body);
   text-align: left;
   font-family: $font-family-primary;
@@ -164,10 +176,6 @@
   max-width: 100%;
   margin-top: to-vw(10px);
   word-break: break-word;
-
-  @include media-up(md) {
-    font-size: to-dvh(17px, 900px);
-  }
 
   ul {
     list-style: none;
@@ -187,31 +195,61 @@
   }
 }
 
-/* Запас над артом задан самим видео: карточка запечена в кадр на 240..568, то
-   есть на 360x640 под текст остаётся 152px (на слайде 3 арт начинается ниже, с
-   271, — там запас больше). Английская длина текста влезает макетными 24/16, а
-   остальные языки длиннее и уперлись бы в арт, поэтому им кегль уменьшен по их
-   самому длинному слайду — один размер на всю историю, чтобы шрифт не прыгал от
-   слайда к слайду. Значения подобраны замером всех 5 слайдов x 6 локалей. */
-.h1:is(:lang(de), :lang(es), :lang(it), :lang(pt), :lang(fr)) {
-  font-size: min(to-vw(20px), to-dvh(20px));
+/* The art clearance is defined by the video itself: the card is baked into the frame at
+   239..568 (slide 3 starts lower at 271), leaving ~150px for text on 360x640. EN fits
+   with design sizes 24/16 with a minimum 8px gap to the art on slide 4 — that is the
+   accepted minimum. Other locales are longer, so sizes are chosen so that: (1) heading
+   line count does not exceed EN's [1,1,2,2,1], (2) the gap to art stays >=8px,
+   (3) the size is the largest possible under those two constraints. One size for the
+   entire story — no font jumping between slides. Determined by exhaustive search
+   measuring all 5 slides x 6 locales.
 
-  // Десктоп остаётся на базовом кегле: там колонка шире и запас над артом другой.
-  @include media-up(md) {
-    font-size: to-dvh(34px, 900px);
-  }
+   FR is the only exception for line count: the slide 1 and 5 headings
+   ("Que sont les jeux type émission TV ?", "Paiements dans les jeux type
+   émission TV") only fit on one line at ~17px, which is already body-text size.
+   So for FR those two headings wrap to two lines but the size stays readable. */
+.h1:lang(de) {
+  @include text-size(21px);
 }
 
-.h2:is(:lang(de), :lang(es), :lang(it), :lang(pt), :lang(fr)) {
-  font-size: min(to-vw(13px), to-dvh(13px));
+.h2:lang(de) {
+  @include text-size(14px);
+}
 
-  @include media-up(md) {
-    font-size: to-dvh(17px, 900px);
-  }
+.h1:lang(es) {
+  @include text-size(23.5px);
+}
+
+.h2:lang(es) {
+  @include text-size(14px);
+}
+
+.h1:lang(it) {
+  @include text-size(22.5px);
+}
+
+.h2:lang(it) {
+  @include text-size(14px);
+}
+
+.h1:lang(pt) {
+  @include text-size(21.5px);
+}
+
+.h2:lang(pt) {
+  @include text-size(14px);
+}
+
+.h1:lang(fr) {
+  @include text-size(20px);
+}
+
+.h2:lang(fr) {
+  @include text-size(13.25px);
 }
 
 .text_container.is-compact-body {
-  // Payouts (5): визуальный отрыв итоговой выплаты от строк ставки и колеса.
+  // Payouts (5): visual gap between the payout line and the bet / wheel rows.
   .h2 ul li:nth-child(3) {
     margin-top: to-dvh(10px);
 
@@ -412,6 +450,11 @@
   height: 100dvh;
   z-index: 0;
   object-fit: cover;
+  // Figma: the video layer blends "luminosity" over the purple gradient behind
+  // it — hue and saturation come from that backdrop, brightness from the frame,
+  // which recolors the baked-in art to match the brand palette. Requires
+  // .stories-segment to stay free of a stacking context (see note there).
+  mix-blend-mode: luminosity;
   @include media-up(md) {
     top: -12dvh;
     height: 117%;
@@ -459,8 +502,8 @@
     font-size: to-dvh(14px, 900px);
   }
 
-  // Строка должна остаться одной: перенос сталкивает её с поднятой кнопкой.
-  // Кегль привязан к ширине, потому что перенос задаёт ширина экрана.
+  // Must stay on one line: wrapping collides with the lifted CTA button.
+  // Size is vw-based because line breaks are governed by screen width.
   &:is(:lang(de), :lang(es), :lang(pt)) {
     font-size: to-vw(12px);
 

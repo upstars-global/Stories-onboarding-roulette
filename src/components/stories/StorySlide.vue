@@ -38,7 +38,7 @@ interface Props {
   story: StoryData;
   texts: { userLanguage: string };
   isAndroid: boolean;
-  /** WebKit не поддерживает альфу в VP9, ему нужен HEVC первым источником. */
+  /** WebKit does not support alpha in VP9; it needs HEVC as the first source. */
   prefersH265?: boolean;
   currentIndex: number;
   autoplay?: boolean;

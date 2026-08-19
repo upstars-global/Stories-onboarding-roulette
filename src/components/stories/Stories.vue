@@ -187,10 +187,10 @@ const discover_link = ref(qpDiscover);
 // === COMPUTED ===
 const isAndroid = computed(() => /android/i.test(navigator.userAgent));
 
-// Фон истории рисует приложение, а видео прозрачно вокруг карточки. WebKit
-// проигрывает VP9, но альфу в нём игнорирует: прозрачное становится чёрным и
-// фон не проступает. Поэтому Safari и всем браузерам на iOS отдаём HEVC с
-// альфой первым источником, остальным webm остаётся первым.
+// The story background is drawn by the app; the video is transparent around the card.
+// WebKit plays VP9 but ignores its alpha: transparent areas turn black and the
+// background does not show through. So for Safari and all iOS browsers HEVC with
+// alpha is placed first in the source list; for everyone else WebM stays first.
 const prefersH265 = computed(() => {
   const ua = navigator.userAgent;
   const isIOS = /iP(hone|ad|od)/.test(ua);
@@ -421,7 +421,7 @@ const buildStoryTimeline = (index: number) => {
     seg.to(deskSel, { opacity: 1 }, '+0.1');
 
     if (deskText.includes('<li')) {
-      // Печать списков с сохранением вложенных тегов
+      // Animate list items while preserving nested tags
       animateListItems(seg, deskSel, deskText);
     } else {
       animateRegularText(seg, deskSel, deskText);
