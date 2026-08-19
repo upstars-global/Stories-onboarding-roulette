@@ -138,6 +138,7 @@ import { TextPlugin } from 'gsap/TextPlugin';
 import { useQueryParams } from '@/composables/useQueryParams';
 import { useLocale } from '@/composables/useLocale';
 import { useStoriesData } from '@/composables/useStoriesData';
+import { useVideoPrefetch } from '@/composables/useVideoPrefetch';
 
 gsap.registerPlugin(TextPlugin);
 
@@ -178,6 +179,7 @@ const {
 } = useQueryParams();
 useLocale(ref(qpLang));
 const { title, ui, stories } = useStoriesData();
+const { prefetch } = useVideoPrefetch();
 const userLanguage = qpLang;
 
 const end_link = ref(qpEnd);
@@ -547,6 +549,45 @@ const onPrev = () => {
   }
 };
 
+/**
+ * Warms the next clip, mirroring the source order in StorySlide.vue so the file
+ * the browser will actually pick is the one fetched ahead.
+ *
+ * Waits until the playing clip is fully buffered: on a narrow connection the two
+ * downloads otherwise share the pipe and the current clip starts stuttering —
+ * trading the stall at the transition for a worse one during playback. Gated
+ * like this the prefetch only ever spends bandwidth playback no longer needs.
+ */
+const prefetchNextVideo = (video: HTMLVideoElement) => {
+  const next = stories.value[currentStoryIndex.value + 1];
+  if (!next) return;
+
+  const url = isAndroid.value
+    ? next.video.webm
+    : prefersH265.value
+      ? next.video.h265
+      : next.video.webm;
+
+  const isFullyBuffered = (): boolean => {
+    const { buffered, duration } = video;
+    if (!buffered.length || !Number.isFinite(duration)) return false;
+    return buffered.end(buffered.length - 1) >= duration - 0.5;
+  };
+
+  if (isFullyBuffered()) {
+    prefetch(url);
+    return;
+  }
+
+  // Listener dies with the element when the slide unmounts.
+  const onProgress = () => {
+    if (!isFullyBuffered()) return;
+    video.removeEventListener('progress', onProgress);
+    prefetch(url);
+  };
+  video.addEventListener('progress', onProgress);
+};
+
 const onLoadedMetadata = () => {
   progress.value = 0;
   const video = videoRefs.value[currentStoryIndex.value];
@@ -562,6 +603,7 @@ const onLoadedMetadata = () => {
         startProgressLoopFor(video);
         showVideoPlayButton.value = false;
         tl.play(); // synchronous start text animation on autoplay
+        prefetchNextVideo(video);
       })
       .catch(() => {
         // Autoplay blocked → show custom button
