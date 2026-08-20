@@ -1,0 +1,464 @@
+---
+description: 'Vue 3 + TypeScript + Vite Enhanced Standards'
+globs: ['**/*.{vue,ts,js,jsx,tsx,scss}']
+alwaysApply: true
+priority: 1
+---
+
+# 🚀 Vue 3 + TypeScript + Vite Enhanced Standards
+
+## 📋 ОБЯЗАТЕЛЬНЫЕ ПРИНЦИПЫ
+
+### Composition API & TypeScript
+
+- **ВСЕГДА** используй `<script setup lang="ts">` вместо Options API
+- **ВСЕГДА** типизируй props, emits, refs, reactive объекты
+- **ВСЕГДА** используй `defineProps<T>()`, `defineEmits<T>()`, `defineExpose<T>()`
+- **НИКОГДА** не используй `any` - создавай интерфейсы для всего
+- **ВСЕГДА** используй интерфейсы для объектов, типы для примитивов и объединений
+
+### Архитектурные принципы
+
+- **SOLID**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion
+- **DRY**: Don't Repeat Yourself - создавай composables для переиспользуемой логики
+- **KISS**: Keep It Simple, Stupid - избегай излишней сложности
+- **Composition over Inheritance**: предпочитай композицию наследованию
+
+## 🏗️ СТРУКТУРА КОМПОНЕНТОВ
+
+### Порядок в `<script setup>`
+
+```typescript
+// 1. Импорты (Vue, внешние библиотеки, компоненты, composables)
+import { ref, computed, onMounted } from 'vue';
+import type { PropType } from 'vue';
+import { useRouter } from 'vue-router';
+
+// 2. Интерфейсы и типы
+interface ComponentProps {
+  title: string;
+  items: Array<{ id: number; name: string }>;
+}
+
+// 3. Props и Emits
+const props = defineProps<ComponentProps>();
+const emit = defineEmits<{
+  'item-click': [item: { id: number; name: string }];
+  close: [];
+}>();
+
+// 4. Reactive данные
+const isLoading = ref(false);
+const selectedItem = ref<{ id: number; name: string } | null>(null);
+
+// 5. Computed свойства
+const filteredItems = computed(() => {
+  return props.items.filter((item) => item.name.includes(searchQuery.value));
+});
+
+// 6. Methods (функции) - используй 'function' для hoisting
+function handleItemClick(item: { id: number; name: string }) {
+  selectedItem.value = item;
+  emit('item-click', item);
+}
+
+// 7. Lifecycle hooks
+onMounted(() => {
+  // инициализация
+});
+
+// 8. Expose (если нужно)
+defineExpose<{
+  reset: () => void;
+  getSelectedItem: () => { id: number; name: string } | null;
+}>({
+  reset: () => {
+    selectedItem.value = null;
+  },
+  getSelectedItem: () => selectedItem.value,
+});
+```
+
+## 🎯 СОГЛАШЕНИЯ ОБ ИМЕНОВАНИИ
+
+### Файлы и директории
+
+- **Компоненты**: PascalCase (`UserProfile.vue`, `LootBoxSpinWheel.vue`)
+- **Composables**: camelCase с префиксом `use` (`useAuth.ts`, `useApi.ts`)
+- **Директории**: kebab-case (`user-profile/`, `loot-box/`)
+- **Типы/Интерфейсы**: PascalCase с префиксом типа (`UserProfileProps`, `ApiResponse`)
+
+### Переменные и функции
+
+- **Boolean**: префикс `is`, `has`, `can` (`isLoading`, `hasError`, `canEdit`)
+- **Events**: camelCase (`itemClick`, `formSubmit`)
+- **Methods**: camelCase с глаголом (`handleClick`, `fetchData`, `validateForm`)
+- **Функции**: используй `function` keyword для hoisting и ясности
+
+## 🔧 TypeScript BEST PRACTICES
+
+### Интерфейсы vs Типы
+
+```typescript
+// ✅ ПРЕДПОЧТИТЕЛЬНО - интерфейсы для объектов
+interface UserProfile {
+  id: number;
+  name: string;
+  email: string;
+  avatar?: string;
+}
+
+// ✅ ДЛЯ объединений и примитивов - типы
+type Status = 'loading' | 'success' | 'error';
+type ApiResponse<T> = {
+  data: T;
+  status: Status;
+  message?: string;
+};
+
+// ✅ Избегай enums, используй object maps
+const UserRole = {
+  ADMIN: 'admin',
+  USER: 'user',
+  GUEST: 'guest',
+} as const;
+
+type UserRole = (typeof UserRole)[keyof typeof UserRole];
+```
+
+### Строгая типизация
+
+```typescript
+// ✅ Правильно
+const items = ref<UserProfile[]>([]);
+const selectedId = ref<number | null>(null);
+
+// ❌ Неправильно
+const items = ref([]);
+const selectedId = ref(null);
+```
+
+## 🎨 TEMPLATE СТАНДАРТЫ
+
+### Структура template
+
+```vue
+<template>
+  <!-- 1. Корневой элемент с семантическим классом -->
+  <div class="component-name">
+    <!-- 2. Условный рендеринг -->
+    <div v-if="isLoading" class="loading">
+      <LoadingSpinner />
+    </div>
+
+    <!-- 3. Основной контент -->
+    <div v-else class="content">
+      <!-- 4. Списки с ключами -->
+      <div
+        v-for="item in items"
+        :key="item.id"
+        class="item"
+        @click="handleItemClick(item)"
+      >
+        {{ item.name }}
+      </div>
+    </div>
+
+    <!-- 5. Модальные окна/оверлеи в конце -->
+    <Modal v-if="showModal" @close="closeModal" />
+  </div>
+</template>
+```
+
+### События и обработчики
+
+```vue
+<!-- ✅ Правильно -->
+<button @click="handleClick" @keydown.enter="handleEnter">
+  Click me
+</button>
+
+<!-- ✅ Для сложной логики -->
+<button @click="(event) => handleClick(event, additionalData)">
+  Click me
+</button>
+```
+
+## 🎯 COMPOSABLES СТАНДАРТЫ
+
+### Структура composable
+
+```typescript
+// useApi.ts
+import { ref, computed } from 'vue';
+
+interface ApiState<T> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export function useApi<T>(url: string) {
+  // State
+  const state = ref<ApiState<T>>({
+    data: null,
+    loading: false,
+    error: null,
+  });
+
+  // Computed
+  const hasData = computed(() => state.value.data !== null);
+  const hasError = computed(() => state.value.error !== null);
+
+  // Methods
+  async function fetchData() {
+    state.value.loading = true;
+    state.value.error = null;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      state.value.data = data;
+    } catch (error) {
+      state.value.error =
+        error instanceof Error ? error.message : 'Unknown error';
+    } finally {
+      state.value.loading = false;
+    }
+  }
+
+  function reset() {
+    state.value = {
+      data: null,
+      loading: false,
+      error: null,
+    };
+  }
+
+  // Return
+  return {
+    // State
+    data: computed(() => state.value.data),
+    loading: computed(() => state.value.loading),
+    error: computed(() => state.value.error),
+
+    // Computed
+    hasData,
+    hasError,
+
+    // Methods
+    fetchData,
+    reset,
+  };
+}
+```
+
+## 🎨 СТИЛИ И SCSS
+
+### SCSS структура
+
+```scss
+// ✅ BEM методология
+.component-name {
+  // Блок
+  &__element {
+    // Элемент
+    &--modifier {
+      // Модификатор
+    }
+  }
+}
+
+// ✅ Для состояний используй data-атрибуты
+.component-name[data-loading='true'] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+// ✅ Используй переменные и миксины
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.component-name {
+  color: $primary-color;
+  @include transition(all 0.2s ease);
+}
+```
+
+### CSS переменные и темизация
+
+```scss
+// ✅ Используй CSS переменные для темизации
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --border-radius: 4px;
+  --transition-duration: 0.2s;
+}
+
+.component-name {
+  color: var(--primary-color);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-duration) ease;
+}
+```
+
+### SCSS модульность
+
+```scss
+// ✅ Один SCSS файл на компонент
+// ✅ Используй @use вместо @import
+// ✅ Избегай глубокой вложенности (максимум 3 уровня)
+// ✅ Используй миксины для переиспользуемых стилей
+```
+
+## ⚡ ПРОИЗВОДИТЕЛЬНОСТЬ И VITE
+
+### Оптимизация сборки
+
+```typescript
+// ✅ Динамический импорт для code splitting
+const HeavyComponent = defineAsyncComponent(
+  () => import('./HeavyComponent.vue')
+);
+
+// ✅ Lazy loading для роутов
+const routes = [
+  {
+    path: '/heavy',
+    component: () => import('./views/HeavyView.vue'),
+  },
+];
+
+// ✅ Оптимизация изображений
+// Используй WebP формат, lazy loading, определенные размеры
+```
+
+### VueUse интеграция
+
+```typescript
+// ✅ Используй VueUse для производительности
+import { useIntersectionObserver, useLocalStorage } from '@vueuse/core';
+
+const { stop } = useIntersectionObserver(target, ([{ isIntersecting }]) => {
+  if (isIntersecting) {
+    // логика при появлении в viewport
+  }
+});
+```
+
+### Suspense для асинхронных компонентов
+
+```vue
+<template>
+  <Suspense>
+    <template #default>
+      <AsyncComponent />
+    </template>
+    <template #fallback>
+      <LoadingSpinner />
+    </template>
+  </Suspense>
+</template>
+```
+
+## 🚨 ЧАСТЫЕ ОШИБКИ И РЕШЕНИЯ
+
+### ❌ Избегай
+
+```typescript
+// Не используй any
+const data: any = response.data;
+
+// Не забывай типизировать ref
+const items = ref([]);
+
+// Не используй Options API в новых компонентах
+export default {
+  data() {
+    return { items: [] };
+  },
+};
+
+// Не используй глубокую вложенность в SCSS
+.component {
+  .nested {
+    .deeply {
+      .nested {
+        // слишком глубоко!
+      }
+    }
+  }
+}
+```
+
+### ✅ Используй
+
+```typescript
+// Типизируй все
+const data: ApiResponse = response.data;
+
+// Типизируй ref
+const items = ref<Item[]>([]);
+
+// Используй Composition API
+const items = ref<Item[]>([]);
+
+// Используй function keyword для hoisting
+function handleClick() {
+  // логика
+}
+```
+
+## 🎯 КРИТЕРИИ КАЧЕСТВА
+
+### Обязательные проверки
+
+- [ ] Все компоненты используют `<script setup lang="ts">`
+- [ ] Все props, emits, refs типизированы
+- [ ] Нет использования `any`
+- [ ] Используются composables для переиспользуемой логики
+- [ ] Компоненты следуют принципу единственной ответственности
+- [ ] Код проходит ESLint без ошибок
+- [ ] SCSS следует BEM методологии
+- [ ] Используется @use вместо @import
+- [ ] Изображения оптимизированы (WebP, lazy loading)
+
+### Метрики качества
+
+- **TypeScript coverage**: >95%
+- **Bundle size**: <250KB gzipped
+- **Code maintainability**: Высокая
+- **Web Vitals**: LCP < 2.5s, CLS < 0.1, FID < 100ms
+
+## 🔧 ИНСТРУМЕНТЫ И НАСТРОЙКИ
+
+### Рекомендуемые инструменты
+
+- **Linting**: ESLint + TypeScript ESLint
+- **Formatting**: Prettier
+- **Type checking**: TypeScript strict mode
+- **Performance**: Lighthouse, WebPageTest
+- **Bundle analysis**: Vite Bundle Analyzer
+
+### Vite конфигурация
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'vue-router'],
+          ui: ['@headlessui/vue'],
+        },
+      },
+    },
+  },
+});
+```
+
+---
+
+**Помни**: Качество кода - это инвестиция в будущее проекта. Следуй этим стандартам неукоснительно!
