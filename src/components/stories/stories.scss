@@ -71,13 +71,23 @@
   width: 100%;
   height: 100%;
   display: flex;
-  // Backdrop for .bg_video's mix-blend-mode: the video box starts exactly at this
-  // element's top edge, so this opaque gradient is what the blend mixes with.
-  // Deliberately NOT a stacking context (no isolation, no z-index): that would
-  // scope the CTA button's z-index locally and let #story_controls (9998, a
-  // sibling) swallow taps meant for the button on mobile.
-  background: linear-gradient(180deg, #1e133f 0%, #622bf1 100%),
-    var(--color-layer-body, #110e1b);
+  background: #032807; // Default background for all slides
+
+  // First slide gets orange gradient background (same as roulette/blackjack)
+  &.first-slide {
+    background: linear-gradient(
+      0deg,
+      #fd7f00 0%,
+      #f97002 8.17%,
+      #db430c 24.62%,
+      #d03304 46.39%,
+      #d43403 53.37%,
+      #c33105 67.14%,
+      #9e1a04 82.01%,
+      #920f04 93.04%,
+      #790303 100%
+    );
+  }
 
   @include media-up(md) {
     width: to-dvh(432px, 900px);
@@ -93,10 +103,8 @@
   }
 }
 
-// No z-index here on purpose: it would make this a stacking context and seal
-// .bg_video (a child) off from the .text_container gradient, so the video's
-// mix-blend-mode would have no backdrop to blend with.
 .stories-segment {
+  z-index: 1;
   pointer-events: none;
   user-select: none;
   -moz-user-select: none;
@@ -450,11 +458,6 @@ $text-col-scale: 1.20122; // 394 / 328
   height: 100dvh;
   z-index: 0;
   object-fit: cover;
-  // Figma: the video layer blends "luminosity" over the purple gradient behind
-  // it — hue and saturation come from that backdrop, brightness from the frame,
-  // which recolors the baked-in art to match the brand palette. Requires
-  // .stories-segment to stay free of a stacking context (see note there).
-  mix-blend-mode: luminosity;
   @include media-up(md) {
     top: -12dvh;
     height: 117%;
