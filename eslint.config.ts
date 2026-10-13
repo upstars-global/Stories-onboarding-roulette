@@ -81,6 +81,17 @@ export default [
     },
   },
   {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        // Node.js globals for build scripts
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
+      },
+    },
+  },
+  {
     files: ['**/*.vue'],
     rules: {
       'vue/component-definition-name-casing': ['error', 'PascalCase'],

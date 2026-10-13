@@ -11,7 +11,8 @@
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "video:encode": "node scripts/encode-story-videos.mjs"
   },
   "dependencies": {
     "@vueuse/core": "^13.5.0",
