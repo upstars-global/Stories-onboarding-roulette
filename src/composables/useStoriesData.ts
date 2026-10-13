@@ -18,8 +18,9 @@ function mapAssetPaths(d: StoriesData): StoriesData {
       items: d.stories.items.map((s) => ({
         ...s,
         video: {
-          ...s.video,
+          av1: resolveAssetUrl(s.video.av1),
           h265: resolveAssetUrl(s.video.h265),
+          h264: resolveAssetUrl(s.video.h264),
           webm: resolveAssetUrl(s.video.webm),
         },
       })),

@@ -1,42 +1,44 @@
 {
   "stories": {
     "title": {
-      "en": "Game shows",
-      "de": "Game Shows",
-      "fr": "Game shows",
-      "it": "Game shows",
-      "es": "Game shows",
-      "pt": "Game shows"
+      "en": "Poker",
+      "de": "Poker",
+      "fr": "Poker",
+      "it": "Poker",
+      "es": "Poker",
+      "pt": "Poker"
     },
     "items": [
       {
         "id": "story1",
         "topText": {
-          "en": "About games",
-          "de": "Über die Spiele",
-          "fr": "À propos des jeux",
-          "it": "Informazioni sui giochi",
-          "es": "Sobre los juegos",
-          "pt": "Sobre os jogos"
+          "en": "About game",
+          "de": "Über das Spiel",
+          "fr": "À propos du jeu",
+          "it": "Informazioni sul gioco",
+          "es": "Acerca del juego",
+          "pt": "Sobre o jogo"
         },
         "header": {
-          "en": "What are Game shows?",
-          "de": "Was sind Game Shows?",
-          "fr": "Que sont les jeux type émission TV ?",
-          "it": "Cosa sono i Game shows?",
-          "es": "¿Qué son los Game shows?",
-          "pt": "O que são Game shows?"
+          "en": "What is Poker",
+          "de": "Was ist Poker",
+          "fr": "Qu'est-ce que le Poker ?",
+          "it": "Cos’è il Poker",
+          "es": "Qué es el Poker",
+          "pt": "O que é Poker"
         },
         "description": {
-          "en": "Game shows are Live casino games presented in the TV-style format featuring a real host, a giant wheel and multipliers.",
-          "de": "Game Shows sind Live-Casino-Spiele im TV-Format mit einem echten Moderator, einem großen Rad und Multiplikatoren.",
-          "fr": "Les jeux type émission TV sont des jeux Live Casino présentés dans un format télévisé, avec un véritable animateur, une roue géante et des multiplicateurs.",
-          "it": "I Game shows sono giochi del Casinò Live presentati in formato stile TV con un vero host, una ruota gigante e moltiplicatori.",
-          "es": "Los Game shows son juegos de Casino en Vivo presentados en formato estilo TV con un host real, una rueda gigante y multiplicadores.",
-          "pt": "Game shows são jogos de Casino ao vivo apresentados em formato de TV, com um apresentador real, uma roda gigante e multiplicadores."
+          "en": "Poker is one of the most popular card games. Build the strongest 5-card hand — or make your opponent fold.",
+          "de": "Poker ist eines der beliebtesten Kartenspiele. Bilde die stärkste 5-Karten-Hand — oder bring deinen Gegner zum Aussteigen.",
+          "fr": "Le Poker est l'un des jeux de cartes les plus populaires. Construisez la main de 5 cartes la plus forte — ou poussez votre adversaire à se coucher.",
+          "it": "Il Poker è uno dei giochi di carte più popolari. Costruisca la combinazione più forte di 5 carte — oppure faccia foldare il Suo avversario.",
+          "es": "El Poker es uno de los juegos de cartas más populares. Forma la mejor mano de 5 cartas — o haz que tu oponente se retire.",
+          "pt": "Poker é um dos jogos de cartas mais populares. Construa a melhor mão de 5 cartas — ou faça o seu oponente desistir."
         },
         "video": {
+          "av1": "/src/assets/videos/stories/en/story_1-av1.mp4",
           "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
+          "h264": "/src/assets/videos/stories/en/story_1-h264.mp4",
           "webm": "/src/assets/videos/stories/en/story_1.webm"
         },
         "ctaButton": {
@@ -46,35 +48,36 @@
           "enabled": false
         }
       },
-
       {
         "id": "story2",
         "topText": {
-          "en": "How it works",
-          "de": "Wie funktioniert es",
-          "fr": "Comment cela fonctionne",
-          "it": "Come funziona",
-          "es": "Cómo funciona",
-          "pt": "Como funciona"
+          "en": "Poker hand ranking",
+          "de": "Poker Kartenkombinationen",
+          "fr": "Classement des mains au Poker",
+          "it": "Classifica delle mani",
+          "es": "Ranking de manos de Poker",
+          "pt": "Ranking das mãos de Poker"
         },
         "header": {
-          "en": "How does it works?",
-          "de": "Wie funktioniert es?",
-          "fr": "Comment cela fonctionne-t-il ?",
-          "it": "Come funziona?",
-          "es": "¿Cómo funciona?",
-          "pt": "Como funciona?"
+          "en": "Card combinations",
+          "de": "Kartenkombinationen",
+          "fr": "Combinaisons de cartes",
+          "it": "Combinazioni di carte",
+          "es": "Combinaciones de cartas",
+          "pt": "Combinações de cartas"
         },
         "description": {
-          "en": "<ul><li>1. Choose one or several segments</li><li>2. Place your bets</li><li>3. The host spins the wheel</li><li>4. If your segment wins - you get reward</li></ul>",
-          "de": "<ul><li>1. Wähle ein oder mehrere Segmente</li><li>2. Platziere deine Einsätze</li><li>3. Der Moderator dreht das Rad</li><li>4. Wenn dein Segment gewinnt — erhältst du eine Belohnung</li></ul>",
-          "fr": "<ul><li>1. Choisir un ou plusieurs segments</li><li>2. Placer vos mises</li><li>3. L'animateur fait tourner la roue</li><li>4. Si votre segment gagne, vous recevez une récompense</li></ul>",
-          "it": "<ul><li>1. Scegli uno o più segmenti</li><li>2. Effettua le tue scommesse</li><li>3. L'host gira la ruota</li><li>4. Se il tuo segmento vince — ottieni una ricompensa</li></ul>",
-          "es": "<ul><li>1. Elige uno o varios segmentos</li><li>2. Realiza tus apuestas</li><li>3. El host gira la rueda</li><li>4. Si tu segmento gana — recibes recompensa</li></ul>",
-          "pt": "<ul><li>1. Escolha um ou vários segmentos</li><li>2. Faça as suas apostas</li><li>3. O apresentador gira a roda</li><li>4. Se o seu segmento ganhar — você recebe a recompensa</li></ul>"
+          "en": "Each hand has its rank. Your goal is to build the strongest one.",
+          "de": "Jede Hand hat ihren Rang. Dein Ziel ist es, die stärkste Kombination zu bilden.",
+          "fr": "Chaque main a son rang. Votre objectif est d'obtenir la main la plus forte.",
+          "it": "Ogni mano ha il suo valore. Il Suo obiettivo è costruire la più forte.",
+          "es": "Cada mano tiene su valor. Tu objetivo es formar la más fuerte.",
+          "pt": "Cada mão tem o seu ranking. O seu objetivo é construir a mais forte."
         },
         "video": {
+          "av1": "/src/assets/videos/stories/en/story_2-av1.mp4",
           "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
+          "h264": "/src/assets/videos/stories/en/story_2-h264.mp4",
           "webm": "/src/assets/videos/stories/en/story_2.webm"
         },
         "ctaButton": {
@@ -84,35 +87,36 @@
           "enabled": false
         }
       },
-
       {
         "id": "story3",
         "topText": {
-          "en": "Multipliers",
-          "de": "Multiplikatoren",
-          "fr": "Multiplicateurs",
-          "it": "Moltiplicatori",
-          "es": "Multiplicadores",
-          "pt": "Multiplicadores"
+          "en": "Game start",
+          "de": "Erster Zug",
+          "fr": "Début du jeu",
+          "it": "Inizio del gioco",
+          "es": "Inicio del juego",
+          "pt": "Início do jogo"
         },
         "header": {
-          "en": "Multipliers boost your wins",
-          "de": "Multiplikatoren erhöhen deine Gewinne",
-          "fr": "Les multiplicateurs augmentent vos gains",
-          "it": "I moltiplicatori aumentano le tue vincite",
-          "es": "Los multiplicadores aumentan tus ganancias",
-          "pt": "Os multiplicadores aumentam os seus ganhos"
+          "en": "First move",
+          "de": "Erster Zug",
+          "fr": "Première action",
+          "it": "Prima mossa",
+          "es": "Primer movimiento",
+          "pt": "Primeira jogada"
         },
         "description": {
-          "en": "Some segments activate random multipliers: x2, x5, x7, x20. Your bet can instantly increase on the next spin depending on the rules of the game.",
-          "de": "Einige Segmente aktivieren zufällige Multiplikatoren: x2, x5, x7, x20. Dein Einsatz kann sich im nächsten Spin sofort erhöhen, abhängig von den Spielregeln.",
-          "fr": "Certains segments activent des multiplicateurs aléatoires : x2, x5, x7, x20. Votre mise peut augmenter instantanément au prochain tour selon les règles du jeu.",
-          "it": "Alcuni segmenti attivano moltiplicatori casuali: x2, x5, x7, x20. La tua scommessa può aumentare istantaneamente al giro successivo a seconda delle regole del gioco.",
-          "es": "Algunos segmentos activan multiplicadores aleatorios: x2, x5, x7, x20. Tu apuesta puede aumentar al instante en el siguiente giro según las reglas del juego.",
-          "pt": "Alguns segmentos ativam multiplicadores aleatórios: x2, x5, x7, x20. A sua aposta pode aumentar instantaneamente na próxima rodada, dependendo das regras do jogo."
+          "en": "Place your Ante bet to begin. Add a Bonus bet if you want more.",
+          "de": "Platziere deinen Ante-Einsatz, um zu beginnen. Füge einen Bonus-Einsatz hinzu, wenn du mehr willst.",
+          "fr": "Placer votre mise Ante pour commencer. Ajouter une mise Bonus si vous souhaitez aller plus loin.",
+          "it": "Effettui la Sua puntata Ante per iniziare. Aggiunga una puntata Bonus se desidera di più.",
+          "es": "Realiza tu Apuesta Ante para comenzar. Añade una Apuesta de Bono si quieres más.",
+          "pt": "Faça a sua aposta Ante para começar. Adicione uma aposta de bónus se quiser mais."
         },
         "video": {
+          "av1": "/src/assets/videos/stories/en/story_3-av1.mp4",
           "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
+          "h264": "/src/assets/videos/stories/en/story_3-h264.mp4",
           "webm": "/src/assets/videos/stories/en/story_3.webm"
         },
         "ctaButton": {
@@ -122,35 +126,71 @@
           "enabled": false
         }
       },
-
       {
         "id": "story4",
         "topText": {
-          "en": "Bonus rounds",
-          "de": "Bonusrunden",
-          "fr": "Tours bonus",
-          "it": "Round bonus",
-          "es": "Rondas de bono",
-          "pt": "Rodadas de bónus"
+          "en": "Game start",
+          "de": "Erster Zug",
+          "fr": "Début du jeu",
+          "it": "Inizio del gioco",
+          "es": "Inicio del juego",
+          "pt": "Início do jogo"
         },
         "header": {
-          "en": "Bonus rounds in Game shows",
-          "de": "Bonusrunden in Game Shows",
-          "fr": "Tours bonus dans les jeux type émission TV",
-          "it": "Round bonus nei Game shows",
-          "es": "Rondas de bono en Game shows",
-          "pt": "Rodadas de bónus em Game shows"
+          "en": "The deal",
+          "de": "Der Deal",
+          "fr": "La distribution",
+          "it": "La distribuzione",
+          "es": "El reparto",
+          "pt": "A distribuição"
         },
         "description": {
-          "en": "Some segments unlock interactive mini-games with bigger multipliers and high win potential.",
-          "de": "Einige Segmente schalten interaktive Mini-Spiele mit höheren Multiplikatoren und großem Gewinnpotenzial frei.",
-          "fr": "Certains segments débloquent des mini-jeux interactifs avec des multiplicateurs plus élevés et un fort potentiel de gain.",
-          "it": "Alcuni segmenti sbloccano mini-giochi interattivi con moltiplicatori più alti e un alto potenziale di vincita.",
-          "es": "Algunos segmentos desbloquean mini-juegos interactivos con multiplicadores más altos y gran potencial de ganancias.",
-          "pt": "Alguns segmentos desbloqueiam mini-jogos interativos com multiplicadores maiores e alto potencial de ganhos."
+          "en": "You get 2 cards. Dealer gets 2 hidden. Then 3 on the table.",
+          "de": "Du erhältst 2 Karten. Der Dealer erhält 2 verdeckte Karten. Dann kommen 3 Karten auf den Tisch.",
+          "fr": "Vous recevez 2 cartes. Le croupier reçoit 2 cartes cachées. Puis, 3 cartes sont placées sur la table.",
+          "it": "Riceve 2 carte. Il dealer ne riceve 2 coperte. Poi 3 sul tavolo.",
+          "es": "Recibes 2 cartas. El crupier recibe 2 ocultas. Luego, 3 en la mesa.",
+          "pt": "Você recebe 2 cartas. O dealer recebe 2 cartas fechadas. Depois, 3 são colocadas na mesa."
         },
+        "descriptionSteps": [
+          {
+            "at": 0.6,
+            "text": {
+              "en": "You get 2 cards.",
+              "de": "Du erhältst 2 Karten.",
+              "fr": "Vous recevez 2 cartes.",
+              "it": "Riceve 2 carte.",
+              "es": "Recibes 2 cartas.",
+              "pt": "Você recebe 2 cartas."
+            }
+          },
+          {
+            "at": 3.6,
+            "text": {
+              "en": "Dealer gets 2 hidden.",
+              "de": "Der Dealer erhält 2 verdeckte Karten.",
+              "fr": "Le croupier reçoit 2 cartes cachées.",
+              "it": "Il dealer ne riceve 2 coperte.",
+              "es": "El crupier recibe 2 ocultas.",
+              "pt": "O dealer recebe 2 cartas fechadas."
+            }
+          },
+          {
+            "at": 5.6,
+            "text": {
+              "en": "Then 3 on the table.",
+              "de": "Dann kommen 3 Karten auf den Tisch.",
+              "fr": "Puis, 3 cartes sont placées sur la table.",
+              "it": "Poi 3 sul tavolo.",
+              "es": "Luego, 3 en la mesa.",
+              "pt": "Depois, 3 são colocadas na mesa."
+            }
+          }
+        ],
         "video": {
+          "av1": "/src/assets/videos/stories/en/story_4-av1.mp4",
           "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
+          "h264": "/src/assets/videos/stories/en/story_4-h264.mp4",
           "webm": "/src/assets/videos/stories/en/story_4.webm"
         },
         "ctaButton": {
@@ -160,9 +200,86 @@
           "enabled": false
         }
       },
-
       {
         "id": "story5",
+        "topText": {
+          "en": "Call or Fold",
+          "de": "Call oder Fold",
+          "fr": "Call ou Fold",
+          "it": "Call o Fold",
+          "es": "Igualar o retirarse",
+          "pt": "Call ou Fold"
+        },
+        "header": {
+          "en": "Your decision",
+          "de": "Deine Entscheidung",
+          "fr": "Votre décision",
+          "it": "La Sua decisione",
+          "es": "Tu decisión",
+          "pt": "A sua decisão"
+        },
+        "description": {
+          "en": "Call — stay in the game (2× Ante).<br>Fold — give up the hand.",
+          "de": "Call — bleib im Spiel (2× Ante).<br>Fold — gib die Hand auf.",
+          "fr": "Call — rester dans la partie (2× Ante).<br>Fold — abandonner la main.",
+          "it": "Call — resti nel gioco (2× Ante).<br>Fold — rinunci alla mano.",
+          "es": "Igualar — permanecer en el juego (2× Apuesta Ante).<br>Retirarse — abandonar la mano.",
+          "pt": "Call — continua no jogo (2× Ante).<br>Fold — desiste da mão."
+        },
+        "video": {
+          "av1": "/src/assets/videos/stories/en/story_5-av1.mp4",
+          "h265": "/src/assets/videos/stories/en/story_5-h265.mp4",
+          "h264": "/src/assets/videos/stories/en/story_5-h264.mp4",
+          "webm": "/src/assets/videos/stories/en/story_5.webm"
+        },
+        "ctaButton": {
+          "enabled": true
+        },
+        "helpText": {
+          "enabled": false
+        }
+      },
+      {
+        "id": "story6",
+        "topText": {
+          "en": "Winning combination",
+          "de": "Gewinnkombination",
+          "fr": "Combinaison gagnante",
+          "it": "Combinazione vincente",
+          "es": "Combinación ganadora",
+          "pt": "Combinação vencedora"
+        },
+        "header": {
+          "en": "Final hand",
+          "de": "Finale Hand",
+          "fr": "Main finale",
+          "it": "Mano finale",
+          "es": "Mano final",
+          "pt": "Mão final"
+        },
+        "description": {
+          "en": "Now there are 5 cards on the table.<br>Build your best combination.",
+          "de": "Jetzt liegen 5 Karten auf dem Tisch.<br>Bilde deine beste Kombination.",
+          "fr": "Il y a maintenant 5 cartes sur la table.<br>Construire votre meilleure combinaison.",
+          "it": "Ora ci sono 5 carte sul tavolo.<br>Costruisca la Sua migliore combinazione.",
+          "es": "Ahora hay 5 cartas en la mesa.<br>Forma tu mejor combinación.",
+          "pt": "Agora há 5 cartas na mesa.<br>Construa a sua melhor combinação."
+        },
+        "video": {
+          "av1": "/src/assets/videos/stories/en/story_6-av1.mp4",
+          "h265": "/src/assets/videos/stories/en/story_6-h265.mp4",
+          "h264": "/src/assets/videos/stories/en/story_6-h264.mp4",
+          "webm": "/src/assets/videos/stories/en/story_6.webm"
+        },
+        "ctaButton": {
+          "enabled": true
+        },
+        "helpText": {
+          "enabled": false
+        }
+      },
+      {
+        "id": "story7",
         "topText": {
           "en": "Payouts",
           "de": "Auszahlungen",
@@ -172,30 +289,32 @@
           "pt": "Pagamentos"
         },
         "header": {
-          "en": "Payouts in Game shows",
-          "de": "Auszahlungen in Game Shows",
-          "fr": "Paiements dans les jeux type émission TV",
-          "it": "Pagamenti nei Game shows",
-          "es": "Pagos en Game shows",
-          "pt": "Pagamentos em Game shows"
+          "en": "How payouts work",
+          "de": "So funktionieren Auszahlungen",
+          "fr": "Fonctionnement des paiements",
+          "it": "Come funzionano i pagamenti",
+          "es": "Cómo funcionan los pagos",
+          "pt": "Como funcionam os pagamentos"
         },
         "description": {
-          "en": "<ul><li>Bet €5</li><li>Wheel hits x5</li><li><strong>Payout 30 EUR: bet 5 EUR - get 25 EUR</strong></li></ul>",
-          "de": "<ul><li>Setze €5</li><li>Rad landet auf x5</li><li><strong>Auszahlung 30 EUR: Einsatz 5 EUR — Gewinn 25 EUR</strong></li></ul>",
-          "fr": "<ul><li>Misez 5 EUR</li><li>La roue s'arrête sur x5</li><li><strong>Paiement : 30 EUR — misez 5 EUR — recevez 25 EUR</strong></li></ul>",
-          "it": "<ul><li>Scommetti €5</li><li>La ruota si ferma su x5</li><li><strong>Pagamento 30 EUR: scommessa 5 EUR — ottieni 25 EUR</strong></li></ul>",
-          "es": "<ul><li>Apuesta 5 EUR</li><li>La rueda cae en x5</li><li><strong>Pago 30 EUR: apuesta 5 EUR — obtén 25 EUR</strong></li></ul>",
-          "pt": "<ul><li>Aposta 5 EUR</li><li>A roda cai em x5</li><li><strong>Pagamento 30 EUR: aposta 5 EUR — recebe 25 EUR</strong></li></ul>"
+          "en": "Ante is 5 EUR and Call is 10 EUR.<br>With a Straight Flush (20:1), you win 300 EUR and get 15 EUR back from your bets. Total payout — 315 EUR.",
+          "de": "Der Ante beträgt 5 EUR und der Call 10 EUR.<br>Mit einem Straight Flush (20:1) gewinnst du 300 EUR und erhältst 15 EUR aus deinen Einsätzen zurück. Gesamtauszahlung — 315 EUR.",
+          "fr": "L'Ante est de 5 EUR et le Call de 10 EUR.<br>Avec une Quinte Flush (20:1), vous gagnez 300 EUR et récupérez 15 EUR de vos mises. Paiement total — 315 EUR.",
+          "it": "L’Ante è 5 EUR e il Call è 10 EUR.<br>Con una Scala Reale (20:1), vince 300 EUR e riceve 15 EUR dalle Sue puntate. Pagamento totale — 315 EUR.",
+          "es": "La Apuesta Ante es de 5 EUR y la Igualar es de 10 EUR.<br>Con una Escalera de Color (20:1), ganas 300 EUR y recibes 15 EUR de vuelta de tus apuestas. Pago total — 315 EUR.",
+          "pt": "A aposta Ante é 5 EUR e o Call é 10 EUR.<br>Com um Straight Flush (20:1), você ganha 300 EUR e recebe 15 EUR de volta das suas apostas. Pagamento total — 315 EUR."
         },
         "video": {
-          "h265": "/src/assets/videos/stories/en/story_5-h265.mp4",
-          "webm": "/src/assets/videos/stories/en/story_5.webm"
+          "av1": "/src/assets/videos/stories/en/story_7-av1.mp4",
+          "h265": "/src/assets/videos/stories/en/story_7-h265.mp4",
+          "h264": "/src/assets/videos/stories/en/story_7-h264.mp4",
+          "webm": "/src/assets/videos/stories/en/story_7.webm"
         },
         "ctaButton": {
           "enabled": true
         },
         "helpText": {
-          "enabled": true
+          "enabled": false
         }
       }
     ]
@@ -223,30 +342,12 @@
     },
     "ctaButton": {
       "text": {
-        "en": "Play Game shows",
-        "de": "Game Shows spielen",
-        "fr": "Jouer aux jeux type émission TV",
-        "it": "Giocare ai Game shows",
-        "es": "Jugar Game shows",
-        "pt": "Jogar Game shows"
-      }
-    },
-    "helpText": {
-      "text": {
-        "en": "Need more info?",
-        "de": "Brauchst du mehr Infos?",
-        "fr": "Besoin de plus d'informations ?",
-        "it": "Hai bisogno di maggiori informazioni?",
-        "es": "¿Necesitas más información?",
-        "pt": "Precisa de mais informações?"
-      },
-      "link": {
-        "en": "Discover Game shows",
-        "de": "Entdecke Game Shows",
-        "fr": "Découvrez les jeux type émission TV",
-        "it": "Scopri i Game shows",
-        "es": "Descubre Game shows",
-        "pt": "Descubra Game shows"
+        "en": "Play Poker",
+        "de": "Poker spielen",
+        "fr": "Jouer au Poker",
+        "it": "Gioca a Poker",
+        "es": "Jugar Poker",
+        "pt": "Jogar Poker"
       }
     }
   }

@@ -1,7 +1,10 @@
 // Types for stories functionality based on actual JSON structure and usage
 
+// One clip, four encodes. Which one plays is decided in useVideoFormat.
 export interface StoryVideo {
+  av1: string;
   h265: string;
+  h264: string;
   webm: string;
 }
 
@@ -26,7 +29,8 @@ export interface StoriesUI {
   storyIcon: string;
   orientationLock: OrientationLock;
   ctaButton: DefaultsCtaButton;
-  helpText: DefaultsHelpText;
+  // Only stories that have a help-text slide carry these strings.
+  helpText?: DefaultsHelpText;
 }
 
 export interface LocalizedText {
@@ -37,6 +41,12 @@ export interface LocalizedText {
   es: string;
   pt: string;
   [key: string]: string;
+}
+
+export interface StoryTextStep {
+  // Seconds of video time at which this part starts typing.
+  at: number;
+  text: LocalizedText;
 }
 
 export interface StoryData {
@@ -57,6 +67,10 @@ export interface StoryData {
   phaseSwitchAt?: number;
   secondHeader?: LocalizedText;
   secondDescription?: LocalizedText;
+  // Optional: the description typed in parts, each started by the video clock
+  // instead of all at once (e.g. "The deal": one sentence per group of cards
+  // as they land). `description` still holds the whole text.
+  descriptionSteps?: StoryTextStep[];
 }
 
 export interface OrientationLock {

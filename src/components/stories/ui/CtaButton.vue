@@ -27,14 +27,18 @@ defineProps({
   left: 50%;
   transform: translate(-50%);
   width: to-percent-x(328px);
-  height: to-dvh(40px);
+  // The smaller of the height- and width-based size. The clip under the button
+  // is scaled by the screen width, so on a phone taller than 9:16 a button
+  // sized by height alone grows past its slot and covers the art above it
+  // (the Fold / Call labels on "The deal").
+  height: min(to-dvh(40px), to-vw(40px));
   z-index: 9999;
   justify-content: center;
   align-items: center;
-  border-radius: to-dvh(19px);
+  border-radius: min(to-dvh(19px), to-vw(19px));
   background-color: var(--color-primary-1);
   color: var(--color-on-light-back);
-  font-size: to-dvh(14px);
+  font-size: min(to-dvh(14px), to-vw(14px));
   font-family: $font-family-primary;
   font-style: normal;
   font-weight: $font-weight-bold;
@@ -57,7 +61,7 @@ defineProps({
 
 @supports (height: 100dvh) {
   .call-to-action-button:not(.call-to-action-button--custom) {
-    bottom: to-dvh(16px);
+    bottom: min(to-dvh(16px), to-vw(16px));
   }
 }
 

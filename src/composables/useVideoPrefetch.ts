@@ -14,7 +14,7 @@
  * element simply requests it as before.
  */
 
-/** Bytes per clip — ~9s of playback at the clips' ~2.1 Mbit/s, and all of story 1. */
+/** Bytes per clip — all of most poker clips; the two longest run to 3-5 MB. */
 const PREFETCH_BYTES = 2_500_000;
 
 const requested = new Set<string>();

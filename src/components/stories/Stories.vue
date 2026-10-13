@@ -32,17 +32,20 @@
         'has-help-text': currentStory?.helpText?.enabled,
         'custom-layout': currentStory?.helpText?.enabled,
         'first-slide': currentStoryIndex === 0,
-        'is-compact-body': currentStory?.id === 'story5',
       }"
     >
-      <template v-for="(story, index) in stories" :key="`story-${story.id}`">
+      <!-- The key carries the preferred format: when a format is dropped after
+           a decode error the slide remounts with the next one. -->
+      <template
+        v-for="(story, index) in stories"
+        :key="`story-${story.id}-${usableFormats[0]}`"
+      >
         <StorySlide
           v-if="currentStoryIndex === index"
           :ref="(el: unknown) => setVideoRef(el as StorySlideRef | null, index)"
           :story
           :texts="{ userLanguage }"
-          :is-android="isAndroid"
-          :prefers-h265="prefersH265"
+          :sources="videoSources(story.video)"
           :current-index="currentStoryIndex"
           :autoplay="!isPaused"
           :muted="isMuted"
@@ -51,6 +54,7 @@
           @ended="onNext"
           @timeupdate="onTimeUpdate"
           @loadedmetadata="onLoadedMetadata"
+          @failed="onVideoFailed"
         />
       </template>
 
@@ -62,9 +66,9 @@
       />
 
       <div v-if="currentStory?.helpText?.enabled" class="help-text">
-        {{ getLocalizedText(ui.helpText.text, userLanguage) }}
+        {{ getLocalizedText(ui.helpText?.text, userLanguage) }}
         <a href="#" class="help-text-link" @click.prevent="goToDiscover">
-          {{ getLocalizedText(ui.helpText.link, userLanguage) }}
+          {{ getLocalizedText(ui.helpText?.link, userLanguage) }}
         </a>
       </div>
     </div>
@@ -139,11 +143,14 @@ import { useQueryParams } from '@/composables/useQueryParams';
 import { useLocale } from '@/composables/useLocale';
 import { useStoriesData } from '@/composables/useStoriesData';
 import { useVideoPrefetch } from '@/composables/useVideoPrefetch';
+import { useVideoFormat } from '@/composables/useVideoFormat';
 
 gsap.registerPlugin(TextPlugin);
 
 // === CONSTANTS ===
 const LONG_PRESS_DELAY = 350;
+/** Typing pace of description steps, the same as list items. */
+const STEP_CHARS_PER_SECOND = 40;
 
 let tl = gsap.timeline({
   defaults: { duration: 0.7, ease: 'power1.inOut' },
@@ -180,6 +187,12 @@ const {
 useLocale(ref(qpLang));
 const { title, ui, stories } = useStoriesData();
 const { prefetch } = useVideoPrefetch();
+const {
+  usable: usableFormats,
+  sources: videoSources,
+  preferredUrl,
+  dropPreferred,
+} = useVideoFormat();
 const userLanguage = qpLang;
 
 const end_link = ref(qpEnd);
@@ -187,19 +200,6 @@ const game_link = ref(qpGame);
 const discover_link = ref(qpDiscover);
 
 // === COMPUTED ===
-const isAndroid = computed(() => /android/i.test(navigator.userAgent));
-
-// The story background is drawn by the app; the video is transparent around the card.
-// WebKit plays VP9 but ignores its alpha: transparent areas turn black and the
-// background does not show through. So for Safari and all iOS browsers HEVC with
-// alpha is placed first in the source list; for everyone else WebM stays first.
-const prefersH265 = computed(() => {
-  const ua = navigator.userAgent;
-  const isIOS = /iP(hone|ad|od)/.test(ua);
-  const isSafari =
-    /safari/i.test(ua) && !/chrome|chromium|android|crios|fxios|edg/i.test(ua);
-  return isIOS || isSafari;
-});
 const currentStory = computed(() => stories.value[currentStoryIndex.value]);
 
 // Maps each story index to its progress-bar segment index. Stories flagged
@@ -277,6 +277,7 @@ function startProgressLoopFor(video: HTMLVideoElement) {
     const tick = () => {
       if (isPaused.value) return;
       maybeSwitchTextPhase(video);
+      renderDescriptionSteps(video);
       const d = video.duration || 0;
       if (d > 0) progress.value = (video.currentTime / d) * 100;
       handle = v.requestVideoFrameCallback(tick);
@@ -292,6 +293,7 @@ function startProgressLoopFor(video: HTMLVideoElement) {
         return;
       }
       maybeSwitchTextPhase(video);
+      renderDescriptionSteps(video);
       const d = video.duration || 0;
       if (d > 0) progress.value = (video.currentTime / d) * 100;
       rafId = window.requestAnimationFrame(tick);
@@ -412,9 +414,15 @@ const buildStoryTimeline = (index: number) => {
   const deskText = currentStory.value?.description
     ? getLocalizedText(currentStory.value.description, userLanguage)
     : '';
+  const typedByVideo = !!currentStory.value?.descriptionSteps?.length;
 
   const seg = gsap.timeline();
   gsap.set([headerSel, deskSel], { opacity: 0, marginTop: '7dvh' });
+  // Emptied while still invisible; renderDescriptionSteps fills it in.
+  if (typedByVideo) {
+    const el = document.querySelector(deskSel);
+    if (el) el.textContent = '';
+  }
 
   seg.to(headerSel, { opacity: 1, marginTop: '0dvh', duration: 0.4 });
   seg.to(deskSel, { marginTop: '0dvh', duration: 0.4 }, '<0.1');
@@ -422,6 +430,7 @@ const buildStoryTimeline = (index: number) => {
   seg.add(() => {
     seg.to(deskSel, { opacity: 1 }, '+0.1');
 
+    if (typedByVideo) return;
     if (deskText.includes('<li')) {
       // Animate list items while preserving nested tags
       animateListItems(seg, deskSel, deskText);
@@ -431,6 +440,31 @@ const buildStoryTimeline = (index: number) => {
   });
 
   return seg;
+};
+
+/**
+ * Types a description in parts, each part starting at its own second of the
+ * clip (story.descriptionSteps) — a sentence appears as the thing it describes
+ * happens on screen.
+ *
+ * The text is a pure function of video.currentTime rather than a tween: a
+ * pause, a stall while buffering or a slow device then holds the text exactly
+ * where the picture is, with nothing to keep in step.
+ */
+const renderDescriptionSteps = (video: HTMLVideoElement) => {
+  const steps = currentStory.value?.descriptionSteps;
+  if (!steps?.length) return;
+  const el = document.querySelector(`#desk${currentStoryIndex.value + 1}`);
+  if (!el) return;
+
+  const text = steps
+    .map((step, i) => {
+      const full = (i ? ' ' : '') + getLocalizedText(step.text, userLanguage);
+      const typed = (video.currentTime - step.at) * STEP_CHARS_PER_SECOND;
+      return full.slice(0, Math.max(0, Math.floor(typed)));
+    })
+    .join('');
+  if (el.textContent !== text) el.textContent = text;
 };
 
 const rebuildTimelineFor = async (index: number) => {
@@ -550,8 +584,8 @@ const onPrev = () => {
 };
 
 /**
- * Warms the next clip, mirroring the source order in StorySlide.vue so the file
- * the browser will actually pick is the one fetched ahead.
+ * Warms the next clip — the same encode the browser will pick for it, so the
+ * file fetched ahead is the one that gets played.
  *
  * Waits until the playing clip is fully buffered: on a narrow connection the two
  * downloads otherwise share the pipe and the current clip starts stuttering —
@@ -562,11 +596,7 @@ const prefetchNextVideo = (video: HTMLVideoElement) => {
   const next = stories.value[currentStoryIndex.value + 1];
   if (!next) return;
 
-  const url = isAndroid.value
-    ? next.video.webm
-    : prefersH265.value
-      ? next.video.h265
-      : next.video.webm;
+  const url = preferredUrl(next.video);
 
   const isFullyBuffered = (): boolean => {
     const { buffered, duration } = video;
@@ -662,10 +692,25 @@ const maybeSwitchTextPhase = (video: HTMLVideoElement) => {
   }
 };
 
+/**
+ * The browser said it could play the format and then could not decode it.
+ * Drop the format and start the slide over on the next one; the slide remounts
+ * through its key, so the text timeline is rebuilt for the new elements.
+ */
+const onVideoFailed = () => {
+  if (!dropPreferred()) return;
+  stopProgressLoop();
+  progress.value = 0;
+  textPhase.value = 0;
+  secondPhaseStarted = false;
+  rebuildTimelineFor(currentStoryIndex.value);
+};
+
 const onTimeUpdate = (e: Event) => {
   const video = e.target as HTMLVideoElement;
   if (!video) return;
   maybeSwitchTextPhase(video);
+  renderDescriptionSteps(video);
   if (!isPaused.value && video.duration) {
     progress.value = (video.currentTime / video.duration) * 100;
   }

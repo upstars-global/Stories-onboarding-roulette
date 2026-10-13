@@ -12,9 +12,10 @@
       @ended="$emit('ended')"
       @timeupdate="$emit('timeupdate', $event)"
       @loadedmetadata="$emit('loadedmetadata')"
+      @error="$emit('failed')"
     >
       <source
-        v-for="source in videoSources"
+        v-for="source in sources"
         :key="source.src"
         :src="source.src"
         :type="source.type"
@@ -28,18 +29,13 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import type { StoryData } from '@/types';
-
-interface VideoSource {
-  src: string;
-  type: string;
-}
+import type { VideoSource } from '@/composables/useVideoFormat';
 
 interface Props {
   story: StoryData;
   texts: { userLanguage: string };
-  isAndroid: boolean;
-  /** WebKit does not support alpha in VP9; it needs HEVC as the first source. */
-  prefersH265?: boolean;
+  /** The clip's encodes this browser can play, best first. */
+  sources: VideoSource[];
   currentIndex: number;
   autoplay?: boolean;
   muted?: boolean;
@@ -49,7 +45,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  prefersH265: false,
   textPhase: 0,
 });
 
@@ -57,6 +52,9 @@ interface Emits {
   ended: [];
   timeupdate: [event: Event];
   loadedmetadata: [];
+  /** The chosen source broke mid-decode; a missing file never gets here, the
+   *  browser just moves on to the next <source>. */
+  failed: [];
 }
 
 defineEmits<Emits>();
@@ -64,17 +62,6 @@ defineEmits<Emits>();
 const videoRef = ref<HTMLVideoElement | null>(null);
 
 const videoId = computed(() => `story_${props.currentIndex + 1}`);
-
-const videoSources = computed((): VideoSource[] => {
-  const webm: VideoSource = { src: props.story.video.webm, type: 'video/webm' };
-  if (props.isAndroid) return [webm];
-
-  const h265: VideoSource = {
-    src: props.story.video.h265,
-    type: 'video/mp4; codecs=hvc1',
-  };
-  return props.prefersH265 ? [h265, webm] : [webm, h265];
-});
 
 const lang = computed(() => props.texts.userLanguage);
 

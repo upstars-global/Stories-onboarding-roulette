@@ -25,7 +25,7 @@ const DEFAULTS: QueryParams = {
   userLanguage: 'en',
   currency: '',
   endLink: '',
-  gameLink: 'live/categories/game-shows',
+  gameLink: 'live/categories/poker',
   discoverLink: '',
   storiesTotal: 4,
 };
@@ -92,8 +92,7 @@ export function useQueryParams(): QueryParams {
     // Per-story attribution: the campaign must be renamed in every story cloned
     // from this template, otherwise its traffic lands in the previous story's
     // bucket in analytics.
-    const utm =
-      'utm_source=site&utm_medium=story&utm_campaign=game_shows_story';
+    const utm = 'utm_source=site&utm_medium=story&utm_campaign=poker_story';
     const baseEnd = params.end_link || DEFAULTS.endLink;
     const endLink = baseEnd
       ? baseEnd.includes('?')
