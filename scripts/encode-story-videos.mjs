@@ -1,13 +1,18 @@
 // Turns the motion designer's masters into the files a story slide ships —
 // AV1, HEVC, VP9 (WebM) and H.264, each at 1080 and 720 pixels wide — and picks
 // the compression per clip instead of trusting one hand-tuned number for all of
-// them. Nothing in here is tied to one story: point it at a folder of masters.
+// them. Nothing in here is tied to one story: point it at a folder of masters
+// and name the story the files are for.
 //
-// Usage: node scripts/encode-story-videos.mjs --src <dir with the masters>
-//        [--out src/assets/videos/stories/en] [--report docs/<story>-video-report.json]
+// Usage: npm run video:encode -- --story <name> --src <dir with the masters>
 //        [--sizes 1080,720] [--only story_2,story_5] [--formats av1,h265,h264,webm]
 //        [--map 2_1.mp4=story_2,intro.mp4=story_1] [--work DIR] [--jobs 1]
+//        [--out DIR] [--report FILE]
 //        [--min-vmaf 95] [--min-vmaf-p1 90] [--banding-room 4]
+//
+// The files go to stories/<name>/videos, named the way the player looks for
+// them (src/data/video-files.json); the report to stories/<name>/video-report.json.
+// `--story` can be left out while stories/ holds a single story.
 //
 // Prerequisite: ffmpeg/ffprobe built with libsvtav1, libx265, libvpx-vp9,
 // libx264, libopus and libvmaf (`brew install ffmpeg`).
@@ -18,8 +23,7 @@
 // codec's files from the work directory.
 //
 // The report is merged, not overwritten: a run over some clips, sizes or
-// formats replaces those entries and keeps the rest. Its default name comes
-// from the story title in src/data/stories.json.
+// formats replaces those entries and keeps the rest.
 //
 // WHICH MASTER
 // The designer exports every clip three times: `N.mp4` (H.264), `N.webm` (VP9)
@@ -113,6 +117,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const STORIES = path.join(ROOT, 'stories');
+
+/** How the files are named. The player looks them up by the same names, so
+ *  both read them from this one file. */
+const NAMING = JSON.parse(
+  await readFile(path.join(ROOT, 'src/data/video-files.json'), 'utf8')
+);
 
 /**
  * The frame widths a clip ships at. 1080 keeps the names the first poker files
@@ -121,8 +132,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * frames — see the H.264 entry in FORMATS.
  */
 const SIZES = {
-  1080: { width: 1080, height: 1920, tag: '', h264Level: '4.0' },
-  720: { width: 720, height: 1280, tag: '-720', h264Level: '3.1' },
+  1080: {
+    width: 1080,
+    height: 1920,
+    tag: NAMING.sizes[1080],
+    h264Level: '4.0',
+  },
+  720: { width: 720, height: 1280, tag: NAMING.sizes[720], h264Level: '3.1' },
 };
 
 /** VMAF floor against the master: the mean, and the worst 1% of frames. */
@@ -156,7 +172,7 @@ const COLOUR_TOLERANCE = 2;
  */
 const FORMATS = {
   av1: {
-    suffix: '-av1.mp4',
+    suffix: NAMING.formats.av1,
     container: 'mp4',
     audio: 'aac',
     crf: { min: 26, max: 44 },
@@ -180,7 +196,7 @@ const FORMATS = {
     ],
   },
   h265: {
-    suffix: '-h265.mp4',
+    suffix: NAMING.formats.h265,
     container: 'mp4',
     audio: 'aac',
     crf: { min: 20, max: 28 },
@@ -201,7 +217,7 @@ const FORMATS = {
     ],
   },
   h264: {
-    suffix: '-h264.mp4',
+    suffix: NAMING.formats.h264,
     container: 'mp4',
     audio: 'aac',
     crf: { min: 18, max: 26 },
@@ -223,7 +239,7 @@ const FORMATS = {
     ],
   },
   webm: {
-    suffix: '.webm',
+    suffix: NAMING.formats.webm,
     container: 'webm',
     audio: 'opus',
     // The payout table of poker slide 7 needs 24 at 1080 and lower still at
@@ -304,22 +320,29 @@ const CONTAINER = {
   },
 };
 
-/** `docs/<story>-video-report.json`, the story named by the English title in
- *  src/data/stories.json; a plain name when there is no such file. */
-async function defaultReport() {
+/** The story folder the files are for: `--story`, or the only one in
+ *  stories/. Not needed when both `--out` and `--report` are given. */
+async function storyFolder(wanted) {
+  let names = [];
   try {
-    const data = JSON.parse(
-      await readFile(path.join(ROOT, 'src/data/stories.json'), 'utf8')
-    );
-    const slug = String(data.stories.title.en)
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
-    if (slug) return path.join(ROOT, `docs/${slug}-video-report.json`);
+    names = (await readdir(STORIES, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
   } catch {
-    // no story data to name it after
+    // no stories/ folder
   }
-  return path.join(ROOT, 'docs/story-video-report.json');
+  if (wanted && !names.includes(wanted)) {
+    throw new Error(
+      `No story "${wanted}" in stories/. There are: ${names.join(', ') || 'none'}`
+    );
+  }
+  const name = wanted ?? (names.length === 1 ? names[0] : null);
+  if (!name) {
+    throw new Error(
+      `Name the story: --story <name>. There are: ${names.join(', ') || 'none'}`
+    );
+  }
+  return path.join(STORIES, name);
 }
 
 async function parseArgs(argv) {
@@ -331,13 +354,15 @@ async function parseArgs(argv) {
   }
   if (!flags.src) {
     throw new Error(
-      'usage: node scripts/encode-story-videos.mjs --src <dir with masters> ' +
-        '[--out DIR] [--report FILE] [--sizes 1080,720] ' +
-        '[--only story_2,story_5] [--formats av1,h265,h264,webm] ' +
-        '[--map file=story_N,...] [--work DIR] [--jobs N] ' +
+      'usage: npm run video:encode -- --story <name> --src <dir with masters> ' +
+        '[--sizes 1080,720] [--only story_2,story_5] ' +
+        '[--formats av1,h265,h264,webm] [--map file=story_N,...] ' +
+        '[--work DIR] [--jobs N] [--out DIR] [--report FILE] ' +
         '[--min-vmaf N] [--min-vmaf-p1 N] [--banding-room N]'
     );
   }
+  const folder =
+    flags.out && flags.report ? null : await storyFolder(flags.story);
   const list = (value) => (value ? value.split(',').filter(Boolean) : null);
   const formats = list(flags.formats) ?? Object.keys(FORMATS);
   for (const key of formats) {
@@ -358,10 +383,10 @@ async function parseArgs(argv) {
   );
   return {
     src: path.resolve(flags.src),
-    out: path.resolve(
-      flags.out ?? path.join(ROOT, 'src/assets/videos/stories/en')
+    out: path.resolve(flags.out ?? path.join(folder, 'videos')),
+    report: path.resolve(
+      flags.report ?? path.join(folder, 'video-report.json')
     ),
-    report: path.resolve(flags.report ?? (await defaultReport())),
     work: path.resolve(
       flags.work ?? path.join(os.tmpdir(), 'story-video-encode')
     ),
