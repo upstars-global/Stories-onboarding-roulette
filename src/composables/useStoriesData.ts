@@ -3,12 +3,20 @@ import storiesData from '@/data/stories.json';
 import type {
   StoriesData,
   StoryData,
+  StoryVideo,
   LocalizedText,
   StoriesUI,
 } from '@/types/stories';
 import { resolveAssetUrl } from '@/composables/useAssetUrl';
 
 const raw = storiesData as StoriesData;
+
+const mapVideo = (v: StoryVideo): StoryVideo => ({
+  av1: resolveAssetUrl(v.av1),
+  h265: resolveAssetUrl(v.h265),
+  h264: resolveAssetUrl(v.h264),
+  webm: resolveAssetUrl(v.webm),
+});
 
 function mapAssetPaths(d: StoriesData): StoriesData {
   return {
@@ -18,10 +26,8 @@ function mapAssetPaths(d: StoriesData): StoriesData {
       items: d.stories.items.map((s) => ({
         ...s,
         video: {
-          av1: resolveAssetUrl(s.video.av1),
-          h265: resolveAssetUrl(s.video.h265),
-          h264: resolveAssetUrl(s.video.h264),
-          webm: resolveAssetUrl(s.video.webm),
+          1080: mapVideo(s.video[1080]),
+          ...(s.video[720] && { 720: mapVideo(s.video[720]) }),
         },
       })),
     },

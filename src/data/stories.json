@@ -36,10 +36,18 @@
           "pt": "Poker é um dos jogos de cartas mais populares. Construa a melhor mão de 5 cartas — ou faça o seu oponente desistir."
         },
         "video": {
-          "av1": "/src/assets/videos/stories/en/story_1-av1.mp4",
-          "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
-          "h264": "/src/assets/videos/stories/en/story_1-h264.mp4",
-          "webm": "/src/assets/videos/stories/en/story_1.webm"
+          "720": {
+            "av1": "/src/assets/videos/stories/en/story_1-720-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_1-720-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_1-720-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_1-720.webm"
+          },
+          "1080": {
+            "av1": "/src/assets/videos/stories/en/story_1-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_1-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_1.webm"
+          }
         },
         "ctaButton": {
           "enabled": true
@@ -75,10 +83,18 @@
           "pt": "Cada mão tem o seu ranking. O seu objetivo é construir a mais forte."
         },
         "video": {
-          "av1": "/src/assets/videos/stories/en/story_2-av1.mp4",
-          "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
-          "h264": "/src/assets/videos/stories/en/story_2-h264.mp4",
-          "webm": "/src/assets/videos/stories/en/story_2.webm"
+          "720": {
+            "av1": "/src/assets/videos/stories/en/story_2-720-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_2-720-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_2-720-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_2-720.webm"
+          },
+          "1080": {
+            "av1": "/src/assets/videos/stories/en/story_2-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_2-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_2.webm"
+          }
         },
         "ctaButton": {
           "enabled": true
@@ -114,10 +130,18 @@
           "pt": "Faça a sua aposta Ante para começar. Adicione uma aposta de bónus se quiser mais."
         },
         "video": {
-          "av1": "/src/assets/videos/stories/en/story_3-av1.mp4",
-          "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
-          "h264": "/src/assets/videos/stories/en/story_3-h264.mp4",
-          "webm": "/src/assets/videos/stories/en/story_3.webm"
+          "720": {
+            "av1": "/src/assets/videos/stories/en/story_3-720-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_3-720-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_3-720-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_3-720.webm"
+          },
+          "1080": {
+            "av1": "/src/assets/videos/stories/en/story_3-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_3-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_3.webm"
+          }
         },
         "ctaButton": {
           "enabled": true
@@ -188,10 +212,18 @@
           }
         ],
         "video": {
-          "av1": "/src/assets/videos/stories/en/story_4-av1.mp4",
-          "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
-          "h264": "/src/assets/videos/stories/en/story_4-h264.mp4",
-          "webm": "/src/assets/videos/stories/en/story_4.webm"
+          "720": {
+            "av1": "/src/assets/videos/stories/en/story_4-720-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_4-720-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_4-720-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_4-720.webm"
+          },
+          "1080": {
+            "av1": "/src/assets/videos/stories/en/story_4-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_4-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_4.webm"
+          }
         },
         "ctaButton": {
           "enabled": true
@@ -227,10 +259,18 @@
           "pt": "Call — continua no jogo (2× Ante).<br>Fold — desiste da mão."
         },
         "video": {
-          "av1": "/src/assets/videos/stories/en/story_5-av1.mp4",
-          "h265": "/src/assets/videos/stories/en/story_5-h265.mp4",
-          "h264": "/src/assets/videos/stories/en/story_5-h264.mp4",
-          "webm": "/src/assets/videos/stories/en/story_5.webm"
+          "720": {
+            "av1": "/src/assets/videos/stories/en/story_5-720-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_5-720-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_5-720-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_5-720.webm"
+          },
+          "1080": {
+            "av1": "/src/assets/videos/stories/en/story_5-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_5-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_5-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_5.webm"
+          }
         },
         "ctaButton": {
           "enabled": true
@@ -266,10 +306,18 @@
           "pt": "Agora há 5 cartas na mesa.<br>Construa a sua melhor combinação."
         },
         "video": {
-          "av1": "/src/assets/videos/stories/en/story_6-av1.mp4",
-          "h265": "/src/assets/videos/stories/en/story_6-h265.mp4",
-          "h264": "/src/assets/videos/stories/en/story_6-h264.mp4",
-          "webm": "/src/assets/videos/stories/en/story_6.webm"
+          "720": {
+            "av1": "/src/assets/videos/stories/en/story_6-720-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_6-720-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_6-720-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_6-720.webm"
+          },
+          "1080": {
+            "av1": "/src/assets/videos/stories/en/story_6-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_6-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_6-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_6.webm"
+          }
         },
         "ctaButton": {
           "enabled": true
@@ -305,10 +353,18 @@
           "pt": "A aposta Ante é 5 EUR e o Call é 10 EUR.<br>Com um Straight Flush (20:1), você ganha 300 EUR e recebe 15 EUR de volta das suas apostas. Pagamento total — 315 EUR."
         },
         "video": {
-          "av1": "/src/assets/videos/stories/en/story_7-av1.mp4",
-          "h265": "/src/assets/videos/stories/en/story_7-h265.mp4",
-          "h264": "/src/assets/videos/stories/en/story_7-h264.mp4",
-          "webm": "/src/assets/videos/stories/en/story_7.webm"
+          "720": {
+            "av1": "/src/assets/videos/stories/en/story_7-720-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_7-720-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_7-720-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_7-720.webm"
+          },
+          "1080": {
+            "av1": "/src/assets/videos/stories/en/story_7-av1.mp4",
+            "h265": "/src/assets/videos/stories/en/story_7-h265.mp4",
+            "h264": "/src/assets/videos/stories/en/story_7-h264.mp4",
+            "webm": "/src/assets/videos/stories/en/story_7.webm"
+          }
         },
         "ctaButton": {
           "enabled": true

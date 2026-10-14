@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T10:24:28.930Z",
+  "generatedAt": "2026-10-14T09:15:58.850Z",
   "floor": {
     "vmafMean": 95,
     "vmafWorst1Percent": 90,
@@ -99,6 +99,107 @@
           "type": "video/webm; codecs=\"vp09.00.40.08, opus\"",
           "codecs": {
             "video": "vp09.00.40.08",
+            "audio": "opus"
+          },
+          "frames": 638,
+          "hasAudio": true,
+          "faststart": null,
+          "topColour": "#770301",
+          "colourDrift": 0,
+          "problems": []
+        }
+      }
+    },
+    {
+      "name": "story_1-720",
+      "master": "1.mp4",
+      "width": 720,
+      "height": 1280,
+      "fps": 30,
+      "frames": 638,
+      "duration": 21.266667,
+      "topColour": "#770301",
+      "banding": 15.54,
+      "files": {
+        "av1": {
+          "file": "story_1-720-av1.mp4",
+          "bytes": 2039771,
+          "crf": 32,
+          "vmaf": {
+            "mean": 97.02,
+            "p1": 90.13,
+            "p5": 93.17
+          },
+          "banding": 7.63,
+          "type": "video/mp4; codecs=\"av01.0.05M.08, mp4a.40.2\"",
+          "codecs": {
+            "video": "av01.0.05M.08",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 638,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#770301",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h265": {
+          "file": "story_1-720-h265.mp4",
+          "bytes": 1852999,
+          "crf": 27,
+          "vmaf": {
+            "mean": 96.63,
+            "p1": 90.74,
+            "p5": 92.19
+          },
+          "banding": 14.81,
+          "type": "video/mp4; codecs=\"hvc1.1.6.L93.90, mp4a.40.2\"",
+          "codecs": {
+            "video": "hvc1.1.6.L93.90",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 638,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#770301",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h264": {
+          "file": "story_1-720-h264.mp4",
+          "bytes": 2918289,
+          "crf": 23,
+          "vmaf": {
+            "mean": 96.36,
+            "p1": 90.12,
+            "p5": 92.13
+          },
+          "banding": 15.28,
+          "type": "video/mp4; codecs=\"avc1.64001F, mp4a.40.2\"",
+          "codecs": {
+            "video": "avc1.64001F",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 638,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#770301",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "webm": {
+          "file": "story_1-720.webm",
+          "bytes": 3153703,
+          "crf": 27,
+          "vmaf": {
+            "mean": 97.27,
+            "p1": 90.1,
+            "p5": 92.8
+          },
+          "banding": 15.82,
+          "type": "video/webm; codecs=\"vp09.00.31.08, opus\"",
+          "codecs": {
+            "video": "vp09.00.31.08",
             "audio": "opus"
           },
           "frames": 638,
@@ -212,6 +313,107 @@
       }
     },
     {
+      "name": "story_2-720",
+      "master": "2_1.mp4",
+      "width": 720,
+      "height": 1280,
+      "fps": 30,
+      "frames": 1325,
+      "duration": 44.166667,
+      "topColour": "#004406",
+      "banding": 3.64,
+      "files": {
+        "av1": {
+          "file": "story_2-720-av1.mp4",
+          "bytes": 2018323,
+          "crf": 44,
+          "vmaf": {
+            "mean": 96.3,
+            "p1": 91.81,
+            "p5": 93.92
+          },
+          "banding": 0.3,
+          "type": "video/mp4; codecs=\"av01.0.05M.08, mp4a.40.2\"",
+          "codecs": {
+            "video": "av01.0.05M.08",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 1325,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h265": {
+          "file": "story_2-720-h265.mp4",
+          "bytes": 2350308,
+          "crf": 27,
+          "vmaf": {
+            "mean": 96.09,
+            "p1": 90.62,
+            "p5": 95.14
+          },
+          "banding": 6.92,
+          "type": "video/mp4; codecs=\"hvc1.1.6.L93.90, mp4a.40.2\"",
+          "codecs": {
+            "video": "hvc1.1.6.L93.90",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 1325,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h264": {
+          "file": "story_2-720-h264.mp4",
+          "bytes": 3140819,
+          "crf": 25,
+          "vmaf": {
+            "mean": 95.77,
+            "p1": 90.72,
+            "p5": 94.17
+          },
+          "banding": 3.53,
+          "type": "video/mp4; codecs=\"avc1.64001F, mp4a.40.2\"",
+          "codecs": {
+            "video": "avc1.64001F",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 1325,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "webm": {
+          "file": "story_2-720.webm",
+          "bytes": 2431270,
+          "crf": 36,
+          "vmaf": {
+            "mean": 96.15,
+            "p1": 92.34,
+            "p5": 95.13
+          },
+          "banding": 13.98,
+          "type": "video/webm; codecs=\"vp09.00.31.08, opus\"",
+          "codecs": {
+            "video": "vp09.00.31.08",
+            "audio": "opus"
+          },
+          "frames": 1325,
+          "hasAudio": true,
+          "faststart": null,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        }
+      }
+    },
+    {
       "name": "story_3",
       "master": "3.mp4",
       "width": 1080,
@@ -301,6 +503,107 @@
           "type": "video/webm; codecs=\"vp09.00.40.08, opus\"",
           "codecs": {
             "video": "vp09.00.40.08",
+            "audio": "opus"
+          },
+          "frames": 213,
+          "hasAudio": true,
+          "faststart": null,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        }
+      }
+    },
+    {
+      "name": "story_3-720",
+      "master": "3.mp4",
+      "width": 720,
+      "height": 1280,
+      "fps": 30,
+      "frames": 213,
+      "duration": 7.1,
+      "topColour": "#004406",
+      "banding": 3.07,
+      "files": {
+        "av1": {
+          "file": "story_3-720-av1.mp4",
+          "bytes": 253766,
+          "crf": 44,
+          "vmaf": {
+            "mean": 95.92,
+            "p1": 91.77,
+            "p5": 94.28
+          },
+          "banding": 0.09,
+          "type": "video/mp4; codecs=\"av01.0.05M.08, mp4a.40.2\"",
+          "codecs": {
+            "video": "av01.0.05M.08",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 213,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h265": {
+          "file": "story_3-720-h265.mp4",
+          "bytes": 328108,
+          "crf": 26,
+          "vmaf": {
+            "mean": 95.82,
+            "p1": 92.88,
+            "p5": 94.36
+          },
+          "banding": 7.05,
+          "type": "video/mp4; codecs=\"hvc1.1.6.L93.90, mp4a.40.2\"",
+          "codecs": {
+            "video": "hvc1.1.6.L93.90",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 213,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "h264": {
+          "file": "story_3-720-h264.mp4",
+          "bytes": 460669,
+          "crf": 25,
+          "vmaf": {
+            "mean": 95.25,
+            "p1": 92.29,
+            "p5": 93.96
+          },
+          "banding": 3.41,
+          "type": "video/mp4; codecs=\"avc1.64001F, mp4a.40.2\"",
+          "codecs": {
+            "video": "avc1.64001F",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 213,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "webm": {
+          "file": "story_3-720.webm",
+          "bytes": 289100,
+          "crf": 36,
+          "vmaf": {
+            "mean": 95.91,
+            "p1": 93.25,
+            "p5": 94.79
+          },
+          "banding": 13.39,
+          "type": "video/webm; codecs=\"vp09.00.31.08, opus\"",
+          "codecs": {
+            "video": "vp09.00.31.08",
             "audio": "opus"
           },
           "frames": 213,
@@ -414,6 +717,107 @@
       }
     },
     {
+      "name": "story_4-720",
+      "master": "4.mp4",
+      "width": 720,
+      "height": 1280,
+      "fps": 30,
+      "frames": 280,
+      "duration": 9.333333,
+      "topColour": "#004405",
+      "banding": 1.58,
+      "files": {
+        "av1": {
+          "file": "story_4-720-av1.mp4",
+          "bytes": 276514,
+          "crf": 44,
+          "vmaf": {
+            "mean": 96.27,
+            "p1": 91.02,
+            "p5": 94.74
+          },
+          "banding": 0.13,
+          "type": "video/mp4; codecs=\"av01.0.05M.08, mp4a.40.2\"",
+          "codecs": {
+            "video": "av01.0.05M.08",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 280,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "h265": {
+          "file": "story_4-720-h265.mp4",
+          "bytes": 363857,
+          "crf": 25,
+          "vmaf": {
+            "mean": 96.43,
+            "p1": 94.37,
+            "p5": 94.95
+          },
+          "banding": 5.4,
+          "type": "video/mp4; codecs=\"hvc1.1.6.L93.90, mp4a.40.2\"",
+          "codecs": {
+            "video": "hvc1.1.6.L93.90",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 280,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "h264": {
+          "file": "story_4-720-h264.mp4",
+          "bytes": 425968,
+          "crf": 26,
+          "vmaf": {
+            "mean": 95.32,
+            "p1": 92.05,
+            "p5": 93.3
+          },
+          "banding": 3.25,
+          "type": "video/mp4; codecs=\"avc1.64001F, mp4a.40.2\"",
+          "codecs": {
+            "video": "avc1.64001F",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 280,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "webm": {
+          "file": "story_4-720.webm",
+          "bytes": 295068,
+          "crf": 36,
+          "vmaf": {
+            "mean": 96.36,
+            "p1": 91.78,
+            "p5": 95.17
+          },
+          "banding": 12.73,
+          "type": "video/webm; codecs=\"vp09.00.31.08, opus\"",
+          "codecs": {
+            "video": "vp09.00.31.08",
+            "audio": "opus"
+          },
+          "frames": 280,
+          "hasAudio": true,
+          "faststart": null,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        }
+      }
+    },
+    {
       "name": "story_5",
       "master": "5.mp4",
       "width": 1080,
@@ -509,6 +913,107 @@
           "hasAudio": true,
           "faststart": null,
           "topColour": "#004406",
+          "colourDrift": 1,
+          "problems": []
+        }
+      }
+    },
+    {
+      "name": "story_5-720",
+      "master": "5.mp4",
+      "width": 720,
+      "height": 1280,
+      "fps": 30,
+      "frames": 312,
+      "duration": 10.4,
+      "topColour": "#004405",
+      "banding": 3.64,
+      "files": {
+        "av1": {
+          "file": "story_5-720-av1.mp4",
+          "bytes": 446509,
+          "crf": 44,
+          "vmaf": {
+            "mean": 96.67,
+            "p1": 92.73,
+            "p5": 95.2
+          },
+          "banding": 0.45,
+          "type": "video/mp4; codecs=\"av01.0.05M.08, mp4a.40.2\"",
+          "codecs": {
+            "video": "av01.0.05M.08",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 312,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "h265": {
+          "file": "story_5-720-h265.mp4",
+          "bytes": 521745,
+          "crf": 27,
+          "vmaf": {
+            "mean": 96.31,
+            "p1": 94.7,
+            "p5": 95.39
+          },
+          "banding": 7.01,
+          "type": "video/mp4; codecs=\"hvc1.1.6.L93.90, mp4a.40.2\"",
+          "codecs": {
+            "video": "hvc1.1.6.L93.90",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 312,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "h264": {
+          "file": "story_5-720-h264.mp4",
+          "bytes": 668161,
+          "crf": 26,
+          "vmaf": {
+            "mean": 95.74,
+            "p1": 93.46,
+            "p5": 94.35
+          },
+          "banding": 3.81,
+          "type": "video/mp4; codecs=\"avc1.64001F, mp4a.40.2\"",
+          "codecs": {
+            "video": "avc1.64001F",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 312,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "webm": {
+          "file": "story_5-720.webm",
+          "bytes": 536420,
+          "crf": 36,
+          "vmaf": {
+            "mean": 96.62,
+            "p1": 93.03,
+            "p5": 95.7
+          },
+          "banding": 12.07,
+          "type": "video/webm; codecs=\"vp09.00.31.08, opus\"",
+          "codecs": {
+            "video": "vp09.00.31.08",
+            "audio": "opus"
+          },
+          "frames": 312,
+          "hasAudio": true,
+          "faststart": null,
+          "topColour": "#004506",
           "colourDrift": 1,
           "problems": []
         }
@@ -616,6 +1121,107 @@
       }
     },
     {
+      "name": "story_6-720",
+      "master": "6.mp4",
+      "width": 720,
+      "height": 1280,
+      "fps": 30,
+      "frames": 650,
+      "duration": 21.666667,
+      "topColour": "#004406",
+      "banding": 2.78,
+      "files": {
+        "av1": {
+          "file": "story_6-720-av1.mp4",
+          "bytes": 826915,
+          "crf": 44,
+          "vmaf": {
+            "mean": 96.8,
+            "p1": 91.33,
+            "p5": 95.7
+          },
+          "banding": 0.36,
+          "type": "video/mp4; codecs=\"av01.0.05M.08, mp4a.40.2\"",
+          "codecs": {
+            "video": "av01.0.05M.08",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 650,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h265": {
+          "file": "story_6-720-h265.mp4",
+          "bytes": 980036,
+          "crf": 27,
+          "vmaf": {
+            "mean": 96.44,
+            "p1": 93.46,
+            "p5": 94.64
+          },
+          "banding": 6.21,
+          "type": "video/mp4; codecs=\"hvc1.1.6.L93.90, mp4a.40.2\"",
+          "codecs": {
+            "video": "hvc1.1.6.L93.90",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 650,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h264": {
+          "file": "story_6-720-h264.mp4",
+          "bytes": 1239022,
+          "crf": 26,
+          "vmaf": {
+            "mean": 95.72,
+            "p1": 92.93,
+            "p5": 93.55
+          },
+          "banding": 3.44,
+          "type": "video/mp4; codecs=\"avc1.64001F, mp4a.40.2\"",
+          "codecs": {
+            "video": "avc1.64001F",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 650,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "webm": {
+          "file": "story_6-720.webm",
+          "bytes": 928544,
+          "crf": 36,
+          "vmaf": {
+            "mean": 96.58,
+            "p1": 93.64,
+            "p5": 94.81
+          },
+          "banding": 12.31,
+          "type": "video/webm; codecs=\"vp09.00.31.08, opus\"",
+          "codecs": {
+            "video": "vp09.00.31.08",
+            "audio": "opus"
+          },
+          "frames": 650,
+          "hasAudio": true,
+          "faststart": null,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        }
+      }
+    },
+    {
       "name": "story_7",
       "master": "7.mp4",
       "width": 1080,
@@ -712,6 +1318,107 @@
           "faststart": null,
           "topColour": "#004406",
           "colourDrift": 0,
+          "problems": []
+        }
+      }
+    },
+    {
+      "name": "story_7-720",
+      "master": "7.mp4",
+      "width": 720,
+      "height": 1280,
+      "fps": 30,
+      "frames": 405,
+      "duration": 13.5,
+      "topColour": "#004406",
+      "banding": 4.62,
+      "files": {
+        "av1": {
+          "file": "story_7-720-av1.mp4",
+          "bytes": 769545,
+          "crf": 38,
+          "vmaf": {
+            "mean": 96.32,
+            "p1": 90.44,
+            "p5": 92.51
+          },
+          "banding": 2.91,
+          "type": "video/mp4; codecs=\"av01.0.05M.08, mp4a.40.2\"",
+          "codecs": {
+            "video": "av01.0.05M.08",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 405,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h265": {
+          "file": "story_7-720-h265.mp4",
+          "bytes": 844153,
+          "crf": 25,
+          "vmaf": {
+            "mean": 95.96,
+            "p1": 90.4,
+            "p5": 90.55
+          },
+          "banding": 4.96,
+          "type": "video/mp4; codecs=\"hvc1.1.6.L93.90, mp4a.40.2\"",
+          "codecs": {
+            "video": "hvc1.1.6.L93.90",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 405,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004406",
+          "colourDrift": 0,
+          "problems": []
+        },
+        "h264": {
+          "file": "story_7-720-h264.mp4",
+          "bytes": 1051315,
+          "crf": 24,
+          "vmaf": {
+            "mean": 95.49,
+            "p1": 90.14,
+            "p5": 90.22
+          },
+          "banding": 3.67,
+          "type": "video/mp4; codecs=\"avc1.64001F, mp4a.40.2\"",
+          "codecs": {
+            "video": "avc1.64001F",
+            "audio": "mp4a.40.2"
+          },
+          "frames": 405,
+          "hasAudio": true,
+          "faststart": true,
+          "topColour": "#004506",
+          "colourDrift": 1,
+          "problems": []
+        },
+        "webm": {
+          "file": "story_7-720.webm",
+          "bytes": 1347627,
+          "crf": 18,
+          "vmaf": {
+            "mean": 96.46,
+            "p1": 90.22,
+            "p5": 90.22
+          },
+          "banding": 5.79,
+          "type": "video/webm; codecs=\"vp09.00.31.08, opus\"",
+          "codecs": {
+            "video": "vp09.00.31.08",
+            "audio": "opus"
+          },
+          "frames": 405,
+          "hasAudio": true,
+          "faststart": null,
+          "topColour": "#004506",
+          "colourDrift": 1,
           "problems": []
         }
       }

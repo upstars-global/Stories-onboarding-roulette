@@ -8,6 +8,14 @@ export interface StoryVideo {
   webm: string;
 }
 
+// The same clip at each frame width it was encoded at. useVideoFormat picks
+// the width from how large the clip is drawn; a clip without a 720 set plays
+// the 1080 one everywhere.
+export interface StoryVideoSizes {
+  1080: StoryVideo;
+  720?: StoryVideo;
+}
+
 export interface StoryCtaButton {
   enabled: boolean;
 }
@@ -54,7 +62,7 @@ export interface StoryData {
   topText: LocalizedText;
   header: LocalizedText;
   description: LocalizedText;
-  video: StoryVideo;
+  video: StoryVideoSizes;
   ctaButton: StoryCtaButton;
   helpText?: StoryHelpText;
   // When true, this story shares the same progress-bar segment as the
