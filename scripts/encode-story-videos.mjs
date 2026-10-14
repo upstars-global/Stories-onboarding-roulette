@@ -1,20 +1,25 @@
-// Turns the motion designer's masters into the four files a story slide ships —
-// AV1, HEVC, VP9 (WebM) and H.264 — and picks the compression per clip instead
-// of trusting one hand-tuned number for all of them.
+// Turns the motion designer's masters into the files a story slide ships —
+// AV1, HEVC, VP9 (WebM) and H.264, each at 1080 and 720 pixels wide — and picks
+// the compression per clip instead of trusting one hand-tuned number for all of
+// them. Nothing in here is tied to one story: point it at a folder of masters.
 //
 // Usage: node scripts/encode-story-videos.mjs --src <dir with the masters>
-//        [--out src/assets/videos/stories/en] [--report docs/poker-video-report.json]
-//        [--only story_2,story_5] [--formats av1,h265,h264,webm]
-//        [--work DIR] [--jobs 3]
+//        [--out src/assets/videos/stories/en] [--report docs/<story>-video-report.json]
+//        [--sizes 1080,720] [--only story_2,story_5] [--formats av1,h265,h264,webm]
+//        [--map 2_1.mp4=story_2,intro.mp4=story_1] [--work DIR] [--jobs 1]
 //        [--min-vmaf 95] [--min-vmaf-p1 90] [--banding-room 4]
 //
 // Prerequisite: ffmpeg/ffprobe built with libsvtav1, libx265, libvpx-vp9,
 // libx264, libopus and libvmaf (`brew install ffmpeg`).
 //
-// The work directory keeps every encode it has scored, keyed by clip, codec
-// and CRF, so an interrupted run picks up where it stopped. It does not know
-// the encoder settings: after changing them in FORMATS, delete that codec's
-// files from the work directory.
+// The work directory keeps every encode it has scored, keyed by clip, size,
+// codec and CRF, so an interrupted run picks up where it stopped. It does not
+// know the encoder settings: after changing them in FORMATS, delete that
+// codec's files from the work directory.
+//
+// The report is merged, not overwritten: a run over some clips, sizes or
+// formats replaces those entries and keeps the rest. Its default name comes
+// from the story title in src/data/stories.json.
 //
 // WHICH MASTER
 // The designer exports every clip three times: `N.mp4` (H.264), `N.webm` (VP9)
@@ -22,8 +27,13 @@
 // set: its colours match the Figma frames to within one code value, while the
 // .webm is colour-shifted (the green background reads #064f09 instead of
 // #004408), and the .mov is the same picture with an alpha layer that is 255
-// everywhere plus uncompressed PCM. So the masters directory needs the seven
-// .mp4 files and nothing else.
+// everywhere plus uncompressed PCM.
+//
+// The slide comes from the file name: `3.mp4` is story_3. The designer numbers
+// revisions after an underscore (`2_1.mp4`); when a slide has several, the
+// highest one is taken. Everything else in the folder is ignored, and the run
+// prints what it took and what it skipped. `--map` names the slide by hand for
+// files that do not follow this.
 //
 // OPAQUE, NOT ALPHA
 // Earlier stories shipped a transparent card over a background painted by the
@@ -73,9 +83,17 @@
 // four, so on the long clips quality alone would overshoot it; those are
 // re-encoded in two passes to fit.
 //
-// The frame stays 1080x1920. At an equal file size it scored higher than
-// 720x1280 upscaled (96.1 against 91.9 on the 44 s clip), and a phone at 3x
-// shows every one of those pixels.
+// TWO SIZES
+// 1080x1920 is the master's own frame, and a phone at 3x shows every one of
+// those pixels. 720x1280 is for screens that draw the clip smaller: a desktop
+// card on an ordinary monitor, a phone at 2x. The player picks by the size the
+// clip is drawn at (src/composables/useVideoFormat.ts). Shrinking is not a way
+// to save bytes on a big screen — at an equal file size 1080 scored higher
+// than 720 upscaled (96.1 against 91.9 on the 44 s clip) — it is a way to send
+// fewer bytes where the extra pixels would not be seen.
+//
+// A 720 encode is scored against the master shrunk to 720 with the same
+// filter, so its floors measure what the compression lost, as at 1080.
 //
 // Audio is kept: the story has a sound button and these clips have a real
 // soundtrack. The <video> still has to start muted, or it will not autoplay.
@@ -85,6 +103,7 @@ import {
   copyFile,
   mkdir,
   open,
+  readdir,
   readFile,
   stat,
   writeFile,
@@ -95,16 +114,16 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-/** Master file -> slide. The designer numbers revisions (`2_1`), slides do not. */
-const CLIPS = [
-  { master: '1.mp4', name: 'story_1' },
-  { master: '2_1.mp4', name: 'story_2' },
-  { master: '3.mp4', name: 'story_3' },
-  { master: '4.mp4', name: 'story_4' },
-  { master: '5.mp4', name: 'story_5' },
-  { master: '6.mp4', name: 'story_6' },
-  { master: '7.mp4', name: 'story_7' },
-];
+/**
+ * The frame widths a clip ships at. 1080 keeps the names the first poker files
+ * had; a smaller size adds its width to the name (`story_3-720-av1.mp4`).
+ * `h264Level` is the lowest level that holds the frame with four reference
+ * frames — see the H.264 entry in FORMATS.
+ */
+const SIZES = {
+  1080: { width: 1080, height: 1920, tag: '', h264Level: '4.0' },
+  720: { width: 720, height: 1280, tag: '-720', h264Level: '3.1' },
+};
 
 /** VMAF floor against the master: the mean, and the worst 1% of frames. */
 const MIN_VMAF = 95;
@@ -187,9 +206,9 @@ const FORMATS = {
     audio: 'aac',
     crf: { min: 18, max: 26 },
     maxBytes: H264_MAX_BYTES,
-    // Level 4.0 holds four reference frames at 1080x1920; the slow preset asks
-    // for five, which would silently push the stream to a higher level.
-    codec: ({ crf, bitrate, final }) => [
+    // Level 4.0 holds four reference frames at 1080x1920 (3.1 at 720x1280); the
+    // slow preset asks for five, which would silently push the stream a level up.
+    codec: ({ crf, bitrate, final, size }) => [
       '-c:v',
       'libx264',
       '-preset',
@@ -197,7 +216,7 @@ const FORMATS = {
       '-profile:v',
       'high',
       '-level:v',
-      '4.0',
+      size.h264Level,
       '-refs',
       '4',
       ...(bitrate ? ['-b:v', String(bitrate)] : ['-crf', String(crf)]),
@@ -207,7 +226,9 @@ const FORMATS = {
     suffix: '.webm',
     container: 'webm',
     audio: 'opus',
-    crf: { min: 24, max: 36 },
+    // The payout table of poker slide 7 needs 24 at 1080 and lower still at
+    // 720 before its worst frames clear the floor; 24 used to be the bottom.
+    crf: { min: 18, max: 36 },
     // See "Floor two" above: VP9 cannot meet the margin at a sane size.
     ignoreBanding: true,
     // Two passes during the search as well: one-pass VP9 scored 1.7 points
@@ -283,7 +304,25 @@ const CONTAINER = {
   },
 };
 
-function parseArgs(argv) {
+/** `docs/<story>-video-report.json`, the story named by the English title in
+ *  src/data/stories.json; a plain name when there is no such file. */
+async function defaultReport() {
+  try {
+    const data = JSON.parse(
+      await readFile(path.join(ROOT, 'src/data/stories.json'), 'utf8')
+    );
+    const slug = String(data.stories.title.en)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+    if (slug) return path.join(ROOT, `docs/${slug}-video-report.json`);
+  } catch {
+    // no story data to name it after
+  }
+  return path.join(ROOT, 'docs/story-video-report.json');
+}
+
+async function parseArgs(argv) {
   const flags = {};
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
@@ -293,8 +332,9 @@ function parseArgs(argv) {
   if (!flags.src) {
     throw new Error(
       'usage: node scripts/encode-story-videos.mjs --src <dir with masters> ' +
-        '[--out DIR] [--report FILE] [--only story_2,story_5] ' +
-        '[--formats av1,h265,h264,webm] [--work DIR] [--jobs N] ' +
+        '[--out DIR] [--report FILE] [--sizes 1080,720] ' +
+        '[--only story_2,story_5] [--formats av1,h265,h264,webm] ' +
+        '[--map file=story_N,...] [--work DIR] [--jobs N] ' +
         '[--min-vmaf N] [--min-vmaf-p1 N] [--banding-room N]'
     );
   }
@@ -303,20 +343,36 @@ function parseArgs(argv) {
   for (const key of formats) {
     if (!FORMATS[key]) throw new Error(`unknown format: ${key}`);
   }
+  const sizes = list(flags.sizes) ?? Object.keys(SIZES);
+  for (const key of sizes) {
+    if (!SIZES[key]) throw new Error(`unknown size: ${key}`);
+  }
+  const map = Object.fromEntries(
+    (list(flags.map) ?? []).map((pair) => {
+      const [file, name] = pair.split('=');
+      if (!file || !/^story_\d+$/.test(name ?? '')) {
+        throw new Error(`--map wants file=story_N, got: ${pair}`);
+      }
+      return [file, name];
+    })
+  );
   return {
     src: path.resolve(flags.src),
     out: path.resolve(
       flags.out ?? path.join(ROOT, 'src/assets/videos/stories/en')
     ),
-    report: path.resolve(
-      flags.report ?? path.join(ROOT, 'docs/poker-video-report.json')
-    ),
+    report: path.resolve(flags.report ?? (await defaultReport())),
     work: path.resolve(
       flags.work ?? path.join(os.tmpdir(), 'story-video-encode')
     ),
     only: list(flags.only),
     formats,
-    jobs: Number(flags.jobs ?? 3),
+    sizes,
+    map,
+    // One at a time by default. The encoders already use every core, and on a
+    // laptop that is also in use three side by side filled the swap and took
+    // the window server down with them.
+    jobs: Number(flags.jobs ?? 1),
     floor: {
       mean: Number(flags['min-vmaf'] ?? MIN_VMAF),
       p1: Number(flags['min-vmaf-p1'] ?? MIN_VMAF_P1),
@@ -402,9 +458,21 @@ async function isFresh(file, than) {
   }
 }
 
+/** The filter that brings the master to a smaller size; empty at its own. The
+ *  measurement shrinks the reference with this same filter. */
+const shrink = (clip) =>
+  clip.size.width === clip.width && clip.size.height === clip.height
+    ? null
+    : `scale=${clip.size.width}:${clip.size.height}:flags=lanczos`;
+
 async function encode({ clip, fmt, rate, final, out, ctx }) {
   const input = [...FFMPEG, '-y', '-i', clip.masterPath];
-  const video = [...VIDEO_COMMON, ...fmt.codec({ ...rate, final })];
+  const scale = shrink(clip);
+  const video = [
+    ...VIDEO_COMMON,
+    ...(scale ? ['-vf', scale] : []),
+    ...fmt.codec({ ...rate, final, size: clip.size }),
+  ];
   // The search only looks at the picture; encoding sound for it is wasted time.
   const audio =
     final && clip.hasAudio
@@ -451,11 +519,24 @@ async function encode({ clip, fmt, rate, final, out, ctx }) {
  * master's previous one. A third of the frames end up one off, and anything
  * that moves scores as garbage — a clean VP9 encode read 61 instead of 95.
  * Renumbering both sides by frame index makes the pairing exact.
+ *
+ * `scale` shrinks the master before the comparison when the encode is smaller;
+ * `scaleFile` shrinks `file` too, for scoring the master against itself.
  */
-async function measure({ file, master, subsample, label, work }) {
+async function measure({
+  file,
+  master,
+  subsample,
+  label,
+  work,
+  scale = null,
+  scaleFile = false,
+}) {
   const log = `${label}.vmaf.json`;
+  const fit = scale ? `${scale},` : '';
   const graph =
-    '[0:v]settb=1/30,setpts=N[d];[1:v]settb=1/30,setpts=N[r];' +
+    `[0:v]${scaleFile ? fit : ''}settb=1/30,setpts=N[d];` +
+    `[1:v]${fit}settb=1/30,setpts=N[r];` +
     `[d][r]libvmaf=n_threads=${VMAF_THREADS}:n_subsample=${subsample}:` +
     `feature='name=cambi':log_fmt=json:log_path=${log}`;
   // Relative log path with cwd set to the work directory: the filter option
@@ -529,6 +610,7 @@ async function trial(clip, key, crf, ctx) {
       subsample: SEARCH_SUBSAMPLE,
       label,
       work: ctx.work,
+      scale: shrink(clip),
     })),
   };
   await writeFile(cache, JSON.stringify(result));
@@ -702,6 +784,7 @@ async function shipped(clip, key, rate, ctx) {
         subsample: 1,
         label,
         work: ctx.work,
+        scale: shrink(clip),
       });
   if (!cached) await writeFile(cache, JSON.stringify({ vmaf, banding }));
 
@@ -822,6 +905,40 @@ async function pool(items, limit, worker) {
   return results;
 }
 
+/** The masters in `dir` and the slide each one is for — see WHICH MASTER. */
+async function findMasters(dir, map) {
+  const files = (await readdir(dir)).sort();
+  for (const file of Object.keys(map)) {
+    if (!files.includes(file))
+      throw new Error(`--map names a missing file: ${file}`);
+  }
+  const bySlide = new Map();
+  const skipped = [];
+  for (const file of files) {
+    if (file.startsWith('.')) continue;
+    const match = /^(\d+)(?:_(\d+))?\.mp4$/i.exec(file);
+    if (!map[file] && !match) {
+      skipped.push(file);
+      continue;
+    }
+    const name = map[file] ?? `story_${Number(match[1])}`;
+    // A file named by hand beats any revision found by its name.
+    const revision = map[file] ? Infinity : Number(match[2] ?? 0);
+    const held = bySlide.get(name);
+    if (held && held.revision >= revision) {
+      skipped.push(file);
+      continue;
+    }
+    if (held) skipped.push(held.master);
+    bySlide.set(name, { master: file, name, revision });
+  }
+  const slide = (name) => Number(name.slice('story_'.length));
+  const clips = [...bySlide.values()]
+    .sort((a, b) => slide(a.name) - slide(b.name))
+    .map(({ master, name }) => ({ master, name }));
+  return { clips, skipped };
+}
+
 /** Everything the run needs to know about a master, banding included. */
 async function describeMaster(c, args) {
   const masterPath = path.join(args.src, c.master);
@@ -846,8 +963,42 @@ async function describeMaster(c, args) {
   return { ...c, masterPath, ...info };
 }
 
+/**
+ * One clip at one size: what gets encoded, scored and named. Its banding
+ * yardstick is the master shrunk to that size, since shrinking alone changes
+ * how banded a frame reads.
+ */
+async function sized(clip, size, args) {
+  const variant = { ...clip, name: `${clip.name}${size.tag}`, size };
+  const scale = shrink(variant);
+  if (!scale) return variant;
+  const cache = path.join(args.work, `${variant.name}.master.json`);
+  if (await isFresh(cache, clip.masterPath)) {
+    return { ...variant, ...JSON.parse(await readFile(cache, 'utf8')) };
+  }
+  const { banding } = await measure({
+    file: clip.masterPath,
+    master: clip.masterPath,
+    subsample: SEARCH_SUBSAMPLE,
+    label: `${variant.name}.master`,
+    work: args.work,
+    scale,
+    scaleFile: true,
+  });
+  await writeFile(cache, JSON.stringify({ banding }));
+  return { ...variant, banding };
+}
+
+async function readReport(file) {
+  try {
+    return JSON.parse(await readFile(file, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
 async function main() {
-  const args = parseArgs(process.argv.slice(2));
+  const args = await parseArgs(process.argv.slice(2));
   await Promise.all(
     [args.out, args.work, path.dirname(args.report)].map((dir) =>
       mkdir(dir, { recursive: true })
@@ -870,16 +1021,65 @@ async function main() {
     log: (clip, key, text) => console.log(`[${clip.name} ${key}] ${text}`),
   };
 
-  const wanted = CLIPS.filter((c) => !args.only || args.only.includes(c.name));
+  const found = await findMasters(args.src, args.map);
+  const wanted = found.clips.filter(
+    (c) => !args.only || args.only.includes(c.name)
+  );
+  if (!wanted.length) throw new Error(`no masters to encode in ${args.src}`);
+  console.log(
+    `masters: ${wanted.map((c) => `${c.master} -> ${c.name}`).join(', ')}` +
+      (found.skipped.length ? `\nskipped: ${found.skipped.join(', ')}` : '')
+  );
   const clips = await pool(wanted, args.jobs, (c) => describeMaster(c, args));
+  // Never enlarge: a size wider than the master is left out for that clip.
+  const variants = await pool(
+    clips.flatMap((clip) =>
+      args.sizes
+        .map((key) => SIZES[key])
+        .filter((size) => size.width <= clip.width)
+        .map((size) => ({ clip, size }))
+    ),
+    args.jobs,
+    ({ clip, size }) => sized(clip, size, args)
+  );
 
-  const tasks = clips.flatMap((clip) =>
+  const tasks = variants.flatMap((clip) =>
     args.formats.map((key) => ({ clip, key }))
   );
   const done = await pool(tasks, args.jobs, ({ clip, key }) =>
     produce(clip, key, ctx)
   );
 
+  const fresh = variants.map((clip) => ({
+    name: clip.name,
+    master: clip.master,
+    width: clip.size.width,
+    height: clip.size.height,
+    fps: clip.fps,
+    frames: clip.frames,
+    duration: clip.duration,
+    topColour: hex(clip.topColour),
+    banding: clip.banding,
+    files: Object.fromEntries(
+      tasks
+        .map((task, i) => ({ ...task, result: done[i] }))
+        .filter((task) => task.clip === clip)
+        .map((task) => [task.key, task.result])
+    ),
+  }));
+  // Entries this run did not touch stay as they were; a touched entry keeps
+  // the formats this run left out.
+  const entries = new Map(
+    ((await readReport(args.report))?.clips ?? []).map((c) => [c.name, c])
+  );
+  for (const entry of fresh) {
+    const old = entries.get(entry.name);
+    entries.set(
+      entry.name,
+      old ? { ...entry, files: { ...old.files, ...entry.files } } : entry
+    );
+  }
+  const slide = (name) => Number(/^story_(\d+)/.exec(name)?.[1] ?? 0);
   const report = {
     generatedAt: new Date().toISOString(),
     floor: {
@@ -890,30 +1090,16 @@ async function main() {
         (key) => FORMATS[key].ignoreBanding
       ),
     },
-    clips: clips.map((clip) => ({
-      name: clip.name,
-      master: clip.master,
-      width: clip.width,
-      height: clip.height,
-      fps: clip.fps,
-      frames: clip.frames,
-      duration: clip.duration,
-      topColour: hex(clip.topColour),
-      banding: clip.banding,
-      files: Object.fromEntries(
-        tasks
-          .map((task, i) => ({ ...task, result: done[i] }))
-          .filter((task) => task.clip === clip)
-          .map((task) => [task.key, task.result])
-      ),
-    })),
+    clips: [...entries.values()].sort(
+      (a, b) => slide(a.name) - slide(b.name) || b.width - a.width
+    ),
   };
   await writeFile(args.report, `${JSON.stringify(report, null, 2)}\n`);
 
   console.log('\nsize, VMAF, banding (master in the first column)');
   console.log(`| clip | ${args.formats.join(' | ')} |`);
   console.log(`|---|${args.formats.map(() => '---').join('|')}|`);
-  for (const clip of report.clips) {
+  for (const clip of fresh) {
     const cells = args.formats.map((key) => {
       const f = clip.files[key];
       const flag = f.problems.length ? ' (!)' : '';
