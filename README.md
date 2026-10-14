@@ -1,22 +1,67 @@
-# Vue 3 + Vite
+# Онбординг-сторіс
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Код сторіс один на всі сторіс. Кожна сторіс — окрема папка в `stories/`: тексти, відео, іконка й налаштування вигляду. Одна збірка робить одну сторіс у папку `dist/<назва>/`, вміст якої розміщується на CDN у `common/stories/<назва>/`.
 
-## Recommended IDE Setup
+## Команди
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+```bash
+npm install                    # один раз після клонування
 
-Please make all font size rounded to 0 decimal place and position rounded to 1 decimal place and give me full final code of the SVG
+npm run dev poker              # локальний сервер, відкривається і з телефона в тій самій мережі
+npm run build poker            # перевірка типів і збірка в dist/poker/
+npm run preview poker          # перегляд зібраної dist/poker/
 
-Good! Now please make from this SVG vue component wits texts in SVG as props,
-and give me full final code of the component. 
-Don't make props from x and y coordinates of elements, font size and font style. Don't use comment to hide part of SVG. I need it all please!
+npm run video:encode -- --story poker --src <папка з відео дизайнера>
+```
 
-Use where possible font-family: "Sora", sans-serif. 
+Поки в `stories/` одна сторіс, назву можна не вказувати. Додаткові параметри Vite пишуться після назви: `npm run preview -- poker --host --port 4310`.
 
+## Папка сторіс
 
-Good! Now show me how this component will look like from parent with all texts and currency props.
+| Файл | Що в ньому |
+|------|------------|
+| `stories.json` | Тексти слайдів 6 мовами, назва сторіс, текст кнопки, посилання на гру та UTM-кампанія |
+| `story.scss` | Колір фону над відео, розміри заголовка й опису для кожної мови |
+| `icon.webp` | Іконка в шапці сторіс |
+| `videos/` | Відео слайдів, які створює `npm run video:encode` |
+| `video-report.json` | Вага та якість кожного відеофайлу |
+| `*_INTEGRATION_UA.md`, `.docx` | Документ для сайту |
 
+Решта (поведінка, верстка, вибір відео під екран) — спільний код у `src/`.
 
+### stories.json
 
-```html 
+| Поле | Що задає |
+|------|----------|
+| `stories.title` | Назва сторіс у шапці та у вкладці браузера (`en`) |
+| `stories.items[]` | Слайди по порядку: `topText` (рядок під назвою), `header`, `description` |
+| `stories.items[].video` | Назва кліпу, наприклад `story_3`. Якщо поле відсутнє — `story_<номер слайда>` |
+| `stories.items[].descriptionSteps` | Необов'язково: опис друкується частинами, кожна з певної секунди відео |
+| `ui.ctaButton.text` | Текст кнопки 6 мовами |
+| `ui.orientationLock` | Прохання повернути телефон 6 мовами |
+| `links.game` | Куди веде кнопка, якщо сайт не передав `game_link` |
+| `links.utmCampaign` | Мітка `utm_campaign` для посилання після закриття, наприклад `poker_story` |
+
+Шляхи до відео не прописуються: сторіс знаходить файли в `videos/` за назвою кліпу. Збірка зупиняється з переліком файлів, яких бракує.
+
+## Нова сторіс
+
+1. Скопіювати `stories/poker` у `stories/<назва>`, видалити з копії `videos/`, `video-report.json` і документ покеру.
+2. У `stories.json` замінити тексти, назву, текст кнопки, `links.game` і `links.utmCampaign` (`<назва>_story`).
+3. У `story.scss` вказати колір верхнього краю відео та розміри шрифту.
+4. Замінити `icon.webp`.
+5. Створити відео: `npm run video:encode -- --story <назва> --src <папка з відео дизайнера>`.
+6. Перевірити: `npm run dev <назва>`.
+7. Зібрати: `npm run build <назва>`, розмістити вміст `dist/<назва>/` на CDN.
+
+## Відео від дизайнера
+
+- Один файл MP4 на слайд, 1080×1920, 30 кадрів за секунду, фон усередині кадру (непрозорий).
+- Назва — номер слайда: `1.mp4`, `2.mp4`. Повторна версія — `2_1.mp4`; береться найновіша.
+- Якість — максимальна: стискає скрипт. Інші файли в папці (.mov, .webm, .xmp) пропускаються.
+
+Скрипт робить кожне відео у двох розмірах (1080 і 720) і чотирьох форматах (AV1, H.265, H.264, WebM) та підбирає стиснення окремо для кожного: найменший файл, якість якого не нижча за поріг. Відео обробляються по одному: розмір 720 для семи відео покеру зайняв близько 40 хвилин, 1080 займає більше. Потрібен ffmpeg (`brew install ffmpeg`).
+
+## Попередні сторіс
+
+Roulette, Blackjack, Baccarat і Game shows зроблені до цієї схеми й лежать у гілках `stories-onboarding-<назва>`. У них прозорі відео та власна верстка; кожна переноситься в папку окремо, коли в ній знадобляться зміни.
