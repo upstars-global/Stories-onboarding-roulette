@@ -10,7 +10,7 @@
  * Format. The clips are opaque, so unlike the earlier stories there is no alpha
  * to steer by and no user-agent sniffing: the browser is asked what it can
  * decode. The order follows what the files turned out to be
- * (docs/poker-video-report.json): AV1 is the smallest and the only one free of
+ * (stories/poker/video-report.json): AV1 is the smallest and the only one free of
  * banding, HEVC comes next, H.264 is larger but holds the gradients, and VP9
  * bands the most for its size — it is last, and is there for builds that ship
  * without the patented codecs.

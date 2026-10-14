@@ -1,3 +1,11 @@
+@use 'sass:list';
+// A file with @use rules of its own no longer sees what the importing style
+// block loaded, so the design system is loaded here as well.
+@use '@/assets/scss/index.scss' as *;
+// The story being built (vite.config.js points `@story` at stories/<name>):
+// its colours and text sizes. Everything else in this file is shared.
+@use '@story/story';
+
 /* =============================================================================
    STORIES COMPONENT STYLES
    ============================================================================= */
@@ -74,10 +82,10 @@
   // The clips are opaque and carry their own background. What shows here is
   // only the strip above the clip on phones taller than 9:16 (see .bg_video),
   // so it is the colour of the clip's top edge, not a background of its own.
-  background: #004406;
+  background: story.$background;
 
   &.first-slide {
-    background: #770301;
+    background: story.$first-slide-background;
   }
 
   @include media-up(md) {
@@ -145,10 +153,11 @@ $text-col-scale: 1.20122; // 394 / 328
   }
 }
 
-/* Figma (Poker): heading Sora 800, 28px / 120%; body: 16px / 150%; 10px between. */
+/* Heading Sora 800 / 120%, body / 150%, 10px between. The sizes come from the
+   story (story.scss): one for English, one per longer language below. */
 .h1 {
   margin-bottom: to-vw(10px);
-  @include text-size(28px);
+  @include text-size(story.$heading);
   color: var(--color-text-alt);
   text-align: left;
   font-family: $font-family-primary;
@@ -163,7 +172,7 @@ $text-col-scale: 1.20122; // 394 / 328
 }
 
 .h2 {
-  @include text-size(16px);
+  @include text-size(story.$body);
   color: var(--color-text-body);
   text-align: left;
   font-family: $font-family-primary;
@@ -193,55 +202,16 @@ $text-col-scale: 1.20122; // 394 / 328
   }
 }
 
-/* The art clearance is defined by the video itself. On 360x640 the text starts at 88
-   and the art begins at 216 on slide 1 (the dealer card), 202 on slides 2-6 (the top
-   of the table rim) and 257 on slide 7 (the payout plate). EN fits at the design
-   sizes 28/16 with 12px to spare on slide 1.
+/* Longer languages get their own size for the whole story, so the text keeps
+   clear of the art; the story picks them (story.scss explains how). */
+@each $language, $sizes in story.$sizes-by-language {
+  .h1:lang(#{$language}) {
+    @include text-size(list.nth($sizes, 1));
+  }
 
-   The other locales are longer, so each gets one size for the whole story — no font
-   jumping between slides — picked by measuring all 7 slides x 6 locales in a browser:
-   the heading as close to 24 as fits, then the largest body that still leaves 8px
-   above the art on every slide. Headings stay on one line, except "How payouts work"
-   on slide 7, which wraps in DE, FR, IT and PT ("So funktionieren Auszahlungen" only
-   fits one line at 20px); that slide has the room for it. */
-.h1:lang(de) {
-  @include text-size(24px);
-}
-
-.h2:lang(de) {
-  @include text-size(13.5px);
-}
-
-.h1:lang(es) {
-  @include text-size(23.5px);
-}
-
-.h2:lang(es) {
-  @include text-size(15px);
-}
-
-.h1:lang(it) {
-  @include text-size(24px);
-}
-
-.h2:lang(it) {
-  @include text-size(13.75px);
-}
-
-.h1:lang(pt) {
-  @include text-size(24px);
-}
-
-.h2:lang(pt) {
-  @include text-size(15px);
-}
-
-.h1:lang(fr) {
-  @include text-size(24px);
-}
-
-.h2:lang(fr) {
-  @include text-size(13.5px);
+  .h2:lang(#{$language}) {
+    @include text-size(list.nth($sizes, 2));
+  }
 }
 
 .video-player {
@@ -462,22 +432,17 @@ $text-col-scale: 1.20122; // 394 / 328
   }
 }
 
-/* Initial hidden state for story headers and text (covers all 7 scenes to
-   avoid a flash of raw HTML before the entrance animation runs). */
-#header1,
-#header2,
-#header3,
-#header4,
-#header5,
-#header6,
-#header7,
-#desk1,
-#desk2,
-#desk3,
-#desk4,
-#desk5,
-#desk6,
-#desk7 {
+/* Initial hidden state for story headers and text, to avoid a flash of raw HTML
+   before the entrance animation runs. Written out for up to 12 slides, so a
+   story with more than poker's 7 needs no change here. */
+$hidden-text: ();
+@each $part in header, desk {
+  @for $slide from 1 through 12 {
+    $hidden-text: list.append($hidden-text, '##{$part}#{$slide}', comma);
+  }
+}
+
+#{$hidden-text} {
   opacity: 0;
   margin-top: 7dvh;
 }

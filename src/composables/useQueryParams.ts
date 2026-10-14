@@ -1,3 +1,5 @@
+import storiesData from '@story/stories.json';
+
 export type SupportedLanguage = 'en' | 'fr' | 'de' | 'it' | 'es' | 'pt';
 
 export interface RawQueryParams {
@@ -25,7 +27,7 @@ const DEFAULTS: QueryParams = {
   userLanguage: 'en',
   currency: '',
   endLink: '',
-  gameLink: 'live/categories/poker',
+  gameLink: storiesData.links.game,
   discoverLink: '',
   storiesTotal: 4,
 };
@@ -89,10 +91,10 @@ export function useQueryParams(): QueryParams {
 
     const currency = params.user_currency || DEFAULTS.currency;
 
-    // Per-story attribution: the campaign must be renamed in every story cloned
-    // from this template, otherwise its traffic lands in the previous story's
-    // bucket in analytics.
-    const utm = 'utm_source=site&utm_medium=story&utm_campaign=poker_story';
+    // Per-story attribution: each story names its own campaign in its
+    // stories.json (links.utmCampaign), so its traffic lands in its own bucket
+    // in analytics.
+    const utm = `utm_source=site&utm_medium=story&utm_campaign=${storiesData.links.utmCampaign}`;
     const baseEnd = params.end_link || DEFAULTS.endLink;
     const endLink = baseEnd
       ? baseEnd.includes('?')

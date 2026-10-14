@@ -94,3 +94,28 @@ export interface StoriesData {
   };
   ui: StoriesUI;
 }
+
+// A slide as stories/<name>/stories.json writes it. `video` names the clip
+// (`story_3`); its files are found in the story's videos/ folder by the names
+// the encode script gives them (src/data/video-files.json). Left out, it is
+// story_<slide number>.
+export interface RawStoryData extends Omit<StoryData, 'video'> {
+  video?: string;
+}
+
+// Where the story sends the player: the game when the site passes no
+// game_link, and the analytics campaign added to end_link.
+export interface StoryLinks {
+  game: string;
+  utmCampaign: string;
+}
+
+// stories/<name>/stories.json as a whole.
+export interface RawStoriesData {
+  stories: {
+    title: LocalizedText;
+    items: RawStoryData[];
+  };
+  ui: StoriesUI;
+  links: StoryLinks;
+}

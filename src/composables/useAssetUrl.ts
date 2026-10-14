@@ -1,39 +1,41 @@
 /**
  * Resolves asset paths from stories.json into final URLs emitted by Vite.
- * Works with any files under /src/assets/** (images, videos, etc.).
  *
- * import.meta.glob(..., { as: 'url', eager: true }) — during build,
- * Vite transforms each match into a public URL, respecting the configured base.
+ * Two places hold assets. Shared ones (icons every story uses) live under
+ * /src/assets and are written as such: "/src/assets/images/icons/close.svg".
+ * The story's own (its videos and icon) live in its folder, stories/<name>,
+ * and are written relative to it: "icon.webp", "videos/story_1-av1.mp4".
+ *
+ * import.meta.glob(..., { eager: true }) — during build, Vite transforms each
+ * match into a public URL, respecting the configured base.
  */
 
-const imageLike = import.meta.glob('/src/assets/images/**', {
-  as: 'url',
+const shared = import.meta.glob('/src/assets/images/**', {
+  query: '?url',
+  import: 'default',
   eager: true,
 }) as Record<string, string>;
 
-const videoLike = import.meta.glob('/src/assets/videos/**', {
-  as: 'url',
-  eager: true,
-}) as Record<string, string>;
+// Keys come back as /stories/<name>/videos/...; the story's own name is cut
+// off, so the lookups below do not depend on which story is being built.
+const own = Object.fromEntries(
+  Object.entries(
+    import.meta.glob('@story/**/*.{webp,png,jpg,jpeg,svg,mp4,webm}', {
+      query: '?url',
+      import: 'default',
+      eager: true,
+    }) as Record<string, string>
+  ).map(([key, url]) => [key.replace(/^.*?\/stories\/[^/]+\//, ''), url])
+);
 
-// if needed, add other folders (audio, fonts, etc.) the same way
-
-function normalizeToSrcPath(input: string): string {
-  // Allow writing in JSON in different formats:
-  // "/src/assets/..."  OR  "/assets/..."  OR  "assets/..."
-  if (input.startsWith('/src/')) return input;
-  if (input.startsWith('/assets/')) return `/src${input}`;
-  if (input.startsWith('assets/')) return `/src/${input}`;
-  // if it's a full absolute URL (https://cdn/...), return as is
-  if (/^https?:\/\//i.test(input)) return input;
-  // fallback: treat as absolute from project root -> convert to /src/...
-  return `/src${input.startsWith('/') ? '' : '/'}${input}`;
+/** URL of a file in the story's folder, or undefined when there is none. */
+export function storyAssetUrl(relativePath: string): string | undefined {
+  return own[relativePath];
 }
 
 export function resolveAssetUrl(input: string): string {
-  const key = normalizeToSrcPath(input);
-  // Order of maps doesn't matter — search in both
-  const url = imageLike[key] ?? videoLike[key];
-  // If not found — leave as is (might be external URL or public/ reference)
-  return url ?? input;
+  // A full address (https://cdn/...) is used as is.
+  if (/^https?:\/\//i.test(input)) return input;
+  if (input.startsWith('/src/')) return shared[input] ?? input;
+  return own[input] ?? input;
 }

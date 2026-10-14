@@ -35,20 +35,7 @@
           "es": "El Poker es uno de los juegos de cartas más populares. Forma la mejor mano de 5 cartas — o haz que tu oponente se retire.",
           "pt": "Poker é um dos jogos de cartas mais populares. Construa a melhor mão de 5 cartas — ou faça o seu oponente desistir."
         },
-        "video": {
-          "720": {
-            "av1": "/src/assets/videos/stories/en/story_1-720-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_1-720-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_1-720-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_1-720.webm"
-          },
-          "1080": {
-            "av1": "/src/assets/videos/stories/en/story_1-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_1-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_1-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_1.webm"
-          }
-        },
+        "video": "story_1",
         "ctaButton": {
           "enabled": true
         },
@@ -82,20 +69,7 @@
           "es": "Cada mano tiene su valor. Tu objetivo es formar la más fuerte.",
           "pt": "Cada mão tem o seu ranking. O seu objetivo é construir a mais forte."
         },
-        "video": {
-          "720": {
-            "av1": "/src/assets/videos/stories/en/story_2-720-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_2-720-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_2-720-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_2-720.webm"
-          },
-          "1080": {
-            "av1": "/src/assets/videos/stories/en/story_2-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_2-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_2-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_2.webm"
-          }
-        },
+        "video": "story_2",
         "ctaButton": {
           "enabled": true
         },
@@ -129,20 +103,7 @@
           "es": "Realiza tu Apuesta Ante para comenzar. Añade una Apuesta de Bono si quieres más.",
           "pt": "Faça a sua aposta Ante para começar. Adicione uma aposta de bónus se quiser mais."
         },
-        "video": {
-          "720": {
-            "av1": "/src/assets/videos/stories/en/story_3-720-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_3-720-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_3-720-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_3-720.webm"
-          },
-          "1080": {
-            "av1": "/src/assets/videos/stories/en/story_3-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_3-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_3-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_3.webm"
-          }
-        },
+        "video": "story_3",
         "ctaButton": {
           "enabled": true
         },
@@ -211,20 +172,7 @@
             }
           }
         ],
-        "video": {
-          "720": {
-            "av1": "/src/assets/videos/stories/en/story_4-720-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_4-720-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_4-720-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_4-720.webm"
-          },
-          "1080": {
-            "av1": "/src/assets/videos/stories/en/story_4-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_4-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_4-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_4.webm"
-          }
-        },
+        "video": "story_4",
         "ctaButton": {
           "enabled": true
         },
@@ -258,20 +206,7 @@
           "es": "Igualar — permanecer en el juego (2× Apuesta Ante).<br>Retirarse — abandonar la mano.",
           "pt": "Call — continua no jogo (2× Ante).<br>Fold — desiste da mão."
         },
-        "video": {
-          "720": {
-            "av1": "/src/assets/videos/stories/en/story_5-720-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_5-720-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_5-720-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_5-720.webm"
-          },
-          "1080": {
-            "av1": "/src/assets/videos/stories/en/story_5-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_5-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_5-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_5.webm"
-          }
-        },
+        "video": "story_5",
         "ctaButton": {
           "enabled": true
         },
@@ -305,20 +240,7 @@
           "es": "Ahora hay 5 cartas en la mesa.<br>Forma tu mejor combinación.",
           "pt": "Agora há 5 cartas na mesa.<br>Construa a sua melhor combinação."
         },
-        "video": {
-          "720": {
-            "av1": "/src/assets/videos/stories/en/story_6-720-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_6-720-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_6-720-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_6-720.webm"
-          },
-          "1080": {
-            "av1": "/src/assets/videos/stories/en/story_6-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_6-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_6-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_6.webm"
-          }
-        },
+        "video": "story_6",
         "ctaButton": {
           "enabled": true
         },
@@ -352,20 +274,7 @@
           "es": "La Apuesta Ante es de 5 EUR y la Igualar es de 10 EUR.<br>Con una Escalera de Color (20:1), ganas 300 EUR y recibes 15 EUR de vuelta de tus apuestas. Pago total — 315 EUR.",
           "pt": "A aposta Ante é 5 EUR e o Call é 10 EUR.<br>Com um Straight Flush (20:1), você ganha 300 EUR e recebe 15 EUR de volta das suas apostas. Pagamento total — 315 EUR."
         },
-        "video": {
-          "720": {
-            "av1": "/src/assets/videos/stories/en/story_7-720-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_7-720-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_7-720-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_7-720.webm"
-          },
-          "1080": {
-            "av1": "/src/assets/videos/stories/en/story_7-av1.mp4",
-            "h265": "/src/assets/videos/stories/en/story_7-h265.mp4",
-            "h264": "/src/assets/videos/stories/en/story_7-h264.mp4",
-            "webm": "/src/assets/videos/stories/en/story_7.webm"
-          }
-        },
+        "video": "story_7",
         "ctaButton": {
           "enabled": true
         },
@@ -376,7 +285,7 @@
     ]
   },
   "ui": {
-    "storyIcon": "/src/assets/images/icons/story_icon.webp",
+    "storyIcon": "icon.webp",
     "orientationLock": {
       "icon": "/src/assets/images/icons/rotate-device.svg",
       "title": {
@@ -406,5 +315,9 @@
         "pt": "Jogar Poker"
       }
     }
+  },
+  "links": {
+    "game": "live/categories/poker",
+    "utmCampaign": "poker_story"
   }
 }
