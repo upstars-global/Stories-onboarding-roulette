@@ -45,13 +45,13 @@
           :ref="(el: unknown) => setVideoRef(el as StorySlideRef | null, index)"
           :story
           :texts="{ userLanguage }"
-          :sources="videoSources(story.video)"
+          :sources="currentSources"
           :current-index="currentStoryIndex"
           :autoplay="!isPaused"
-          :muted="isMuted"
+          :muted="videoMuted"
           :video-locked="showVideoPlayButton"
           :text-phase="textPhase"
-          @ended="onNext"
+          @ended="onEnded"
           @timeupdate="onTimeUpdate"
           @loadedmetadata="onLoadedMetadata"
           @failed="onVideoFailed"
@@ -144,6 +144,7 @@ import { useLocale } from '@/composables/useLocale';
 import { useStoriesData } from '@/composables/useStoriesData';
 import { useVideoPrefetch } from '@/composables/useVideoPrefetch';
 import { useVideoFormat } from '@/composables/useVideoFormat';
+import { useSoundtrack } from '@/composables/useSoundtrack';
 
 gsap.registerPlugin(TextPlugin);
 
@@ -233,6 +234,32 @@ const segmentProgress = computed<number>(() => {
 });
 // true, if explicit user action (Play) is required to start video
 const isUserPlayRequired = computed(() => showVideoPlayButton.value);
+
+// The clip's sources, worked out once per slide: a copy downloaded into
+// memory while the slide plays must not swap the source under its video.
+const currentSources = computed(() =>
+  currentStory.value ? videoSources(currentStory.value.video) : []
+);
+
+// The story's music, when it has its own track (stories/<name>/audio): it
+// plays on through the slide changes. Without one, the clips play their own
+// sound and every call below does nothing.
+const soundtrack = useSoundtrack(
+  {
+    clip: () => currentStory.value?.clip,
+    // A slide visited before leaves its old, detached element in videoRefs
+    // until it mounts again.
+    video: () => {
+      const video = videoRefs.value[currentStoryIndex.value];
+      return video?.isConnected ? video : undefined;
+    },
+  },
+  () => {
+    isMuted.value = true;
+  }
+);
+// With a track of their own the clips carry no sound and always play muted.
+const videoMuted = computed(() => soundtrack.enabled || isMuted.value);
 
 // === METHODS ===
 const getLocalizedText = (
@@ -485,6 +512,7 @@ const setVideoRef = (el: StorySlideRef | null, index: number) => {
 };
 
 const closeStory = () => {
+  soundtrack.pause();
   window.parent.postMessage('close', '*');
   if (end_link.value)
     setTimeout(
@@ -510,10 +538,12 @@ const goToDiscover = () => {
 const onPlay = () => {
   isPaused.value = false;
   showVideoPlayButton.value = false;
+  // Started here, inside the viewer's tap, where browsers allow sound.
+  if (!isMuted.value) soundtrack.play();
 
   const video = videoRefs.value[currentStoryIndex.value];
   if (video) {
-    video.muted = isMuted.value;
+    video.muted = videoMuted.value;
     video
       .play()
       .then(() => {
@@ -526,6 +556,7 @@ const onPlay = () => {
         // Still blocked (e.g., not a "real" user gesture) → keep button visible
         showVideoPlayButton.value = true;
         isPaused.value = true;
+        soundtrack.pause();
       });
   }
 };
@@ -533,6 +564,7 @@ const onPlay = () => {
 const onPause = () => {
   if (isPaused.value) return;
   isPaused.value = true;
+  soundtrack.pause();
   const video = videoRefs.value[currentStoryIndex.value];
   if (video) video.pause();
   // Stop progress tracking when pausing
@@ -552,8 +584,10 @@ const onToggleMute = (muted: boolean) => {
   isMuted.value = muted;
   const video = videoRefs.value[currentStoryIndex.value];
   if (video) {
-    video.muted = muted;
+    video.muted = videoMuted.value;
   }
+  if (muted) soundtrack.pause();
+  else if (!isPaused.value) soundtrack.play();
   window.parent.postMessage(muted ? 'mute_video' : 'unmute_video', '*');
 };
 
@@ -565,13 +599,26 @@ const onWarningVisible = (isVisible: boolean) => {
   }
 };
 
+/** One slide forward; false on the last slide. */
+const goForward = (): boolean => {
+  if (isUserPlayRequired.value) return false; // block forward navigation until user starts video
+  if (currentStoryIndex.value >= stories.value.length - 1) return false;
+  currentStoryIndex.value++;
+  progress.value = 0;
+  window.parent.postMessage('click_forward', '*');
+  return true;
+};
+
+// A tap or an arrow: the picture jumps to the next slide, and the music
+// follows it.
 const onNext = () => {
-  if (isUserPlayRequired.value) return; // block forward navigation until user starts video
-  if (currentStoryIndex.value < stories.value.length - 1) {
-    currentStoryIndex.value++;
-    progress.value = 0;
-    window.parent.postMessage('click_forward', '*');
-  }
+  if (goForward()) soundtrack.jump();
+};
+
+// The clip played to its end: the music is already playing on into the next
+// slide.
+const onEnded = () => {
+  goForward();
 };
 
 const onPrev = () => {
@@ -580,12 +627,15 @@ const onPrev = () => {
     currentStoryIndex.value--;
     progress.value = 0;
     window.parent.postMessage('click_backward', '*');
+    soundtrack.jump();
   }
 };
 
 /**
- * Warms the next clip — the same encode the browser will pick for it, so the
- * file fetched ahead is the one that gets played.
+ * Downloads the next clip into memory — the same encode the browser will pick
+ * for it, so the file fetched ahead is the one that gets played — and, the
+ * first time, the story's music, ahead of the clip so the sound button can
+ * start it at once.
  *
  * Waits until the playing clip is fully buffered: on a narrow connection the two
  * downloads otherwise share the pipe and the current clip starts stuttering —
@@ -594,9 +644,12 @@ const onPrev = () => {
  */
 const prefetchNextVideo = (video: HTMLVideoElement) => {
   const next = stories.value[currentStoryIndex.value + 1];
-  if (!next) return;
+  const nextUrl = next ? preferredUrl(next.video) : undefined;
 
-  const url = preferredUrl(next.video);
+  const go = () => {
+    prefetch(soundtrack.prefetchUrl());
+    prefetch(nextUrl);
+  };
 
   const isFullyBuffered = (): boolean => {
     const { buffered, duration } = video;
@@ -604,8 +657,10 @@ const prefetchNextVideo = (video: HTMLVideoElement) => {
     return buffered.end(buffered.length - 1) >= duration - 0.5;
   };
 
-  if (isFullyBuffered()) {
-    prefetch(url);
+  // A clip playing from memory has nothing left to download, and Safari
+  // reports no download progress for it either.
+  if (video.currentSrc.startsWith('blob:') || isFullyBuffered()) {
+    go();
     return;
   }
 
@@ -613,7 +668,42 @@ const prefetchNextVideo = (video: HTMLVideoElement) => {
   const onProgress = () => {
     if (!isFullyBuffered()) return;
     video.removeEventListener('progress', onProgress);
-    prefetch(url);
+    go();
+  };
+  video.addEventListener('progress', onProgress);
+};
+
+/** Seconds of the playing clip downloaded ahead of the picture before the
+ *  music's download may start beside it. */
+const AHEAD_OF_MUSIC = 3;
+
+/**
+ * Starts downloading the story's music into memory early, once the playing
+ * clip has AHEAD_OF_MUSIC seconds in hand: a tap on the sound button soon
+ * after opening then finds the music there or nearly there (useSoundtrack).
+ * Before that, the clip on screen keeps the bandwidth to itself.
+ */
+const prefetchMusicSoon = (video: HTMLVideoElement) => {
+  if (!soundtrack.prefetchUrl()) return;
+  const inHand = (): boolean => {
+    if (video.currentSrc.startsWith('blob:')) return true;
+    const { buffered, currentTime, duration } = video;
+    if (!buffered.length) return false;
+    const end = buffered.end(buffered.length - 1);
+    return (
+      end - currentTime >= AHEAD_OF_MUSIC ||
+      (Number.isFinite(duration) && end >= duration - 0.5)
+    );
+  };
+  if (inHand()) {
+    prefetch(soundtrack.prefetchUrl());
+    return;
+  }
+  // Listener dies with the element when the slide unmounts.
+  const onProgress = () => {
+    if (!inHand()) return;
+    video.removeEventListener('progress', onProgress);
+    prefetch(soundtrack.prefetchUrl());
   };
   video.addEventListener('progress', onProgress);
 };
@@ -623,7 +713,12 @@ const onLoadedMetadata = () => {
   const video = videoRefs.value[currentStoryIndex.value];
   if (!video) return;
 
-  video.muted = isMuted.value;
+  video.muted = videoMuted.value;
+  // Whether or not the clip may start by itself. Where it may not (an iPhone
+  // in Low Power Mode shows the play button), the clip loads once that button
+  // is tapped, and the downloads follow it.
+  prefetchMusicSoon(video);
+  prefetchNextVideo(video);
 
   if (!isPaused.value) {
     video
@@ -633,7 +728,6 @@ const onLoadedMetadata = () => {
         startProgressLoopFor(video);
         showVideoPlayButton.value = false;
         tl.play(); // synchronous start text animation on autoplay
-        prefetchNextVideo(video);
       })
       .catch(() => {
         // Autoplay blocked → show custom button

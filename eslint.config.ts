@@ -29,6 +29,7 @@ export default [
         setTimeout: 'readonly',
         HTMLElement: 'readonly',
         HTMLVideoElement: 'readonly',
+        HTMLAudioElement: 'readonly',
         Event: 'readonly',
         MessageEvent: 'readonly',
         IntersectionObserver: 'readonly',

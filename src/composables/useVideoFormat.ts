@@ -18,6 +18,8 @@
 
 import { ref } from 'vue';
 import type { StoryVideo, StoryVideoSizes } from '@/types';
+import { hasSoundtrack } from '@/composables/useSoundtrack';
+import { useVideoPrefetch } from '@/composables/useVideoPrefetch';
 
 export type VideoFormat = keyof StoryVideo;
 export type VideoSize = '1080' | '720';
@@ -27,23 +29,39 @@ export interface VideoSource {
   type: string;
 }
 
-/** `type` values are read off the encoded files (the report lists them). Both
- *  codecs are named so that a browser which decodes the picture but not the
- *  sound skips the source rather than starting it and failing. The 720 files
- *  sit a level lower: the level follows the frame size. */
-const TYPES: Record<VideoSize, Record<VideoFormat, string>> = {
+/** `codecs` values are read off the encoded files (the report lists them).
+ *  Both codecs are named, so that a browser which decodes the picture but not
+ *  the sound skips the source rather than starting it and failing. The 720
+ *  files sit a level lower: the level follows the frame size. */
+const PICTURE: Record<VideoSize, Record<VideoFormat, string>> = {
   1080: {
-    av1: 'video/mp4; codecs="av01.0.08M.08, mp4a.40.2"',
-    h265: 'video/mp4; codecs="hvc1.1.6.L120.90, mp4a.40.2"',
-    h264: 'video/mp4; codecs="avc1.640028, mp4a.40.2"',
-    webm: 'video/webm; codecs="vp09.00.40.08, opus"',
+    av1: 'av01.0.08M.08',
+    h265: 'hvc1.1.6.L120.90',
+    h264: 'avc1.640028',
+    webm: 'vp09.00.40.08',
   },
   720: {
-    av1: 'video/mp4; codecs="av01.0.05M.08, mp4a.40.2"',
-    h265: 'video/mp4; codecs="hvc1.1.6.L93.90, mp4a.40.2"',
-    h264: 'video/mp4; codecs="avc1.64001F, mp4a.40.2"',
-    webm: 'video/webm; codecs="vp09.00.31.08, opus"',
+    av1: 'av01.0.05M.08',
+    h265: 'hvc1.1.6.L93.90',
+    h264: 'avc1.64001F',
+    webm: 'vp09.00.31.08',
   },
+};
+const SOUND: Record<VideoFormat, string> = {
+  av1: 'mp4a.40.2',
+  h265: 'mp4a.40.2',
+  h264: 'mp4a.40.2',
+  webm: 'opus',
+};
+
+/** A story whose music plays from its own file (useSoundtrack) ships its
+ *  clips without sound, and their type names the picture alone. */
+const typeOf = (size: VideoSize, format: VideoFormat): string => {
+  const container = format === 'webm' ? 'webm' : 'mp4';
+  const codecs = hasSoundtrack
+    ? PICTURE[size][format]
+    : `${PICTURE[size][format]}, ${SOUND[format]}`;
+  return `video/${container}; codecs="${codecs}"`;
 };
 
 const ORDER: VideoFormat[] = ['av1', 'h265', 'h264', 'webm'];
@@ -116,7 +134,8 @@ export async function detectVideoFormats(): Promise<void> {
   // the lower one too.
   const playable = ORDER.filter(
     (format) =>
-      (format !== 'av1' || av1) && probe.canPlayType(TYPES[1080][format]) !== ''
+      (format !== 'av1' || av1) &&
+      probe.canPlayType(typeOf('1080', format)) !== ''
   );
   // A browser that claims nothing still gets the list: letting it try beats
   // showing an empty slide.
@@ -124,17 +143,21 @@ export async function detectVideoFormats(): Promise<void> {
 }
 
 export function useVideoFormat() {
+  const { local } = useVideoPrefetch();
+
   /** The set at the chosen size; a story shipped at 1080 only plays that. */
   const pick = (video: StoryVideoSizes): [VideoSize, StoryVideo] => {
     const files = video[size.value];
     return files ? [size.value, files] : ['1080', video[1080]];
   };
 
+  /** The encodes to offer, best first; a file already downloaded ahead of
+   *  time (useVideoPrefetch) is offered from memory. */
   const sources = (video: StoryVideoSizes): VideoSource[] => {
     const [at, files] = pick(video);
     return usable.value.map((format) => ({
-      src: files[format],
-      type: TYPES[at][format],
+      src: local(files[format]) ?? files[format],
+      type: typeOf(at, format),
     }));
   };
 

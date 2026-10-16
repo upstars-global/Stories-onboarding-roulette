@@ -62,6 +62,9 @@ export interface StoryData {
   topText: LocalizedText;
   header: LocalizedText;
   description: LocalizedText;
+  // The clip's name (`story_3`); the story's soundtrack finds the clip's place
+  // in the music by it.
+  clip: string;
   video: StoryVideoSizes;
   ctaButton: StoryCtaButton;
   helpText?: StoryHelpText;
@@ -99,7 +102,7 @@ export interface StoriesData {
 // (`story_3`); its files are found in the story's videos/ folder by the names
 // the encode script gives them (src/data/video-files.json). Left out, it is
 // story_<slide number>.
-export interface RawStoryData extends Omit<StoryData, 'video'> {
+export interface RawStoryData extends Omit<StoryData, 'video' | 'clip'> {
   video?: string;
 }
 

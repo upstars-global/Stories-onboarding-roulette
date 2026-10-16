@@ -38,10 +38,10 @@ function resolve(d: RawStoriesData): StoriesData {
   return {
     stories: {
       ...d.stories,
-      items: d.stories.items.map((s, i) => ({
-        ...s,
-        video: videoSizes(s.video ?? `story_${i + 1}`),
-      })),
+      items: d.stories.items.map((s, i) => {
+        const clip = s.video ?? `story_${i + 1}`;
+        return { ...s, clip, video: videoSizes(clip) };
+      }),
     },
     ui: {
       ...d.ui,

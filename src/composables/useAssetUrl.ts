@@ -3,8 +3,9 @@
  *
  * Two places hold assets. Shared ones (icons every story uses) live under
  * /src/assets and are written as such: "/src/assets/images/icons/close.svg".
- * The story's own (its videos and icon) live in its folder, stories/<name>,
- * and are written relative to it: "icon.webp", "videos/story_1-av1.mp4".
+ * The story's own (its videos, music and icon) live in its folder,
+ * stories/<name>, and are written relative to it: "icon.webp",
+ * "videos/story_1-av1.mp4", "audio/soundtrack.m4a".
  *
  * import.meta.glob(..., { eager: true }) — during build, Vite transforms each
  * match into a public URL, respecting the configured base.
@@ -20,7 +21,7 @@ const shared = import.meta.glob('/src/assets/images/**', {
 // off, so the lookups below do not depend on which story is being built.
 const own = Object.fromEntries(
   Object.entries(
-    import.meta.glob('@story/**/*.{webp,png,jpg,jpeg,svg,mp4,webm}', {
+    import.meta.glob('@story/**/*.{webp,png,jpg,jpeg,svg,mp4,webm,m4a}', {
       query: '?url',
       import: 'default',
       eager: true,
