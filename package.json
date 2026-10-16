@@ -11,7 +11,8 @@
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write src/",
-    "video:encode": "node scripts/encode-story-videos.mjs"
+    "video:encode": "node scripts/encode-story-videos.mjs",
+    "audio:build": "node scripts/build-story-soundtrack.mjs"
   },
   "dependencies": {
     "@vueuse/core": "^13.5.0",

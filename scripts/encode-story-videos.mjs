@@ -101,8 +101,13 @@
 //
 // Audio is kept: the story has a sound button and these clips have a real
 // soundtrack. The <video> still has to start muted, or it will not autoplay.
+// A story whose music plays from a track of its own (stories/<name>/audio,
+// made by scripts/build-story-soundtrack.mjs) ships its clips without sound:
+// they are encoded and scored as usual and lose the sound on the way into the
+// story's folder.
 
 import { spawn } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import {
   copyFile,
   mkdir,
@@ -115,6 +120,7 @@ import {
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { silentEntry, withoutSound } from './without-sound.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const STORIES = path.join(ROOT, 'stories');
@@ -394,6 +400,10 @@ async function parseArgs(argv) {
     formats,
     sizes,
     map,
+    // The story's music has its own track: see the end of the notes above.
+    silent:
+      folder !== null &&
+      existsSync(path.join(folder, 'audio', 'soundtrack.json')),
     // One at a time by default. The encoders already use every core, and on a
     // laptop that is also in use three side by side filled the swap and took
     // the window server down with them.
@@ -901,8 +911,11 @@ async function produce(clip, key, ctx) {
   if (result.colourDrift > COLOUR_TOLERANCE)
     problems.push('background colour drifted');
 
-  const { path: built, ...entry } = result;
-  await copyFile(built, path.join(ctx.out, entry.file));
+  const { path: built, ...encoded } = result;
+  const dest = path.join(ctx.out, encoded.file);
+  let entry = encoded;
+  if (ctx.silent) entry = silentEntry(encoded, await withoutSound(built, dest));
+  else await copyFile(built, dest);
   ctx.log(
     clip,
     key,

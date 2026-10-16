@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import path from 'path';
+import { largestChunk } from './scripts/mp4-index.mjs';
 
 // Every story is a folder in stories/: its texts (stories.json), its look
 // (story.scss), its icon and videos. The code is shared. One build makes one
@@ -32,11 +33,73 @@ function pickStory() {
 
 const readJson = (file) => JSON.parse(readFileSync(file, 'utf8'));
 
+/** Frames one chunk of a clip may hold: about a second of video. */
+const CHUNK_FRAMES = 30;
+
+/**
+ * Clips whose frames sit in big chunks. Safari shows nothing of a chunk until
+ * all of it has arrived, so such a clip waits for seconds of video before its
+ * first frame (scripts/mp4-index.mjs). A clip with sound never has them; a
+ * clip without sound has them unless its index was rewritten.
+ */
+function chunkProblems(dir, name) {
+  const videos = path.join(dir, 'videos');
+  if (!existsSync(videos)) return [];
+  return readdirSync(videos)
+    .filter((file) => file.endsWith('.mp4'))
+    .flatMap((file) => {
+      const frames = largestChunk(readFileSync(path.join(videos, file)));
+      return frames > CHUNK_FRAMES
+        ? [
+            `videos/${file} keeps ${frames} frames in one chunk; rewrite the index: npm run audio:build -- --story ${name} --src <dir with the masters>`,
+          ]
+        : [];
+    });
+}
+
+/**
+ * A story whose music has a track of its own (audio/soundtrack.json, made by
+ * scripts/build-story-soundtrack.mjs) needs that track made for the slides it
+ * plays and from the masters its videos came from: the track says where each
+ * clip starts in it, so new clips leave it out of step until it is made again.
+ */
+function soundtrackProblems(dir, name, clips) {
+  const file = path.join(dir, 'audio', 'soundtrack.json');
+  if (!existsSync(file)) return [];
+  const track = readJson(file);
+  const again = `make it again: npm run audio:build -- --story ${name} --src <dir with the masters>`;
+  const problems = Object.values(track.files)
+    .filter((sound) => !existsSync(path.join(dir, 'audio', sound)))
+    .map((sound) => `audio/${sound} is missing`);
+  const made = track.slides.map((slide) => slide.video);
+  if (made.join() !== clips.join()) {
+    problems.push(
+      `the track is for ${made.join(', ')}, the slides play ${clips.join(', ')}; ${again}`
+    );
+  }
+  const report = path.join(dir, 'video-report.json');
+  const encoded = existsSync(report) ? readJson(report).clips : [];
+  for (const slide of track.slides) {
+    const video = encoded.find((clip) => clip.name === slide.video);
+    if (
+      video &&
+      (video.master !== slide.master ||
+        Math.abs(video.duration - slide.duration) > 0.001)
+    ) {
+      problems.push(
+        `${slide.video} is encoded from ${video.master} (${video.duration} s), its music is from ${slide.master} (${slide.duration} s); ${again}`
+      );
+    }
+  }
+  return problems;
+}
+
 /**
  * Names the page after the story and checks its videos before anything is
  * built: every slide needs its four 1080 files, and a 720 set is either
  * complete or absent. A missing file would otherwise surface only as a slide
- * that never plays.
+ * that never plays. The music track, where the story has one, is checked
+ * against the slides too (soundtrackProblems).
  */
 function story(name) {
   const dir = path.join(STORIES, name);
@@ -70,6 +133,22 @@ function story(name) {
       if (problems.length) {
         this.error(
           `stories/${name}/videos is missing files:\n  ${problems.join('\n  ')}`
+        );
+      }
+      const chunks = chunkProblems(dir, name);
+      if (chunks.length) {
+        this.error(
+          `stories/${name}/videos has clips Safari plays late:\n  ${chunks.join('\n  ')}`
+        );
+      }
+      const sound = soundtrackProblems(
+        dir,
+        name,
+        data.stories.items.map((item, i) => item.video ?? `story_${i + 1}`)
+      );
+      if (sound.length) {
+        this.error(
+          `stories/${name}/audio does not fit the story:\n  ${sound.join('\n  ')}`
         );
       }
     },
